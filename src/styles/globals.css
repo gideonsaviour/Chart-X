@@ -175,19 +175,33 @@
 }
 
 
-/* Chats/Trading split launcher: floating silver-and-midnight glass. */
-.chat-chooser-dismiss{position:fixed;inset:0;z-index:29;background:rgba(0,4,12,.22);border:0;cursor:default}
-.chat-glass-chooser{pointer-events:auto;position:absolute;z-index:37;bottom:102px;right:14px;width:min(314px,calc(100% - 28px));padding:8px;border:1px solid rgba(216,236,255,.35);border-radius:27px;background:linear-gradient(155deg,rgba(119,145,183,.4),rgba(25,38,64,.86) 36%,rgba(8,19,40,.94));-webkit-backdrop-filter:blur(26px) saturate(155%);backdrop-filter:blur(26px) saturate(155%);box-shadow:inset 0 2px 2px #ffffff42,inset 0 -3px 6px #0208138a,0 16px 38px #000c,0 0 20px #3e95e53b;animation:chooserAppear .2s ease both}
-.chat-glass-chooser>button{width:100%;min-height:74px;display:flex;align-items:center;gap:12px;text-align:left;padding:10px 12px;border:0;border-radius:20px;color:white;background:transparent}
-.chat-glass-chooser>button+button{border-top:1px solid #c5e0ff25}
-.chat-glass-chooser>button:hover,.chat-glass-chooser>button:focus-visible{background:#84c6ff1d}
-.chat-glass-chooser .chooser-icon{width:48px;height:48px;flex:none;border:1px solid #77baff8a;border-radius:16px;background:linear-gradient(145deg,#1d67ab,#0a2244);display:grid;place-items:center;box-shadow:inset 0 1px 2px #ffffff45;color:#e5f7ff}
-.chat-glass-chooser .chooser-icon.trader{background:linear-gradient(145deg,#0d8d9d,#0d3254);color:#50f6d7}
-.chat-glass-chooser>button>span:nth-child(2){display:grid;gap:4px;flex:1}
-.chat-glass-chooser b{font-family:Outfit,sans-serif;font-size:16px}
-.chat-glass-chooser small{color:#b5cce3;font-size:11px}
-.chat-glass-chooser>button>svg{color:#95b9d8}
-@keyframes chooserAppear{from{opacity:0;transform:translateY(10px) scale(.97)}to{opacity:1;transform:translateY(0) scale(1)}}
+/* Two independent icon-only floating glass orbs above the Chats tab. */
+.chat-chooser-dismiss{position:fixed;inset:0;z-index:29;background:rgba(0,5,16,.12);border:0;cursor:default}
+.chat-glass-chooser{
+  position:absolute;z-index:37;bottom:105px;
+  left:calc(70% - 86px);width:172px;
+  display:flex;gap:14px;justify-content:center;align-items:center;
+  background:transparent;border:0;box-shadow:none;padding:0;
+  pointer-events:none;
+}
+.chat-choice-orb{
+  width:76px;height:76px;min-width:76px;
+  display:grid;place-items:center;flex:none;
+  border-radius:50%;
+  border:1px solid rgba(219,238,255,.44);
+  background:linear-gradient(158deg,rgba(187,213,243,.31) 0%,rgba(89,111,149,.35) 26%,rgba(21,32,54,.84) 70%,rgba(109,142,181,.35) 100%);
+  color:#f5fbff;
+  -webkit-backdrop-filter:blur(26px) saturate(165%);
+  backdrop-filter:blur(26px) saturate(165%);
+  box-shadow:inset 0 2px 3px #ffffff58,inset 0 -3px 7px #0208179c,0 12px 28px #0009,0 0 19px #76bfff25;
+  position:relative;isolation:isolate;overflow:hidden;pointer-events:auto;
+  animation:chatOrbRise .23s cubic-bezier(.18,.89,.25,1.12) both;
+}
+.chat-choice-orb::before{content:"";position:absolute;top:4px;left:15%;right:15%;height:16px;border-radius:50%;background:linear-gradient(#ffffff58,transparent);filter:blur(5px);pointer-events:none}
+.chat-choice-orb.trading-orb{animation-delay:.065s;color:#8df4de}
+.chat-choice-orb:hover,.chat-choice-orb:focus-visible{border-color:#c7eaff;background-color:#6daee52b;box-shadow:inset 0 2px 3px #ffffff70,0 12px 28px #0009,0 0 23px #45b7ff80}
+.chat-choice-orb:active{transform:scale(.95)}
+@keyframes chatOrbRise{from{opacity:0;transform:translateY(19px) scale(.7)}to{opacity:1;transform:translateY(0) scale(1)}}
 /* Trading gateway: independent from messaging, extensible for future real broker OAuth. */
 .trader-landing{padding:0 14px 18px}
 .trader-hero{margin:15px 0 16px;border-radius:23px;padding:23px 18px 19px;border:1px solid #479dff6b;background:radial-gradient(circle at 93% 12%,#1284ce4f,transparent 47%),linear-gradient(145deg,#113d78,#071833 78%);box-shadow:inset 0 1px 2px #b7e1ff32,0 12px 24px #0005}
@@ -241,5 +255,5 @@
 .broker-request>small{font-size:10px;color:#7dc7e8;line-height:1.5}
 .broker-security{display:flex;gap:9px;padding:12px;margin-top:15px;border-radius:12px;border:1px solid #32b8c642;background:#0a424b55;font-size:10px;color:#a1e4e1;line-height:1.5}
 .broker-security svg{flex:none}
-@media(max-width:760px){.chat-chooser-dismiss{position:fixed}.chat-glass-chooser{bottom:calc(96px + env(safe-area-inset-bottom));right:10px}}
-@media(prefers-reduced-motion:reduce){.chat-glass-chooser{animation:none}}
+@media(max-width:760px){.chat-glass-chooser{bottom:calc(97px + env(safe-area-inset-bottom))}}
+@media(max-width:365px){.chat-glass-chooser{left:calc(70% - 75px);width:150px;gap:10px}.chat-choice-orb{width:67px;height:67px;min-width:67px}}@media(prefers-reduced-motion:reduce){.chat-choice-orb{animation:none}}
