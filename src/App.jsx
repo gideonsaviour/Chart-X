@@ -1,5 +1,5 @@
 import { useEffect, useMemo, useState } from 'react'
-import { referencePortrait, referenceCity } from './designAssets.js'
+import { referencePortrait, referenceCity, referenceJenny, referenceSarah, referenceDavid, referenceQueen } from './designAssets.js'
 import {
   Home, Users, MessageCircle, UserRound, Plus, Search, Bell, Settings, X,
   Heart, MessageSquare, Share2, MoreHorizontal, Image as ImageIcon, Camera,
@@ -13,10 +13,10 @@ import {
 
 const faces = {
   gideon: referencePortrait,
-  sarah: 'https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=240&h=240&fit=crop&crop=faces',
-  jenny: 'https://images.unsplash.com/photo-1524504388940-b1c1722653e1?w=240&h=240&fit=crop&crop=faces',
-  david: 'https://images.unsplash.com/photo-1506794778202-cad84cf45f1d?w=240&h=240&fit=crop&crop=faces',
-  queen: 'https://images.unsplash.com/photo-1531123897727-8f129e1688ce?w=240&h=240&fit=crop&crop=faces',
+  sarah: referenceSarah,
+  jenny: referenceJenny,
+  david: referenceDavid,
+  queen: referenceQueen,
   daniel: 'https://images.unsplash.com/photo-1504257432389-52343af06ae3?w=240&h=240&fit=crop&crop=faces',
   silver: 'https://images.unsplash.com/photo-1506794778202-cad84cf45f1?w=240&h=240&fit=crop&crop=faces',
   family: 'https://images.unsplash.com/photo-1542038784456-1ea8e935640e?w=240&h=240&fit=crop',
