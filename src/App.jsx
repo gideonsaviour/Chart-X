@@ -107,6 +107,63 @@ function Communities({notify}) {
   </div>
  </>
 }
+
+function TraderLanding({navigate}) {
+ const [asset,setAsset]=useState('BTC/USD')
+ const [range,setRange]=useState('1W')
+ const [showBrokers,setShowBrokers]=useState(false)
+ const [searchBroker,setSearchBroker]=useState('')
+ const [brokerRequest,setBrokerRequest]=useState('')
+ const [requested,setRequested]=useState([])
+ const pairs=['BTC/USD','ETH/USD','EUR/USD','GBP/USD','AAPL']
+ const periods=['1D','1W','1M','3M','1Y']
+ const brokerExamples=['Interactive Brokers','Alpaca','OANDA','Coinbase Advanced','Kraken']
+ const available=brokerExamples.filter(name=>name.toLowerCase().includes(searchBroker.toLowerCase()))
+ const points=useMemo(()=>{
+  const seed=asset.split('').reduce((v,ch)=>v+ch.charCodeAt(0),0)+range.length*41
+  const data=Array.from({length:32},(_,i)=>{const wobble=Math.sin(i*.72+seed)*8+Math.cos(i*.29+seed)*11;return 72-i*.87+wobble})
+  return data.map((y,i)=>`${(i/31*320).toFixed(2)},${Math.max(13,Math.min(123,y)).toFixed(2)}`).join(' ')
+ },[asset,range])
+ return <>
+  <PageTop title="Trading Hub" right={<button className="icon-btn" aria-label="Trading information" onClick={()=>setShowBrokers(true)}><ShieldCheck size={21}/></button>}/>
+  <div className="trader-landing">
+   <div className="trader-hero">
+    <span className="trader-kicker"><TrendingUp size={16}/> CHAT-X TRADING</span>
+    <h1>Trade globally.<br/><em>Stay connected.</em></h1>
+    <p>Your space for market discovery, broker connectivity and copy trading — all in one place.</p>
+    <button className="primary wide trader-connect-button" onClick={()=>setShowBrokers(true)}><Wallet size={19}/> Connect a Broker <ChevronRight size={19}/></button>
+    <span className="trader-connect-status"><Lock size={13}/> No broker connected · Preview mode</span>
+   </div>
+   <section className="trader-market-panel">
+    <div className="trader-card-top"><div><small>MARKET CHART</small><h2>{asset}</h2></div><span className="trader-demo-tag">ILLUSTRATIVE</span></div>
+    <div className="trader-pairs" role="group" aria-label="Select market">{pairs.map(item=><button className={asset===item?'selected':''} key={item} onClick={()=>setAsset(item)}>{item}</button>)}</div>
+    <div className="trader-chart" role="img" aria-label={'Illustrative sample chart for '+asset+'; not live market prices'}>
+     <svg viewBox="0 0 320 140" preserveAspectRatio="none" aria-hidden="true">
+      <defs><linearGradient id="traderLineFill" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stopColor="#19ddbb" stopOpacity=".28"/><stop offset="1" stopColor="#19ddbb" stopOpacity="0"/></linearGradient></defs>
+      {[23,55,87,119].map(y=><line key={y} x1="0" y1={y} x2="320" y2={y} stroke="#5485ad" strokeOpacity=".2" strokeDasharray="4 5"/>)}
+      <polygon points={`0,140 ${points} 320,140`} fill="url(#traderLineFill)"/>
+      <polyline points={points} stroke="#3aefd5" strokeWidth="2.8" fill="none" strokeLinejoin="round" strokeLinecap="round"/>
+     </svg>
+    </div>
+    <div className="trader-ranges" role="group" aria-label="Chart period">{periods.map(p=><button key={p} className={range===p?'selected':''} onClick={()=>setRange(p)}>{p}</button>)}</div>
+    <p className="trader-chart-note">Demonstration chart only. Live market data will be connected later.</p>
+   </section>
+   <div className="trader-actions">
+    <button onClick={()=>setShowBrokers(true)}><span><Wallet size={23}/></span><b>Connect broker</b><small>Start here</small></button>
+    <button onClick={()=>navigate('trading')}><span><Activity size={23}/></span><b>Trading dashboard</b><small>Explore demo</small></button>
+   </div>
+   <section className="broker-explainer"><h3>Built for international traders</h3><p>Broker integrations will be introduced by supported provider and country. Availability, eligibility, compliance checks and account permissions will depend on each broker.</p><div><ShieldCheck size={18}/> Your broker credentials must never be entered into Chat-X until a verified, secure connection is implemented.</div></section>
+  </div>
+  {showBrokers&&<div className="broker-modal-backdrop" onClick={()=>setShowBrokers(false)}><section className="broker-modal" role="dialog" aria-modal="true" aria-label="Connect a broker" onClick={e=>e.stopPropagation()}>
+    <div className="broker-modal-head"><div><small>BROKER CONNECTIONS</small><h2>Connect your broker</h2></div><button onClick={()=>setShowBrokers(false)} aria-label="Close broker selection"><X size={22}/></button></div>
+    <p>Find a provider below. Connections aren't live yet; these are examples of brokers to evaluate for future integration.</p>
+    <div className="broker-search"><Search size={17}/><input value={searchBroker} onChange={e=>setSearchBroker(e.target.value)} placeholder="Search brokers..." aria-label="Search broker names"/></div>
+    <div className="broker-provider-list">{available.map(name=><div className="broker-provider" key={name}><span><TrendingUp size={19}/></span><div><b>{name}</b><small>Integration not available yet</small></div><span className="broker-pending">Planned</span></div>)}{available.length===0&&<p className="broker-empty">No listed broker matches that name.</p>}</div>
+    <form className="broker-request" onSubmit={e=>{e.preventDefault();if(brokerRequest.trim()){setRequested(current=>[...current,brokerRequest.trim()]);setBrokerRequest('')}}}><label htmlFor="broker-request-input">Which broker would you like to see?</label><div><input id="broker-request-input" value={brokerRequest} onChange={e=>setBrokerRequest(e.target.value)} placeholder="Enter broker name" required maxLength={75}/><button type="submit">Add</button></div>{requested.length>0&&<small>Noted for this preview session: {requested.join(', ')}. This is not submitted to a server.</small>}</form>
+    <div className="broker-security"><Lock size={16}/><span>Do not enter passwords, API keys or payment details here. Secure OAuth or provider-approved account linking will be added later.</span></div>
+  </section></div>}
+ </>
+}
 function Trading({notify}) {const [period,setPeriod]=useState('1W'),[follow,setFollow]=useState({});return <><PageTop title="Trading" right={<button className="icon-btn" aria-label="Trading notifications" onClick={()=>notify('Trading account not connected')}><Bell size={20}/></button>}/><div className="balance-card"><div className="balance-label">Your Balance <span>DEMO</span></div><h1>$2,840.50</h1><p>↗ +12.5% <span>this week</span></p><svg viewBox="0 0 350 115" preserveAspectRatio="none" aria-label="Illustrative portfolio chart"><defs><linearGradient id="balance-gradient" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stopColor="#16e6ad" stopOpacity=".48"/><stop offset="1" stopColor="#16e6ad" stopOpacity="0"/></linearGradient></defs><path d="M0 100 C20 96 30 82 46 87 S71 57 90 66 S119 78 135 52 S168 65 189 43 S219 54 246 25 S275 33 298 17 S320 20 350 4 V115 H0 Z" fill="url(#balance-gradient)"/><path d="M0 100 C20 96 30 82 46 87 S71 57 90 66 S119 78 135 52 S168 65 189 43 S219 54 246 25 S275 33 298 17 S320 20 350 4" fill="none" stroke="#1af4b8" strokeWidth="3"/></svg><div className="chart-periods">{['1D','1W','1M','3M','1Y'].map(p=><button key={p} onClick={()=>setPeriod(p)} className={p===period?'active':''}>{p}</button>)}</div><button className="primary wide" onClick={()=>notify('Copy trading requires broker connection and compliance setup')}>Copy Trade Now <ChevronRight size={18}/></button></div><div className="quick-actions">{[[ArrowDownToLine,'Deposit'],[ArrowUpFromLine,'Withdraw'],[History,'History'],[Activity,'Signals']].map(([Icon,name])=><button onClick={()=>notify(name+' requires trading provider integration')} key={name}><span><Icon size={21}/></span><small>{name}</small></button>)}</div><div className="section-title"><h3>Top Traders</h3><button onClick={()=>notify('Showing example trader profiles')}>See All <ChevronRight size={14}/></button></div><div className="traders">{[['ProTrader','12.5K','+48.6%','david'],['AlphaTrade','9.8K','+37.2%','sarah'],['Nova Signals','7.2K','+29.4%','queen']].map(([name,followers,gain,face])=><div className="trader" key={name}><Avatar id={face} size="sm"/><div><b>{name}</b><small>{followers} Followers</small></div><strong>{gain}</strong><button className="primary mini" onClick={()=>setFollow({...follow,[name]:!follow[name]})}>{follow[name]?'Following':'Copy'}</button></div>)}</div><p className="risk">Preview values are illustrative only. No real trading or payments are enabled.</p></>}
 function Marketplace({notify}) {const [filter,setFilter]=useState('All'),[cart,setCart]=useState([]);return <><PageTop title="Marketplace" right={<button className="icon-btn cart-button" aria-label="Cart" onClick={()=>notify(cart.length+' items in your preview cart')}><ShoppingCart size={21}/>{cart.length>0&&<em>{cart.length}</em>}</button>}/><p className="screen-intro">Discover something you'll love.</p><div className="filter-pills">{['All','Phones','Laptops','Accessories'].map(t=><button className={filter===t?'selected':''} key={t} onClick={()=>setFilter(t)}>{t}</button>)}</div><div className="product-grid">{products.filter(p=>filter==='All'||p.category===filter).map(p=><div className="product-card" key={p.name}><img src={p.image} alt={p.name}/><div><b>{p.name}</b><small><Star size={12} fill="currentColor"/> {p.rating}</small><strong>{p.price}</strong><button className="primary mini" onClick={()=>{setCart([...cart,p]);notify(p.name+' added to preview cart')}}>Buy Now</button></div></div>)}</div></>}
 function Notifications(){const [filter,setFilter]=useState('All'),[read,setRead]=useState({});const items=[{id:1,icon:Heart,kind:'Likes',text:'Jenny Bright liked your post.',when:'2m ago',tone:'pink'},{id:2,icon:MessageSquare,kind:'Comments',text:'David King commented: Great post!',when:'5m ago',tone:'blue'},{id:3,icon:UserPlus,kind:'Mentions',text:'Sarah Love started following you.',when:'10m ago',tone:'purple'},{id:4,icon:Trophy,kind:'All',text:'You won the weekly challenge! 🎉',when:'1h ago',tone:'gold'},{id:5,icon:Users,kind:'All',text:'New activity in Chat-X Group.',when:'2h ago',tone:'blue'}];return <><PageTop title="Notifications" right={<Bell size={21}/>}/><div className="filter-pills">{['All','Likes','Comments','Mentions'].map(t=><button className={filter===t?'selected':''} onClick={()=>setFilter(t)} key={t}>{t}</button>)}</div><div className="notifications">{items.filter(n=>filter==='All'||n.kind===filter).map(n=><button className={'notification-row '+(read[n.id]?'is-read':'')} key={n.id} onClick={()=>setRead({...read,[n.id]:true})}><span className={'notification-symbol '+n.tone}><n.icon size={22}/></span><span><b>{n.text}</b><small>{n.when}</small></span>{!read[n.id]&&<i/>}</button>)}</div></>}
@@ -114,7 +171,7 @@ function SettingsPage({notify,onLogout,navigate}) {const [dark,setDark]=useState
 function Explore({navigate}) {return <><PageTop title="Explore" right={<Compass size={20}/>}/><p className="screen-intro">Your world. Your community.</p><div className="explore-grid">{[['Communities',Users,'communities'],['Messages',MessageCircle,'chats'],['Trading',TrendingUp,'trading'],['Marketplace',ShoppingBag,'marketplace'],['Notifications',Bell,'notifications'],['Settings',Settings,'settings']].map(([name,Icon,id])=><button onClick={()=>navigate(id)} key={id}><Icon size={29}/><b>{name}</b><ChevronRight size={15}/></button>)}</div></>}
 function AboutPage({navigate}) {return <div className="about-page"><div className="about-orbit"/><button className="about-back icon-btn" onClick={()=>navigate('settings')} aria-label="Back"><ArrowLeft size={21}/></button><Brand large/><h1>Chat-<span>X</span></h1><h3>Connect. Share. Inspire.</h3><ul>{['Chat & Make Friends','Join Communities','Copy Trading','Trade & Earn','Share Your World','Marketplace','Notifications','Dark Mode & More...'].map(t=><li key={t}><span><Check size={13} strokeWidth={3}/></span>{t}</li>)}</ul><div className="about-footer">Your World.<br/>Our Community.</div></div>}
 function GlobalSearch({navigate,onClose}) {const [q,setQ]=useState('');return <div className="search-overlay"><button className="search-dismiss" aria-label="Close search" onClick={onClose}><X size={24}/></button><div className="search-dialog"><Search size={22}/><input autoFocus placeholder="Search Chat-X…" value={q} onChange={e=>setQ(e.target.value)}/>{q&&<button onClick={()=>setQ('')}><X size={18}/></button>}</div><div className="search-results"><h3>Explore Chat-X</h3>{[['Messages','chats'],['Communities','communities'],['Trading','trading'],['Marketplace','marketplace'],['Profile','profile']].filter(x=>x[0].toLowerCase().includes(q.toLowerCase())).map(([name,id])=><button key={id} onClick={()=>{navigate(id);onClose()}}>{name}<ChevronRight size={18}/></button>)}</div></div>}
-function BottomNav({active,navigate,create}) {
+function BottomNav({active,navigate,create,chatMenuOpen,setChatMenuOpen}) {
  const tabs=[
   {id:'home',label:'Home',icon:Home},
   {id:'communities',label:'Communities',icon:Users},
@@ -124,9 +181,13 @@ function BottomNav({active,navigate,create}) {
  ]
  const unread=people.reduce((sum,person)=>sum+(person.unread||0),0)
  return <div className="glass-nav-dock">
+  {chatMenuOpen&&<div className="chat-glass-chooser" role="menu" aria-label="Choose chats or trading">
+   <button role="menuitem" onClick={()=>navigate('chats')}><span className="chooser-icon"><MessageCircle size={25}/></span><span><b>Chats</b><small>Messages and conversations</small></span><ChevronRight size={17}/></button>
+   <button role="menuitem" onClick={()=>navigate('trader-landing')}><span className="chooser-icon trader"><TrendingUp size={25}/></span><span><b>Trading</b><small>Markets and broker connections</small></span><ChevronRight size={17}/></button>
+  </div>}
   <button className="glass-compose" type="button" onClick={create} aria-label="Create a post or message"><Plus size={22}/><span>Create</span></button>
   <nav className="bottom-nav glass-bottom-nav" aria-label="Main navigation">
-   {tabs.map(({id,label,icon:Icon})=><button type="button" key={id} aria-current={active===id?'page':undefined} className={'glass-tab'+(active===id?' active':'')} onClick={()=>navigate(id)}>
+   {tabs.map(({id,label,icon:Icon})=><button type="button" key={id} aria-current={active===id?'page':undefined} className={'glass-tab'+((active===id||(id==='chats'&&active==='trader-landing')?' active':'')} onClick={()=>id==='chats'?setChatMenuOpen(!chatMenuOpen):navigate(id)} aria-expanded={id==='chats'?chatMenuOpen:undefined} aria-haspopup={id==='chats'?'menu':undefined}>
     <span className="glass-tab-icon"><Icon size={23} strokeWidth={active===id?2.5:2}/>{id==='chats'&&unread>0&&<span className="glass-badge" aria-label={unread+' unread messages'}>{unread>99?'99+':unread}</span>}</span>
     <span className="glass-tab-label">{label}</span>
    </button>)}
@@ -135,13 +196,14 @@ function BottomNav({active,navigate,create}) {
 }
 export default function App() {
  const [stage,setStage]=useState(()=>sessionStorage.getItem('chatx_seen')?'app':'welcome')
- const [page,setPage]=useState('home'),[menu,setMenu]=useState(false),[create,setCreate]=useState(false),[toast,setToast]=useState(''),[search,setSearch]=useState(false)
+ const [page,setPage]=useState('home'),[chatMenuOpen,setChatMenuOpen]=useState(false),[menu,setMenu]=useState(false),[create,setCreate]=useState(false),[toast,setToast]=useState(''),[search,setSearch]=useState(false)
  useEffect(()=>{if(!toast)return;const timeout=setTimeout(()=>setToast(''),3200);return ()=>clearTimeout(timeout)},[toast])
  const notify=text=>setToast(text)
- const navigate=p=>{setPage(p);setMenu(false);window.scrollTo({top:0,behavior:'instant'})}
+ const navigate=p=>{setPage(p);setMenu(false);setChatMenuOpen(false);window.scrollTo({top:0,behavior:'instant'})}
+ useEffect(()=>{if(!chatMenuOpen)return;const close=e=>{if(e.key==='Escape')setChatMenuOpen(false)};window.addEventListener('keydown',close);return ()=>window.removeEventListener('keydown',close)},[chatMenuOpen])
  const enter=()=>{sessionStorage.setItem('chatx_seen','1');setStage('app');navigate('home')}
  if(stage==='welcome')return <div className="entry-wrap"><Welcome next={()=>setStage('auth')}/></div>
  if(stage==='auth')return <div className="entry-wrap"><SignIn onEnter={enter}/></div>
- const pages={home:<Feed navigate={p=>p==='search'?setSearch(true):navigate(p)} notify={notify}/>,feed:<FeedPage navigate={p=>p==='search'?setSearch(true):navigate(p)} notify={notify}/>,chats:<Chats notify={notify}/>,communities:<Communities notify={notify}/>,profile:<Profile notify={notify}/>,trading:<Trading notify={notify}/>,marketplace:<Marketplace notify={notify}/>,notifications:<Notifications/>,settings:<SettingsPage notify={notify} navigate={navigate} onLogout={()=>{sessionStorage.removeItem('chatx_seen');setStage('auth')}}/>,about:<AboutPage navigate={navigate}/>,explore:<Explore navigate={navigate}/>}
- return <div className="site-shell"><aside className={'desktop-rail '+(menu?'menu-open':'')}><Brand/><p className="rail-heading">DISCOVER</p>{[['home',Home,'Home'],['chats',MessageCircle,'Messages'],['communities',Users,'Communities'],['trading',TrendingUp,'Trading'],['marketplace',ShoppingBag,'Marketplace'],['notifications',Bell,'Notifications'],['profile',UserRound,'Profile'],['settings',Settings,'Settings']].map(([id,Icon,label])=><button key={id} onClick={()=>navigate(id)} className={page===id?'active':''}><Icon size={19}/>{label}</button>)}<div className="rail-foot">Connect. Share. Inspire.</div></aside><div className="app-wrap"><div className="desktop-bar"><Brand/><span>YOUR WORLD. OUR COMMUNITY.</span><button className="icon-btn" onClick={()=>setMenu(!menu)} aria-label="Open navigation"><Menu size={20}/></button></div><main className="app-screen" key={page}>{pages[page]||pages.home}</main><BottomNav active={page} navigate={navigate} create={()=>setCreate(true)}/></div>{create&&<div className="modal-shade" onClick={()=>setCreate(false)}><section className="create-panel" onClick={e=>e.stopPropagation()}><div><h2>Create something new</h2><button onClick={()=>setCreate(false)} aria-label="Close"><X size={22}/></button></div>{[[ImageIcon,'Create a post','home'],[Users,'Explore communities','communities'],[MessageCircle,'New message','chats'],[TrendingUp,'Explore trading','trading']].map(([Icon,label,id])=><button key={id} onClick={()=>{setCreate(false);navigate(id)}}><Icon size={21}/>{label}<ChevronRight size={18}/></button>)}</section></div>}{search&&<GlobalSearch navigate={navigate} onClose={()=>setSearch(false)}/ >}{toast&&<div className="toast" role="status"><Check size={15}/>{toast}</div>}</div>
+ const pages={home:<Feed navigate={p=>p==='search'?setSearch(true):navigate(p)} notify={notify}/>,feed:<FeedPage navigate={p=>p==='search'?setSearch(true):navigate(p)} notify={notify}/>,chats:<Chats notify={notify}/>,communities:<Communities notify={notify}/>,profile:<Profile notify={notify}/>,trader-landing:<TraderLanding navigate={navigate}/>,trading:<Trading notify={notify}/>,marketplace:<Marketplace notify={notify}/>,notifications:<Notifications/>,settings:<SettingsPage notify={notify} navigate={navigate} onLogout={()=>{sessionStorage.removeItem('chatx_seen');setStage('auth')}}/>,about:<AboutPage navigate={navigate}/>,explore:<Explore navigate={navigate}/>}
+ return <div className="site-shell"><aside className={'desktop-rail '+(menu?'menu-open':'')}><Brand/><p className="rail-heading">DISCOVER</p>{[['home',Home,'Home'],['chats',MessageCircle,'Messages'],['communities',Users,'Communities'],['trading',TrendingUp,'Trading'],['marketplace',ShoppingBag,'Marketplace'],['notifications',Bell,'Notifications'],['profile',UserRound,'Profile'],['settings',Settings,'Settings']].map(([id,Icon,label])=><button key={id} onClick={()=>navigate(id)} className={page===id?'active':''}><Icon size={19}/>{label}</button>)}<div className="rail-foot">Connect. Share. Inspire.</div></aside><div className="app-wrap"><div className="desktop-bar"><Brand/><span>YOUR WORLD. OUR COMMUNITY.</span><button className="icon-btn" onClick={()=>setMenu(!menu)} aria-label="Open navigation"><Menu size={20}/></button></div><main className="app-screen" key={page}>{pages[page]||pages.home}</main>{chatMenuOpen&&<button className="chat-chooser-dismiss" aria-label="Close Chats choices" onClick={()=>setChatMenuOpen(false)}/>}<BottomNav active={page} navigate={navigate} create={()=>{setChatMenuOpen(false);setCreate(true)}} chatMenuOpen={chatMenuOpen} setChatMenuOpen={setChatMenuOpen}/></div>{create&&<div className="modal-shade" onClick={()=>setCreate(false)}><section className="create-panel" onClick={e=>e.stopPropagation()}><div><h2>Create something new</h2><button onClick={()=>setCreate(false)} aria-label="Close"><X size={22}/></button></div>{[[ImageIcon,'Create a post','home'],[Users,'Explore communities','communities'],[MessageCircle,'New message','chats'],[TrendingUp,'Explore trading','trading']].map(([Icon,label,id])=><button key={id} onClick={()=>{setCreate(false);navigate(id)}}><Icon size={21}/>{label}<ChevronRight size={18}/></button>)}</section></div>}{search&&<GlobalSearch navigate={navigate} onClose={()=>setSearch(false)}/ >}{toast&&<div className="toast" role="status"><Check size={15}/>{toast}</div>}</div>
 }
