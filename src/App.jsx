@@ -1,5 +1,5 @@
 import { useEffect, useMemo, useState } from 'react'
-import { referencePortrait, referenceCity, referenceJenny, referenceSarah, referenceDavid, referenceQueen } from './designAssets.js'
+import { referencePortrait, referenceCity, referenceJenny, referenceSarah, referenceDavid, referenceQueen, referencePhone, referenceMac, referenceHeadphones, referenceWatch } from './designAssets.js'
 import {
   Home, Users, MessageCircle, UserRound, Plus, Search, Bell, Settings, X,
   Heart, MessageSquare, Share2, MoreHorizontal, Image as ImageIcon, Camera,
@@ -41,10 +41,10 @@ const groups = [
   {name:'Crypto Traders', about:'Learn and trade together', count:'27.4K', emoji:'₿', tone:'gold'}
 ]
 const products = [
-  {name:'iPhone 16 Pro', price:'$999', category:'Phones', image:'https://images.unsplash.com/photo-1695048133142-1a20484d2569?w=450&h=450&fit=crop', rating:'4.8'},
-  {name:'MacBook Air', price:'$1,199', category:'Laptops', image:'https://images.unsplash.com/photo-1517336714731-489689fd1ca8?w=450&h=450&fit=crop', rating:'4.9'},
-  {name:'Studio Headphones', price:'$299', category:'Accessories', image:'https://images.unsplash.com/photo-1505740420928-5e560c06d30e?w=450&h=450&fit=crop', rating:'4.7'},
-  {name:'Smart Watch', price:'$799', category:'Accessories', image:'https://images.unsplash.com/photo-1523275335684-37898b6baf30?w=450&h=450&fit=crop', rating:'4.8'}
+  {name:'iPhone 16 Pro', price:'$999', category:'Phones', image:referencePhone, rating:'4.8'},
+  {name:'MacBook Air', price:'$1,199', category:'Laptops', image:referenceMac, rating:'4.9'},
+  {name:'Studio Headphones', price:'$299', category:'Accessories', image:referenceHeadphones, rating:'4.7'},
+  {name:'Smart Watch', price:'$799', category:'Accessories', image:referenceWatch, rating:'4.8'}
 ]
 function Brand({large=false}) { return <div className={'brand '+(large?'brand-large':'')}><span className="brand-symbol" aria-label="CX logo"><svg viewBox="0 0 190 130" aria-hidden="true"><defs><linearGradient id="chromeLogo" x1="0" y1="0" x2="0.93" y2="1"><stop stopColor="#f0f9ff"/><stop offset=".28" stopColor="#80cdff"/><stop offset=".57" stopColor="#126fe5"/><stop offset=".78" stopColor="#c5d0e4"/><stop offset="1" stopColor="#0673fa"/></linearGradient><linearGradient id="chromeX" x1="0" y1="0" x2="1" y2="1"><stop stopColor="#e7f7ff"/><stop offset=".45" stopColor="#83bafb"/><stop offset=".7" stopColor="#0e66db"/><stop offset="1" stopColor="#cdd8ed"/></linearGradient></defs><ellipse cx="93" cy="70" rx="98" ry="20" transform="rotate(-25 93 70)" fill="none" stroke="#0a82fa" strokeWidth="6"/><path d="M100 22C70 18 38 39 31 68c-9 31 16 49 44 43l14-18C67 99 51 89 55 72c4-19 21-33 41-33h23Z" fill="url(#chromeLogo)" stroke="#7fd8ff" strokeWidth="1.5"/><path d="M106 25h35l-31 34 36 49h-35L92 81l-25 27H35l41-47-17-23h32l8 12Z" fill="url(#chromeX)" stroke="#80b5f3" strokeWidth="1"/><path d="M102 68 170 16l-44 68-13-5Z" fill="#edf6ff" opacity=".8"/></svg></span>{!large&&<span className="brand-word">Chat-<em>X</em></span>}</div> }
 function Avatar({id='gideon',name='',size='md',badge=false}) { return <span className={'avatar avatar-'+size+(badge?' has-badge':'')+(id==='group'||id==='family'||id==='signals'||id==='friends'?' group-avatar':'')}>{id==='group'?<Users size={size==='lg'?26:22} fill="currentColor"/>:id==='signals'?<TrendingUp size={22}/>:<img src={faces[id]||faces.gideon} alt={name||'Profile'} onError={e=>{e.currentTarget.style.display='none'}} />}{badge&&<span className="verified"><Check size={10} strokeWidth={4}/></span>}</span> }
