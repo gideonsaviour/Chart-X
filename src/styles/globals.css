@@ -3,3 +3,9 @@
 @media(min-width:1100px){.site-shell{gap:60px}.app-wrap{width:480px}.desktop-rail{width:250px}.app-screen{min-height:780px}.post-photo{height:235px}}
 @media(max-width:760px){.site-shell{padding:0;background:#020917}.desktop-rail{display:none}.app-wrap{width:100%;max-width:520px;border-radius:0;border:0;box-shadow:none;min-height:100vh;margin:auto}.app-screen{min-height:calc(100vh - 78px)}.bottom-nav{position:fixed;max-width:520px;margin:auto;height:calc(70px + env(safe-area-inset-bottom));padding-bottom:calc(6px + env(safe-area-inset-bottom))}.post-photo{height:clamp(190px,54vw,250px)}.entry-wrap{padding:0}.welcome-screen,.auth-shell{min-height:100vh;min-height:100dvh;border:0;border-radius:0;width:100%;max-width:520px}}
 @media(max-width:375px){.tab-button{min-width:51px}.tab-button span{font-size:9px}.nav-create{height:49px;width:49px}.profile-body h1{font-size:21px}.community-row{gap:7px}.community-row .mini{padding:8px 10px}.auth-inner{padding-left:22px;padding-right:22px}}
+
+/* Keep the experience faithful to the approved mobile-first reference on desktop too. */
+.desktop-rail{display:none!important}
+.site-shell{justify-content:center;gap:0;padding:28px 16px 44px;background:radial-gradient(ellipse at 50% 25%,#0b2a5f 0%,#05142f 35%,#020917 75%)}
+.app-wrap{width:min(100%,480px)}
+@media(max-width:760px){.site-shell{padding:0}.app-wrap{width:100%}}
