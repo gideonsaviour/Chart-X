@@ -1,4 +1,5 @@
 import { useEffect, useMemo, useState } from 'react'
+import { referencePortrait } from './designAssets.js'
 import {
   Home, Users, MessageCircle, UserRound, Plus, Search, Bell, Settings, X,
   Heart, MessageSquare, Share2, MoreHorizontal, Image as ImageIcon, Camera,
@@ -11,7 +12,7 @@ import {
 } from 'lucide-react'
 
 const faces = {
-  gideon: 'https://images.unsplash.com/photo-1500648767791-00dcc994a43e?w=400&h=400&fit=crop&crop=faces',
+  gideon: referencePortrait,
   sarah: 'https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=240&h=240&fit=crop&crop=faces',
   jenny: 'https://images.unsplash.com/photo-1524504388940-b1c1722653e1?w=240&h=240&fit=crop&crop=faces',
   david: 'https://images.unsplash.com/photo-1506794778202-cad84cf45f1d?w=240&h=240&fit=crop&crop=faces',
