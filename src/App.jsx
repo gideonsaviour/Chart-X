@@ -114,7 +114,25 @@ function SettingsPage({notify,onLogout,navigate}) {const [dark,setDark]=useState
 function Explore({navigate}) {return <><PageTop title="Explore" right={<Compass size={20}/>}/><p className="screen-intro">Your world. Your community.</p><div className="explore-grid">{[['Communities',Users,'communities'],['Messages',MessageCircle,'chats'],['Trading',TrendingUp,'trading'],['Marketplace',ShoppingBag,'marketplace'],['Notifications',Bell,'notifications'],['Settings',Settings,'settings']].map(([name,Icon,id])=><button onClick={()=>navigate(id)} key={id}><Icon size={29}/><b>{name}</b><ChevronRight size={15}/></button>)}</div></>}
 function AboutPage({navigate}) {return <div className="about-page"><div className="about-orbit"/><button className="about-back icon-btn" onClick={()=>navigate('settings')} aria-label="Back"><ArrowLeft size={21}/></button><Brand large/><h1>Chat-<span>X</span></h1><h3>Connect. Share. Inspire.</h3><ul>{['Chat & Make Friends','Join Communities','Copy Trading','Trade & Earn','Share Your World','Marketplace','Notifications','Dark Mode & More...'].map(t=><li key={t}><span><Check size={13} strokeWidth={3}/></span>{t}</li>)}</ul><div className="about-footer">Your World.<br/>Our Community.</div></div>}
 function GlobalSearch({navigate,onClose}) {const [q,setQ]=useState('');return <div className="search-overlay"><button className="search-dismiss" aria-label="Close search" onClick={onClose}><X size={24}/></button><div className="search-dialog"><Search size={22}/><input autoFocus placeholder="Search Chat-X…" value={q} onChange={e=>setQ(e.target.value)}/>{q&&<button onClick={()=>setQ('')}><X size={18}/></button>}</div><div className="search-results"><h3>Explore Chat-X</h3>{[['Messages','chats'],['Communities','communities'],['Trading','trading'],['Marketplace','marketplace'],['Profile','profile']].filter(x=>x[0].toLowerCase().includes(q.toLowerCase())).map(([name,id])=><button key={id} onClick={()=>{navigate(id);onClose()}}>{name}<ChevronRight size={18}/></button>)}</div></div>}
-function BottomNav({active,navigate,create}) {return <nav className="bottom-nav" aria-label="Main navigation"><TabButton active={active==='home'} onClick={()=>navigate('home')} icon={Home}>Home</TabButton><TabButton active={active==='communities'} onClick={()=>navigate('communities')} icon={Users}>Communities</TabButton><button className="nav-create" onClick={create} aria-label="Create"><Plus size={28}/></button><TabButton active={active==='feed'} onClick={()=>navigate('feed')} icon={MessageSquare}>Feed</TabButton><TabButton active={active==='profile'} onClick={()=>navigate('profile')} icon={UserRound}>Profile</TabButton></nav>}
+function BottomNav({active,navigate,create}) {
+ const tabs=[
+  {id:'home',label:'Home',icon:Home},
+  {id:'communities',label:'Communities',icon:Users},
+  {id:'feed',label:'Feed',icon:MessageSquare},
+  {id:'chats',label:'Chats',icon:MessageCircle},
+  {id:'profile',label:'You',icon:UserRound}
+ ]
+ const unread=people.reduce((sum,person)=>sum+(person.unread||0),0)
+ return <div className="glass-nav-dock">
+  <button className="glass-compose" type="button" onClick={create} aria-label="Create a post or message"><Plus size={22}/><span>Create</span></button>
+  <nav className="bottom-nav glass-bottom-nav" aria-label="Main navigation">
+   {tabs.map(({id,label,icon:Icon})=><button type="button" key={id} aria-current={active===id?'page':undefined} className={'glass-tab'+(active===id?' active':'')} onClick={()=>navigate(id)}>
+    <span className="glass-tab-icon"><Icon size={23} strokeWidth={active===id?2.5:2}/>{id==='chats'&&unread>0&&<span className="glass-badge" aria-label={unread+' unread messages'}>{unread>99?'99+':unread}</span>}</span>
+    <span className="glass-tab-label">{label}</span>
+   </button>)}
+  </nav>
+ </div>
+}
 export default function App() {
  const [stage,setStage]=useState(()=>sessionStorage.getItem('chatx_seen')?'app':'welcome')
  const [page,setPage]=useState('home'),[menu,setMenu]=useState(false),[create,setCreate]=useState(false),[toast,setToast]=useState(''),[search,setSearch]=useState(false)
