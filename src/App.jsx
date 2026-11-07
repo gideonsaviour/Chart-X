@@ -181,13 +181,13 @@ function BottomNav({active,navigate,create,chatMenuOpen,setChatMenuOpen}) {
  ]
  const unread=people.reduce((sum,person)=>sum+(person.unread||0),0)
  return <div className="glass-nav-dock">
-  {chatMenuOpen&&<div className="chat-glass-chooser" role="menu" aria-label="Choose chats or trading">
-   <button role="menuitem" onClick={()=>navigate('chats')}><span className="chooser-icon"><MessageCircle size={25}/></span><span><b>Chats</b><small>Messages and conversations</small></span><ChevronRight size={17}/></button>
-   <button role="menuitem" onClick={()=>navigate('trader-landing')}><span className="chooser-icon trader"><TrendingUp size={25}/></span><span><b>Trading</b><small>Markets and broker connections</small></span><ChevronRight size={17}/></button>
+  {chatMenuOpen&&<div className="chat-glass-chooser" role="group" aria-label="Chats or Trading">
+   <button type="button" className="chat-choice-orb" onClick={()=>navigate('chats')} aria-label="Open Chats" title="Chats"><MessageCircle size={28} strokeWidth={2.2}/></button>
+   <button type="button" className="chat-choice-orb trading-orb" onClick={()=>navigate('trader-landing')} aria-label="Open Trading" title="Trading"><TrendingUp size={28} strokeWidth={2.2}/></button>
   </div>}
   <button className="glass-compose" type="button" onClick={create} aria-label="Create a post or message"><Plus size={22}/><span>Create</span></button>
   <nav className="bottom-nav glass-bottom-nav" aria-label="Main navigation">
-   {tabs.map(({id,label,icon:Icon})=><button type="button" key={id} aria-current={active===id?'page':undefined} className={'glass-tab'+((active===id||(id==='chats'&&active==='trader-landing'))?' active':'')} onClick={()=>id==='chats'?setChatMenuOpen(!chatMenuOpen):navigate(id)} aria-expanded={id==='chats'?chatMenuOpen:undefined} aria-haspopup={id==='chats'?'menu':undefined}>
+   {tabs.map(({id,label,icon:Icon})=><button type="button" key={id} aria-current={active===id?'page':undefined} className={'glass-tab'+((active===id||(id==='chats'&&active==='trader-landing'))?' active':'')} onClick={()=>id==='chats'?setChatMenuOpen(!chatMenuOpen):navigate(id)} aria-expanded={id==='chats'?chatMenuOpen:undefined} aria-haspopup={id==='chats'?'true':undefined}>
     <span className="glass-tab-icon"><Icon size={23} strokeWidth={active===id?2.5:2}/>{id==='chats'&&unread>0&&<span className="glass-badge" aria-label={unread+' unread messages'}>{unread>99?'99+':unread}</span>}</span>
     <span className="glass-tab-label">{label}</span>
    </button>)}
