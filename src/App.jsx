@@ -187,7 +187,7 @@ function BottomNav({active,navigate,create,chatMenuOpen,setChatMenuOpen}) {
   </div>}
   <button className="glass-compose" type="button" onClick={create} aria-label="Create a post or message"><Plus size={22}/><span>Create</span></button>
   <nav className="bottom-nav glass-bottom-nav" aria-label="Main navigation">
-   {tabs.map(({id,label,icon:Icon})=><button type="button" key={id} aria-current={active===id?'page':undefined} className={'glass-tab'+((active===id||(id==='chats'&&active==='trader-landing')?' active':'')} onClick={()=>id==='chats'?setChatMenuOpen(!chatMenuOpen):navigate(id)} aria-expanded={id==='chats'?chatMenuOpen:undefined} aria-haspopup={id==='chats'?'menu':undefined}>
+   {tabs.map(({id,label,icon:Icon})=><button type="button" key={id} aria-current={active===id?'page':undefined} className={'glass-tab'+((active===id||(id==='chats'&&active==='trader-landing'))?' active':'')} onClick={()=>id==='chats'?setChatMenuOpen(!chatMenuOpen):navigate(id)} aria-expanded={id==='chats'?chatMenuOpen:undefined} aria-haspopup={id==='chats'?'menu':undefined}>
     <span className="glass-tab-icon"><Icon size={23} strokeWidth={active===id?2.5:2}/>{id==='chats'&&unread>0&&<span className="glass-badge" aria-label={unread+' unread messages'}>{unread>99?'99+':unread}</span>}</span>
     <span className="glass-tab-label">{label}</span>
    </button>)}
