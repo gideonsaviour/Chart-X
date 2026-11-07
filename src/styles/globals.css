@@ -9,3 +9,53 @@
 .site-shell{justify-content:center;gap:0;padding:28px 16px 44px;background:radial-gradient(ellipse at 50% 25%,#0b2a5f 0%,#05142f 35%,#020917 75%)}
 .app-wrap{width:min(100%,480px)}
 @media(max-width:760px){.site-shell{padding:0}.app-wrap{width:100%}}
+
+/* Screenshot-faithful polish: chrome CX logo, iOS-style status bar, vivid luminous framing. */
+.brand-symbol{display:block;letter-spacing:normal;transform:none;filter:drop-shadow(0 0 7px #078dff);line-height:1}
+.brand-symbol svg{display:block;width:48px;height:35px;overflow:visible}
+.brand-large .brand-symbol{font-size:initial;letter-spacing:normal;margin:0;filter:drop-shadow(0 0 16px #0b9dff)}
+.brand-large .brand-symbol svg{width:205px;height:141px;filter:drop-shadow(0 8px 16px #0008)}
+.auth-inner .brand-large .brand-symbol{font-size:initial;margin:0;letter-spacing:normal}
+.auth-inner .brand-large .brand-symbol svg{width:159px;height:114px}
+.welcome-content h1{margin-top:-6px}
+.auth-inner>h1{margin-top:-10px}
+.status-bar{height:25px;padding:7px 23px 0;display:flex;justify-content:space-between;align-items:center;color:#f5faff;font-size:12px;font-weight:800;letter-spacing:-.4px}
+.status-bar span{letter-spacing:2px;font-size:10px}
+.screen-top{height:62px;border-bottom:1px solid #163b6c55;padding:0 17px}
+.screen-top>strong{font-size:22px}
+.screen-top .brand-word{font-size:21px}
+.screen-top .brand-symbol svg{width:41px;height:30px}
+.screen-top .brand{gap:3px}
+.screen-top-right{gap:4px}
+.mini-profile{background:none;border:0;padding:0;margin-left:4px;display:grid;place-items:center}
+.mini-profile .avatar{border-color:#4d92c6}
+.avatar.group-avatar{background:linear-gradient(155deg,#48c6ff,#075beb 68%,#052765);color:white;border-color:#159fff}
+.app-wrap{width:min(100%,408px);min-height:858px;box-shadow:inset 0 0 0 2px #0f3b70,0 15px 70px #000a,0 0 27px #047dff54;border:1.5px solid #85bdf8;border-radius:31px}
+.app-screen{min-height:775px;padding-bottom:82px}
+.bottom-nav{height:72px;background:#030c1eec;border-top:1px solid #25558b}
+.nav-create{height:57px;width:57px;margin-top:-25px;box-shadow:0 0 18px #0385f5a9, inset 0 0 0 3px #0464cf}
+.tab-button.active{color:#30bdff}
+.feed-column{padding:0 10px}
+.post-card{padding:10px 10px 0}
+.post-photo{height:198px}
+.stories{padding-bottom:8px}
+.stories small{font-size:10px}
+.balance-card{background:radial-gradient(circle at 77% 75%,#0c5b88 0,#071e40 45%,#06132e 85%);border-color:#27659d}
+.profile-hero{height:241px;background:radial-gradient(ellipse at 51% 62%,#125bb1 0,#061a43 58%,#020b20)}
+.profile-orb{border-width:9px;box-shadow:0 0 25px #0395ff,inset 0 0 28px #0d80fb}
+.profile-portrait .avatar-hero{width:149px;height:149px;box-shadow:0 0 0 9px #0c3275,0 0 27px #129aff}
+.profile-body{padding-top:40px}
+.community-row{padding:11px 9px;margin-bottom:8px}
+.community-icon{width:52px;height:52px}
+.product-card{border-radius:13px}
+.product-card>img{height:146px}
+.notification-row{margin-bottom:5px;padding:12px 13px}
+.settings-profile{margin-top:7px}
+.settings-list h3{margin-top:14px}
+.setting-item{padding:14px 5px}
+.welcome-screen:before{content:"";position:absolute;z-index:-1;left:-25%;bottom:-33%;width:150%;height:59%;border:5px solid #168bff99;border-radius:50%;transform:rotate(-12deg);box-shadow:0 0 35px #0077ff, inset 0 0 35px #149fffa0}
+.welcome-screen:after{content:"";position:absolute;z-index:-1;left:-18%;bottom:-33%;width:145%;height:50%;border:2px solid #0a84f7;border-radius:50%;transform:rotate(-9deg);box-shadow:0 0 30px #0b8eff}
+.welcome-content{padding-top:26%}
+.welcome-content p{margin-top:41px}
+.welcome-next{bottom:55px}
+@media(max-width:760px){.app-wrap{max-width:520px;width:100%;border:0;border-radius:0;min-height:100vh;box-shadow:none}.app-screen{min-height:calc(100vh - 80px)}.post-photo{height:clamp(184px,51vw,258px)}.bottom-nav{height:calc(68px + env(safe-area-inset-bottom));padding-bottom:calc(5px + env(safe-area-inset-bottom))}.status-bar{padding-top:max(7px,env(safe-area-inset-top))}}
