@@ -32,7 +32,7 @@ const people = [
   {id:'friends', name:'Friends Forever', text:'Let’s hang out! 😊', time:'Mon', unread:0, group:true}
 ]
 const initialPosts = [
-  {id:1, name:'Jenny Bright', avatar:'jenny', time:'2h ago', text:'Good vibes only! 💙\\nLet’s keep pushing forward together.', picture:true, likes:1200, comments:245, shares:128}
+  {id:1, name:'Jenny Bright', avatar:'jenny', time:'2h ago', text:'Good vibes only! 💙\nLet’s keep pushing forward together.', picture:true, likes:1200, comments:245, shares:128}
 ]
 const groups = [
   {name:'Chat-X Tech Hub', about:'Discuss tech, AI and the future', count:'24.5K', emoji:'⌘', tone:'blue'},
