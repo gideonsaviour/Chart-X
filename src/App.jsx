@@ -10,7 +10,7 @@ import {
   ShoppingCart, Star, ShieldCheck, Lock, Globe2, Moon, Sun, LogOut, Bookmark,
   Music2, Trophy, Bitcoin, Laptop, Headphones, Watch, Sparkles, ArrowLeft,
   Check, CirclePlus, UserPlus, Mail, Smartphone, Eye, EyeOff, Menu, Compass,
-  Zap, Copy, Edit3, MessageCircleMore, Shield, HelpCircle, ExternalLink
+  Zap, Copy, Edit3, MessageCircleMore, Shield, HelpCircle, ExternalLink, MapPin, LayoutDashboard, ChevronDown
 } from 'lucide-react'
 
 const faces = {
@@ -330,14 +330,15 @@ function Chats({notify,navigate}) {
  return <><div className={'messages-main '+(selected?'show-conversation':'')}><section className="messages-list"><PageTop title="Chats" right={<button className="icon-btn" onClick={()=>notify('Choose a conversation to chat')} aria-label="New message"><Edit3 size={19}/></button>}/><div className="search-pill"><Search size={18}/><input value={query} onChange={e=>setQuery(e.target.value)} placeholder="Search chats..."/></div><div className="filter-pills">{['All','Groups','Unread'].map(f=><button key={f} className={filter===f?'selected':''} onClick={()=>setFilter(f)}>{f}{f==='All'?' (12)':f==='Groups'?' (5)':' (2)'}</button>)}</div><div className="chat-items">{visible.map(p=><button className={'chat-item '+(selected?.id===p.id?'active':'')} key={p.id} onClick={()=>setSelected(p)}><Avatar id={p.id} size="md"/><span><b>{p.name}</b><small className={p.text==='Typing...'?'typing':''}>{p.text}</small></span><aside><small>{p.time}</small>{p.unread>0&&<em>{p.unread}</em>}</aside></button>)}</div></section><section className="conversation">{selected?<><div className="conversation-header"><button className="icon-btn" onClick={()=>setSelected(null)} aria-label="Back to messages"><ArrowLeft size={20}/></button><button type="button" className="cx-chat-user" onClick={()=>navigate(selected.group?'community/'+(selected.id==='family'?'friends':'tech'):'profile/'+(['jenny','david','silver'].includes(selected.id)?selected.id:'me'))} aria-label="Open chat participant profile"><Avatar id={selected.id} size="sm"/><div><b>{selected.name}</b><small>{selected.online?'Online now':'Chat-X preview'}</small></div></button><button className="icon-btn" onClick={()=>notify('Calls require real-time backend integration')} aria-label="Call"><Phone size={19}/></button><button className="icon-btn" onClick={()=>notify('Video calls require real-time backend integration')} aria-label="Video call"><Video size={19}/></button></div><div className="conversation-body"><div className="secure-note"><Lock size={13}/> Demo conversation</div><span className="bubble inbound">Hey! How's everything going?<small>9:02</small></span><span className="bubble outbound">Great! Building something new with Chat-X. 💙<small>9:04 <CheckCheck size={12}/></small></span><span className="bubble inbound">Can't wait to see it!<small>9:05</small></span>{(sent[selected.id]||[]).map((m,i)=><span className="bubble outbound" key={i}>{m}<small>Now <CheckCheck size={12}/></small></span>)}</div><form className="send-form" onSubmit={e=>{e.preventDefault();send()}}><button type="button" onClick={()=>notify('Attachments need storage integration')}><Paperclip size={19}/></button><input value={message} onChange={e=>setMessage(e.target.value)} placeholder="Type a message..."/><button type="submit" className="send-icon"><Send size={18}/></button></form></>:<div className="conversation-empty"><MessageCircleMore size={48}/><h3>Your conversations</h3><p>Choose a chat to view messages.</p></div>}</section></div></>
 }
 function Profile({notify,navigate}) {
- const [tab,setTab]=useState('Posts')
+ const [tab,setTab]=useState('All')
+ const [moreOpen,setMoreOpen]=useState(false)
  const [editing,setEditing]=useState(false)
  const [expanded,setExpanded]=useState(false)
  const [showMenu,setShowMenu]=useState(false)
  const [editingThought,setEditingThought]=useState(false)
  const [thoughtDraft,setThoughtDraft]=useState('')
  const [profile,setProfile]=useState(()=>{
-  try{return {...{name:'Silver Sonik',handle:'@silver_sonik',role:'Artist',bio:'Connect. Share. Inspire.',thought:'Thinking about…'},...JSON.parse(localStorage.getItem('chatx_demo_profile')||'{}')}}catch{return {name:'Silver Sonik',handle:'@silver_sonik',role:'Artist',bio:'Connect. Share. Inspire.',thought:'Thinking about…'}}
+  try{return {...{name:'Silver Sonik',handle:'@silver_sonik',role:'Artist',bio:'Connect. Share. Inspire.',thought:'Thinking about…',location:'',website:''},...JSON.parse(localStorage.getItem('chatx_demo_profile')||'{}')}}catch{return {name:'Silver Sonik',handle:'@silver_sonik',role:'Artist',bio:'Connect. Share. Inspire.',thought:'Thinking about…'}}
  })
  const [draft,setDraft]=useState(profile)
  const cover=useCoverPhoto()
@@ -375,14 +376,40 @@ function Profile({notify,navigate}) {
     <button className="cx-artist-expand" aria-label={expanded?'Collapse profile details':'Expand profile details'} aria-expanded={expanded} onClick={()=>setExpanded(v=>!v)}><ChevronRight className={expanded?'open':''} size={23}/></button>
     <p>{profile.role||'Artist'}</p>
    </div>
+   <p className="cx-artist-handle">{profile.handle}</p>
+   <div className="cx-artist-stats">
+    <button type="button" onClick={()=>navigate('requests')}><b>—</b><small>Followers · Demo</small></button>
+    <button type="button" onClick={()=>navigate('requests')}><b>—</b><small>Following · Demo</small></button>
+   </div>
+   <p className="cx-artist-bio">{profile.bio}</p>
    {expanded&&<div className="cx-artist-extra">
-    <p className="cx-artist-handle">{profile.handle}</p>
-    <p>{profile.bio}</p>
-    <div className="cx-artist-stats"><span><b>Demo</b><small>Profile</small></span><span><b>—</b><small>Followers</small></span><span><b>—</b><small>Following</small></span></div>
-    <div className="cx-artist-shortcuts"><button onClick={()=>{setDraft(profile);setEditing(true)}}>Edit Profile</button><button onClick={()=>navigate('privacy')}>Privacy</button></div>
+    {profile.location&&<p><MapPin size={16}/>{profile.location}</p>}
+    {profile.website&&<p><Globe2 size={16}/>{profile.website}</p>}
+    <button type="button" onClick={()=>{setDraft(profile);setEditing(true)}}>Edit profile details</button>
    </div>}
-   <div className="cx-artist-tabs">{['Posts','Photos','Friends','Likes'].map(t=><button key={t} className={tab===t?'active':''} onClick={()=>setTab(t)}>{t}</button>)}</div>
-   {tab==='Photos'?<div className="photo-grid cx-artist-gallery"><button onClick={()=>navigate('media/me')} aria-label="View profile picture"><ProfilePhoto alt="Profile"/></button><button onClick={()=>navigate('media/post-post-jenny-1')} aria-label="View sample photo"><img src={referenceCity} alt="Demo city"/></button></div>:<div className="cx-artist-tab-content">{tab==='Posts'?'Your public posts will appear here when connected. You can still create demo posts on Home.':tab==='Friends'?'Friend connections require account integration.':'Liked posts are stored locally in this demo.'}</div>}
+   <div className="cx-artist-common"><div className="cx-common-avatars"><Avatar id="sarah" size="sm"/><Avatar id="david" size="sm"/><Avatar id="queen" size="sm"/></div><span>Discover people and communities on Chat-X</span></div>
+   <div className="cx-artist-main-actions">
+    <button type="button" className="cx-artist-dashboard" onClick={()=>setTab('Dashboard')}><LayoutDashboard size={18}/>Dashboard</button>
+    <button type="button" className="cx-artist-create" onClick={()=>navigate('home')}><Plus size={22}/>Create</button>
+   </div>
+   <div className="cx-artist-tabs" role="tablist" aria-label="Profile content">
+    {['All','Reels','Photos'].map(t=><button type="button" role="tab" aria-selected={tab===t} key={t} className={tab===t?'active':''} onClick={()=>setTab(t)}>{t}</button>)}
+    <button type="button" role="tab" aria-selected={tab==='Friends'||tab==='Likes'} onClick={()=>setMoreOpen(v=>!v)}>More <ChevronDown size={14}/></button>
+   </div>
+   {moreOpen&&<div className="cx-artist-more-tabs"><button onClick={()=>{setTab('Friends');setMoreOpen(false)}}>Friends</button><button onClick={()=>{setTab('Likes');setMoreOpen(false)}}>Likes</button></div>}
+   {(tab==='All'||tab==='Dashboard')&&<div className="cx-artist-overview">
+    <div className="cx-artist-section-heading"><h2>At a glance</h2><button onClick={()=>{setDraft(profile);setEditing(true)}}>Edit</button></div>
+    <button className="cx-glance-item" onClick={()=>{setDraft(profile);setEditing(true)}}><UserRound size={19}/><span>{profile.role||'Artist'}</span></button>
+    <button className="cx-glance-item" onClick={()=>{setDraft(profile);setEditing(true)}}><MapPin size={19}/><span>{profile.location||'Add your location'}</span></button>
+    <button className="cx-glance-item" onClick={()=>{setDraft(profile);setEditing(true)}}><Globe2 size={19}/><span>{profile.website||'Add your website'}</span></button>
+    <div className="cx-artist-section-heading"><h2>Discover people</h2><button onClick={()=>navigate('discover')}>See all</button></div>
+    <div className="cx-artist-connection-row">{['sarah','david','queen'].map(id=><button key={id} onClick={()=>navigate('profile/'+id)}><Avatar id={id} size="lg"/><span>{id==='sarah'?'Sarah':id==='david'?'David':'Queen'}</span></button>)}</div>
+    <p className="cx-artist-demo-note">Sample profiles for navigation, not real friends or followers.</p>
+   </div>}
+   {tab==='Photos'&&<div className="photo-grid cx-artist-gallery"><button onClick={()=>navigate('media/me')} aria-label="View profile picture"><ProfilePhoto alt="Profile"/></button><button onClick={()=>navigate('media/post-post-jenny-1')} aria-label="View sample photo"><img src={referenceCity} alt="Demo city"/></button></div>}
+   {tab==='Reels'&&<div className="cx-artist-tab-content">Coming Soon — Video uploads will be available soon.</div>}
+   {tab==='Friends'&&<div className="cx-artist-overview">{['sarah','david','queen'].map(id=><button className="cx-glance-item" key={id} onClick={()=>navigate('profile/'+id)}><Avatar id={id} size="sm"/>{id==='sarah'?'Sarah':id==='david'?'David':'Queen'}<ChevronRight size={17}/></button>)}<p className="cx-artist-demo-note">Fictional profiles only. Actual friendships require backend setup.</p></div>}
+   {tab==='Likes'&&<div className="cx-artist-tab-content">Likes are saved locally in your demo feed.</div>}
   </section>
   {editingThought&&<div className="home-art-dialog-backdrop" onClick={()=>setEditingThought(false)}><form className="home-art-dialog cx-edit-form" onClick={e=>e.stopPropagation()} onSubmit={e=>{e.preventDefault();setProfile(p=>({...p,thought:thoughtDraft.trim()||'Thinking about…'}));setEditingThought(false);notify('Thought updated on this device')}}><div><strong>What’s on your mind?</strong><button type="button" aria-label="Close" onClick={()=>setEditingThought(false)}>×</button></div><label>Profile thought<input maxLength={50} value={thoughtDraft} onChange={e=>setThoughtDraft(e.target.value)} placeholder="Thinking about…"/></label><button className="home-art-dialog-submit" type="submit">Save</button></form></div>}
   {editing&&<div className="home-art-dialog-backdrop" onClick={()=>setEditing(false)}><form className="home-art-dialog cx-edit-form" onClick={e=>e.stopPropagation()} onSubmit={e=>{e.preventDefault();setProfile(draft);setEditing(false);notify('Profile saved on this device (demo only)')}}>
@@ -390,7 +417,7 @@ function Profile({notify,navigate}) {
    <label>Display name<input required maxLength={70} value={draft.name} onChange={e=>setDraft(v=>({...v,name:e.target.value}))}/></label>
    <label>Username<input required maxLength={50} value={draft.handle} onChange={e=>setDraft(v=>({...v,handle:e.target.value}))}/></label>
    <label>Role<input maxLength={45} value={draft.role||''} onChange={e=>setDraft(v=>({...v,role:e.target.value}))}/></label>
-   <label>Bio<textarea rows={3} maxLength={200} value={draft.bio} onChange={e=>setDraft(v=>({...v,bio:e.target.value}))}/></label>
+   <label>Bio<textarea rows={3} maxLength={200} value={draft.bio} onChange={e=>setDraft(v=>({...v,bio:e.target.value}))}/></label><label>Location (optional)<input maxLength={90} value={draft.location||''} onChange={e=>setDraft(v=>({...v,location:e.target.value}))}/></label><label>Website (optional)<input maxLength={150} value={draft.website||''} onChange={e=>setDraft(v=>({...v,website:e.target.value}))}/></label>
    <button className="home-art-dialog-submit" type="submit">Save changes</button>
   </form></div>}
  </section>
