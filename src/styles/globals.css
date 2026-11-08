@@ -754,3 +754,59 @@ body{overscroll-behavior-y:auto}
 @media(max-width:375px){
  .profile-hero .profile-portrait.cx-profile-photo-wrapper{transform:translateY(-35px)!important}
 }
+
+/* Artist profile — original user-supplied layout reference, native responsive UI. */
+.cx-artist-profile{min-height:100dvh;background:#272729;color:#f7f7f8;position:relative;padding-bottom:calc(105px + env(safe-area-inset-bottom));overflow-x:clip}
+.cx-artist-cover{
+ height:clamp(340px,54dvh,570px);width:100%;position:relative;isolation:isolate;
+ background-color:#0d0b09;
+ background-image:radial-gradient(circle at 50% 30%,#64451e9c,transparent 34%),repeating-radial-gradient(circle at 50% 100%,transparent 0 46px,#8b62271c 49px 61px,transparent 65px 83px),linear-gradient(155deg,#09090d,#261a0d 45%,#06060c 85%);
+ background-size:cover;background-position:center;overflow:visible;
+}
+.cx-artist-cover:before{content:"";pointer-events:none;position:absolute;inset:0;background:linear-gradient(180deg,#0008,#0001 35%,#0005 93%);z-index:0}
+.cx-artist-cover-brand{position:absolute;inset:12% 0 17%;display:flex;flex-direction:column;align-items:center;justify-content:center;pointer-events:none;gap:0;opacity:.7}
+.cx-artist-cover-brand span{font-family:Georgia,serif;font-weight:900;font-size:clamp(100px,30vw,245px);line-height:.92;letter-spacing:-.1em;padding-right:.1em;color:#bb8e3c;text-shadow:0 2px 0 #e1b863,0 6px 6px #000,0 0 34px #63481b}
+.cx-artist-cover-brand small{font-family:Georgia,serif;font-weight:900;letter-spacing:.18em;color:#cba257;font-size:clamp(15px,4vw,30px);text-shadow:0 2px 7px #000}
+.cx-artist-tools{position:absolute;top:calc(16px + env(safe-area-inset-top));left:12px;right:12px;display:flex;align-items:center;gap:clamp(10px,2vw,21px);z-index:5}
+.cx-artist-tools>span{flex:1}
+.cx-artist-tools button{display:grid;place-items:center;color:white;background:#1010183b;border:0;border-radius:50%;height:43px;width:43px;min-width:43px;padding:7px;filter:drop-shadow(0 3px 6px #0008)}
+.cx-artist-tools button svg{height:28px;width:28px;stroke-width:2.5}
+.cx-artist-menu{position:absolute;z-index:12;top:calc(70px + env(safe-area-inset-top));right:14px;display:grid;gap:2px;min-width:min(225px,75vw);background:#171b24ed;border:1px solid #536174;border-radius:16px;padding:9px;box-shadow:0 16px 34px #0009;backdrop-filter:blur(18px)}
+.cx-artist-menu button{display:flex;align-items:center;gap:11px;text-align:left;border:0;background:transparent;color:white;padding:12px 10px;border-radius:11px;font-size:14px}
+.cx-artist-menu button:active,.cx-artist-menu button:hover{background:#354054}
+.cx-cover-camera{position:absolute;z-index:4;right:clamp(14px,4vw,27px);bottom:19px;display:grid;place-items:center;width:50px;height:50px;border:0;border-radius:50%;background:#11192498;color:#fff;filter:drop-shadow(0 2px 7px #000b)}
+.cx-cover-camera svg{height:29px;width:29px}
+.cx-artist-portrait{position:absolute;z-index:7;bottom:-88px;left:50%;transform:translateX(-50%);width:clamp(175px,47vw,290px);aspect-ratio:1;isolation:isolate}
+.cx-artist-photo-view{border:9px solid #202225;border-radius:50%;padding:0;background:#05090f;display:block;width:100%;height:100%;overflow:hidden;box-shadow:0 0 0 3px #2a2b30}
+.cx-artist-photo-view>img{display:block;width:100%;height:100%;border-radius:50%;object-fit:cover}
+.cx-artist-portrait .cx-profile-camera{bottom:3px!important;right:3px!important;z-index:8;width:clamp(43px,12vw,62px);height:clamp(43px,12vw,62px);background:linear-gradient(160deg,#55565b,#38393e);border:4px solid #28282d}
+.cx-artist-thought{position:absolute;z-index:9;bottom:calc(100% - 10px);left:50%;transform:translateX(-50%);min-width:max-content;max-width:90vw;height:auto;min-height:48px;padding:11px 19px;background:#38383d;border:0;border-radius:22px;color:#cdd0d7;font-weight:700;font-size:clamp(13px,3.8vw,19px);box-shadow:0 4px 10px #0008;overflow:visible}
+.cx-artist-thought:after{content:"";position:absolute;bottom:-9px;left:29%;width:17px;height:17px;border-radius:5px;background:#38383d;transform:rotate(45deg)}
+.cx-thought-dot{position:absolute;width:9px;height:9px;background:#38383d;bottom:-21px;left:35%;border-radius:50%}
+.cx-artist-info{position:relative;z-index:2;background:#272729;border-radius:clamp(22px,7vw,54px) clamp(22px,7vw,54px) 0 0;margin-top:-1px;min-height:350px;padding:112px 17px 24px;text-align:center}
+.cx-artist-identity{position:relative;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:4px}
+.cx-artist-identity h1{font-size:clamp(26px,7vw,43px);font-family:Outfit,'DM Sans',sans-serif;color:#fff;font-weight:850;letter-spacing:-.03em;line-height:1.2;display:flex;align-items:center;gap:10px;max-width:calc(100% - 45px);overflow-wrap:anywhere;margin:0}
+.cx-artist-demo-badge{display:grid;place-items:center;background:#56575c;border-radius:50%;width:28px;height:28px;flex:none;color:#d5d6d8}
+.cx-artist-identity>p{font-size:clamp(14px,4vw,19px);color:#c1c1c6;letter-spacing:.015em;margin:0}
+.cx-artist-expand{position:absolute;right:1px;top:5px;width:40px;height:40px;display:grid;place-items:center;border:0;border-radius:50%;background:#424247;color:#fff}
+.cx-artist-expand svg{transform:rotate(90deg);transition:transform .2s}
+.cx-artist-expand svg.open{transform:rotate(-90deg)}
+.cx-artist-extra{max-width:520px;margin:20px auto 0;display:grid;gap:12px;font-size:13px;line-height:1.5}
+.cx-artist-handle{color:#8acafe}
+.cx-artist-stats{display:flex;justify-content:space-around;padding:14px 0;border-top:1px solid #4b4b52;border-bottom:1px solid #4b4b52}
+.cx-artist-stats span{display:grid;gap:3px}
+.cx-artist-stats b{font-size:18px}
+.cx-artist-stats small{font-size:11px;color:#b3b3bb}
+.cx-artist-shortcuts{display:flex;justify-content:center;gap:10px}
+.cx-artist-shortcuts button{border:1px solid #686d7a;border-radius:18px;background:#373c47;color:white;padding:10px 20px}
+.cx-artist-tabs{margin:27px auto 0;display:flex;border-bottom:1px solid #55565a;gap:1px;justify-content:space-around;max-width:620px}
+.cx-artist-tabs button{flex:1;border:0;border-bottom:2px solid transparent;background:transparent;color:#c4c6cf;font-size:13px;padding:12px 3px}
+.cx-artist-tabs button.active{color:#fff;border-bottom-color:#38bfff;font-weight:800}
+.cx-artist-tab-content{padding:24px 5px;color:#b9bdc7;line-height:1.6;font-size:13px;max-width:520px;margin:auto}
+.cx-artist-gallery{max-width:530px;margin:21px auto}
+.cx-artist-gallery button{border:0;background:transparent;padding:0;border-radius:13px;overflow:hidden}
+.cx-artist-gallery button img{width:100%;aspect-ratio:1;object-fit:cover}
+.cx-photo-dialog>img.cx-cover-preview{width:100%;height:auto;max-height:250px;border-radius:13px;object-fit:contain}
+@media(min-width:761px){.cx-artist-profile{max-width:100%}.cx-artist-cover{height:clamp(400px,57vh,610px)}.cx-artist-portrait{bottom:-97px}.cx-artist-info{padding-top:124px}}
+@media(max-width:375px){.cx-artist-tools{gap:4px;left:5px;right:5px}.cx-artist-tools button{width:40px;min-width:40px}.cx-artist-identity h1{font-size:26px}.cx-artist-expand{width:34px;height:34px}.cx-artist-portrait{bottom:-81px}}
+@media(prefers-reduced-motion:reduce){.cx-artist-expand svg{transition:none}}
