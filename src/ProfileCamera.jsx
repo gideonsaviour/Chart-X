@@ -75,6 +75,5 @@ export function ProfileCameraControl({notify}){
     <p>This photo will be saved on this device for your Chat-X demo. It will not be uploaded or shared.</p>
     <div><button type="button" onClick={()=>setCandidate('')}>Cancel</button><button type="button" className="cx-photo-save" onClick={commit}><Check size={18}/> Use Photo</button></div>
   </section></div>}
-  {photo&&<button type="button" className="cx-photo-reset" onClick={()=>{if(window.confirm('Restore your default demo profile photo?')){save('');notify?.('Default demo profile photo restored.')}}}>Remove custom photo</button>}
  </>
 }
