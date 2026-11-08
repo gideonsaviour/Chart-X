@@ -17,13 +17,13 @@ export const contacts = [
 
 export const groups = [
   { id: 'g1', name: 'Finite Brand Team', avatar: 'FB', members: 6, status: 'group', unread: 5, lastMessage: 'Sarah: Pushing the new designs now', lastSeen: 'now' },
-  { id: 'g2', name: 'Chat-X Dev', avatar: 'CX', members: 4, status: 'group', unread: 0, lastMessage: 'Marcus: All tests passing ✅', lastSeen: '10m ago' },
+  { id: 'g2', name: 'ChartX Dev', avatar: 'CX', members: 4, status: 'group', unread: 0, lastMessage: 'Marcus: All tests passing ✅', lastSeen: '10m ago' },
   { id: 'g3', name: 'Bitcoin Builders', avatar: 'BB', members: 12, status: 'group', unread: 2, lastMessage: 'James: Block 850,000 just mined!', lastSeen: '30m ago' },
 ]
 
 export const generateMessages = (contactId) => [
   { id: 1, senderId: contactId, text: 'Hey! How is everything going?', time: '10:00 AM', status: 'read' },
-  { id: 2, senderId: 'u1', text: 'All good! Just finishing up the Chat-X build. It\'s looking really clean.', time: '10:02 AM', status: 'read' },
+  { id: 2, senderId: 'u1', text: 'All good! Just finishing up the ChartX build. It\'s looking really clean.', time: '10:02 AM', status: 'read' },
   { id: 3, senderId: contactId, text: 'That\'s awesome. What features are you adding?', time: '10:03 AM', status: 'read' },
   { id: 4, senderId: 'u1', text: 'Real-time messaging, group chats, voice/video calls, media sharing, end-to-end encryption and online status. The works!', time: '10:05 AM', status: 'read' },
   { id: 5, senderId: contactId, text: 'End-to-end encryption? That\'s next level 🔐', time: '10:06 AM', status: 'read' },
