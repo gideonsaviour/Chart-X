@@ -335,6 +335,12 @@ function Profile({notify,navigate}) {
  const [editing,setEditing]=useState(false)
  const [expanded,setExpanded]=useState(false)
  const [showMenu,setShowMenu]=useState(false)
+ useEffect(()=>{
+  if(!showMenu)return
+  const dismiss=e=>{if(e.key==='Escape')setShowMenu(false)}
+  document.addEventListener('keydown',dismiss)
+  return()=>document.removeEventListener('keydown',dismiss)
+ },[showMenu])
  const [editingThought,setEditingThought]=useState(false)
  const [thoughtDraft,setThoughtDraft]=useState('')
  const [profile,setProfile]=useState(()=>{
@@ -356,11 +362,30 @@ function Profile({notify,navigate}) {
     <button type="button" aria-label="Profile menu" aria-expanded={showMenu} onClick={()=>setShowMenu(v=>!v)}><Menu size={27}/></button>
    </div>
   </header>
-  {showMenu&&<div className="cx-tiktok-menu">
-   <button onClick={()=>{setShowMenu(false);setDraft(profile);setEditing(true)}}><Edit3 size={17}/>Edit profile</button>
-   <button onClick={()=>{setShowMenu(false);navigate('privacy')}}><Shield size={17}/>Privacy & Security</button>
-   <button onClick={()=>{setShowMenu(false);share()}}><Share2 size={17}/>Share profile</button>
-   <button onClick={()=>{setShowMenu(false);navigate('settings')}}><Settings size={17}/>Settings</button>
+  {showMenu&&<div className="cx-drawer-layer" role="presentation">
+   <button className="cx-drawer-scrim" type="button" aria-label="Close profile menu" onClick={()=>setShowMenu(false)}/>
+   <aside className="cx-profile-drawer" role="dialog" aria-modal="true" aria-label="Chat-X profile menu">
+    <header className="cx-drawer-head"><strong>Chat-X Menu</strong><button type="button" aria-label="Close menu" onClick={()=>setShowMenu(false)}><X size={22}/></button></header>
+    <div className="cx-drawer-content">
+     <div className="cx-drawer-group"><h2>Assets</h2>
+      <button onClick={()=>{setShowMenu(false);navigate('trading')}}><Wallet size={23}/><span>Balance <small>Trading demo overview</small></span><ChevronRight size={19}/></button>
+     </div>
+     <div className="cx-drawer-group"><h2>Personal tools</h2>
+      <button onClick={()=>{setShowMenu(false);navigate('notifications')}}><History size={23}/><span>Activity center</span><ChevronRight size={19}/></button>
+      <button onClick={()=>{setShowMenu(false);notify('Coming Soon — Offline videos will be available soon.')}}><Video size={23}/><span>Offline videos</span><ChevronRight size={19}/></button>
+      <button onClick={()=>{setShowMenu(false);notify('Coming Soon — Your Chat-X QR code will be available soon.')}}><ImageIcon size={23}/><span>Your QR code</span><ChevronRight size={19}/></button>
+     </div>
+     <div className="cx-drawer-group"><h2>Creation & business tools</h2>
+      <button onClick={()=>{setShowMenu(false);navigate('marketplace')}}><ShoppingBag size={23}/><span>Marketplace tools</span><ChevronRight size={19}/></button>
+      <button onClick={()=>{setShowMenu(false);notify('Coming Soon — Chat-X Creator Studio will be available soon.')}}><Edit3 size={23}/><span>Creator Studio</span><ChevronRight size={19}/></button>
+      <button onClick={()=>{setShowMenu(false);notify('Coming Soon — Promotion tools will be available soon.')}}><TrendingUp size={23}/><span>Promote</span><ChevronRight size={19}/></button>
+     </div>
+     <div className="cx-drawer-group cx-drawer-last">
+      <button onClick={()=>{setShowMenu(false);navigate('settings')}}><Settings size={23}/><span>Settings and privacy</span><ChevronRight size={19}/></button>
+      <button onClick={()=>{setShowMenu(false);setDraft(profile);setEditing(true)}}><UserRound size={23}/><span>Edit your profile</span><ChevronRight size={19}/></button>
+     </div>
+    </div>
+   </aside>
   </div>}
   <section className="cx-tiktok-summary" aria-label="Your profile">
    <div className="cx-tiktok-left">
