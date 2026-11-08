@@ -59,8 +59,8 @@ function Welcome({next}) {
  const [imageMissing,setImageMissing]=useState(false)
  useEffect(()=>{
   if(!imageSettled)return
-  // Trace the trading arrow from start to tip, reveal the complete sign, then enter at five seconds.
-  const id=window.setTimeout(next,5000)
+  // Draw the trading sign, hold the completed artwork, and enter after seven seconds.
+  const id=window.setTimeout(next,7000)
   return ()=>window.clearTimeout(id)
  },[imageSettled,next])
  return <div className="exact-splash-screen">
@@ -75,7 +75,7 @@ function Welcome({next}) {
      <img className="exact-splash-trading-complete" src="/assets/chatx-loading-sign.svg" alt="" aria-hidden="true"/>
     </span>
    </div>}
-   {imageMissing&&<span className="splash-missing">Splash artwork has not been uploaded yet.<small>Opening Chat-X in five seconds.</small></span>}
+   {imageMissing&&<span className="splash-missing">Splash artwork has not been uploaded yet.<small>Opening Chat-X in seven seconds.</small></span>}
   </div>
  </div>
 }
