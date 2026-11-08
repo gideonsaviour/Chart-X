@@ -570,3 +570,15 @@ body{overscroll-behavior-y:auto}
  .cx-post-actions button{gap:4px;font-size:11px}
 }
 @media(prefers-reduced-motion:reduce){html{scroll-behavior:auto}}
+
+/* Profile editing controls reuse the existing Midnight Blue glass panels. */
+.cx-edit-form label{display:grid;gap:7px;font-size:13px;color:#cce7ff;text-align:left}
+.cx-edit-form input,.cx-edit-form textarea{display:block;width:100%;box-sizing:border-box;padding:11px 12px;background:#0c2a50;border:1px solid #3977b8;border-radius:11px;color:#fff;font:inherit;resize:vertical}
+.cx-edit-form input:focus,.cx-edit-form textarea:focus{outline:2px solid #59bdf9}
+@media(max-width:760px){
+ .messages-main,.messages-list,.conversation{max-width:100%;min-width:0}
+ .conversation-body{overscroll-behavior-y:contain;-webkit-overflow-scrolling:touch}
+ .send-form{padding-bottom:max(12px,env(safe-area-inset-bottom))}
+ .glass-nav-dock{bottom:0!important}
+ .app-screen{overflow-x:clip}
+}
