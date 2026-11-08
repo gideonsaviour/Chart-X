@@ -384,3 +384,39 @@
 .signup-artboard button:focus-visible{outline:2px solid #67c9ff;outline-offset:2px}
 .sr-only{position:absolute;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;clip:rect(0,0,0,0);white-space:nowrap;border:0}
 @media(min-aspect-ratio:1/1){.signup-page{padding:18px 0}}
+
+/* Unchanged user-uploaded CX dashboard artwork with functional invisible controls. */
+.home-art-main{padding:0!important;min-height:0!important;animation:none!important}
+.home-art-page{position:relative;width:100%;background:#020a1c}
+.home-art-canvas{position:relative;width:100%;aspect-ratio:941/1672;overflow:hidden}
+.home-art-img{display:block;width:100%;height:100%;object-fit:contain;user-select:none;pointer-events:none}
+.home-art-hit{position:absolute;z-index:2;border:0;padding:0;margin:0;border-radius:10px;background:transparent;cursor:pointer;-webkit-tap-highlight-color:transparent}
+.home-art-hit:focus-visible{outline:2px solid #55dcff;outline-offset:-2px;background:#15a4fa18}
+.home-art-search{left:61%;top:4.6%;width:9%;height:6%}
+.home-art-alerts{left:72.5%;top:4.6%;width:10%;height:6%}
+.home-art-avatar{left:83%;top:4%;width:13%;height:6.5%;border-radius:50%}
+.home-art-compose{left:7%;top:11.2%;width:73%;height:5.7%}
+.home-art-camera{left:80%;top:11.2%;width:16%;height:5.7%}
+.home-art-story{top:17.4%;height:12%;width:19%;border-radius:40%}
+.home-art-story-0{left:2%}.home-art-story-1{left:20.8%}.home-art-story-2{left:40%}.home-art-story-3{left:59%}.home-art-story-4{left:78%}
+.home-art-more{left:83%;top:30%;width:12%;height:6%}
+.home-art-like{left:7%;top:57.3%;width:27%;height:5.2%}
+.home-art-comment{left:35%;top:57.3%;width:29%;height:5.2%}
+.home-art-share{left:65%;top:57.3%;width:28%;height:5.2%}
+.home-art-trading{left:5%;top:63%;width:44%;height:17%}
+.home-art-marketplace{left:51%;top:63%;width:44%;height:17%}
+.home-art-communities{left:5%;top:80%;width:90%;height:10%}
+.home-art-home{left:3%;top:90%;width:19%;height:9.5%}
+.home-art-community-tab{left:22%;top:90%;width:19%;height:9.5%}
+.home-art-plus{left:41%;top:89.5%;width:18%;height:10.5%;border-radius:50%}
+.home-art-chats{left:60%;top:90%;width:19%;height:9.5%}
+.home-art-profile{left:79%;top:90%;width:19%;height:9.5%}
+.home-art-feedback{color:#a7ccef;font-size:12px;text-align:center;padding:10px}
+.home-art-dialog-backdrop{position:fixed;inset:0;background:#010512bc;z-index:70;display:grid;place-items:center;padding:18px}
+.home-art-dialog{width:min(100%,410px);display:grid;gap:16px;padding:20px;border-radius:20px;border:1px solid #41b8ff;background:#07182f;color:white;box-shadow:0 16px 60px #0009}
+.home-art-dialog>div{display:flex;align-items:center;justify-content:space-between}
+.home-art-dialog>div strong{font-size:18px}
+.home-art-dialog>div button{border:0;background:none;font-size:24px;color:#c7e6ff}
+.home-art-dialog textarea{resize:vertical;width:100%;background:#0c2a50;border:1px solid #3476b4;border-radius:12px;color:white;font:inherit;padding:12px;min-height:90px}
+.home-art-dialog-submit{background:linear-gradient(90deg,#06c8ef,#1365f1);border:0;color:white;font-weight:750;padding:13px;border-radius:30px}
+@media(max-width:760px){.home-art-main{min-height:0!important}.home-art-page{width:100%}}
