@@ -1,5 +1,6 @@
 import { useEffect, useMemo, useRef, useState } from 'react'
 import { DemoScreen, useDemoState, demoPosts, demoUsers, canAccess } from './socialCore.jsx'
+import { ProfilePhoto, ProfileCameraControl, useProfilePhoto } from './ProfileCamera.jsx'
 import { referencePortrait, referenceCity, referenceJenny, referenceSarah, referenceDavid, referenceQueen, referencePhone, referenceMac, referenceHeadphones, referenceWatch } from './designAssets.js'
 import {
   Home, Users, MessageCircle, UserRound, Plus, Search, Bell, Settings, X,
@@ -48,7 +49,7 @@ const products = [
   {name:'Smart Watch', price:'$799', category:'Accessories', image:referenceWatch, rating:'4.8'}
 ]
 function Brand({large=false}) { return <div className={'brand '+(large?'brand-large':'')}><span className="brand-symbol" aria-label="CX logo"><svg viewBox="0 0 190 130" aria-hidden="true"><defs><linearGradient id="chromeLogo" x1="0" y1="0" x2="0.93" y2="1"><stop stopColor="#f0f9ff"/><stop offset=".28" stopColor="#80cdff"/><stop offset=".57" stopColor="#126fe5"/><stop offset=".78" stopColor="#c5d0e4"/><stop offset="1" stopColor="#0673fa"/></linearGradient><linearGradient id="chromeX" x1="0" y1="0" x2="1" y2="1"><stop stopColor="#e7f7ff"/><stop offset=".45" stopColor="#83bafb"/><stop offset=".7" stopColor="#0e66db"/><stop offset="1" stopColor="#cdd8ed"/></linearGradient></defs><ellipse cx="93" cy="70" rx="98" ry="20" transform="rotate(-25 93 70)" fill="none" stroke="#0a82fa" strokeWidth="6"/><path d="M100 22C70 18 38 39 31 68c-9 31 16 49 44 43l14-18C67 99 51 89 55 72c4-19 21-33 41-33h23Z" fill="url(#chromeLogo)" stroke="#7fd8ff" strokeWidth="1.5"/><path d="M106 25h35l-31 34 36 49h-35L92 81l-25 27H35l41-47-17-23h32l8 12Z" fill="url(#chromeX)" stroke="#80b5f3" strokeWidth="1"/><path d="M102 68 170 16l-44 68-13-5Z" fill="#edf6ff" opacity=".8"/></svg></span>{!large&&<span className="brand-word">Chat-<em>X</em></span>}</div> }
-function Avatar({id='gideon',name='',size='md',badge=false}) { return <span className={'avatar avatar-'+size+(badge?' has-badge':'')+(id==='group'||id==='family'||id==='signals'||id==='friends'?' group-avatar':'')}>{id==='group'||id==='family'||id==='friends'?<Users size={size==='lg'?26:22}/>:id==='signals'?<TrendingUp size={22}/>:id==='silver'?<UserRound size={size==='lg'?30:22} aria-label="Private demo avatar"/>:<img src={faces[id]||faces.gideon} alt={name||'Profile'} onError={e=>{e.currentTarget.style.display='none'}} />}{badge&&<span className="verified"><Check size={10} strokeWidth={4}/></span>}</span> }
+function Avatar({id='gideon',name='',size='md',badge=false}) { return <span className={'avatar avatar-'+size+(badge?' has-badge':'')+(id==='group'||id==='family'||id==='signals'||id==='friends'?' group-avatar':'')}>{id==='group'||id==='family'||id==='friends'?<Users size={size==='lg'?26:22}/>:id==='signals'?<TrendingUp size={22}/>:id==='silver'?<UserRound size={size==='lg'?30:22} aria-label="Private demo avatar"/>:id==='gideon'?<ProfilePhoto alt={name||'Your profile photo'}/>:<img src={faces[id]||faces.gideon} alt={name||'Profile'} onError={e=>{e.currentTarget.style.display='none'}} />}{badge&&<span className="verified"><Check size={10} strokeWidth={4}/></span>}</span> }
 function TabButton({active,onClick,icon:Icon,children}) {return <button type="button" className={'tab-button '+(active?'active':'')} onClick={onClick}>{Icon&&<Icon size={18}/>}<span>{children}</span></button>}
 function PageTop({title,right,back}) {return <><header className="screen-top">{back&&<button className="icon-btn" onClick={back} aria-label="Back"><ArrowLeft size={21}/></button>}<strong>{title}</strong><div className="screen-top-right">{right}</div></header></>}
 function SignIn({onEnter}) {
@@ -338,14 +339,14 @@ function Profile({notify}) {
  useEffect(()=>{localStorage.setItem('chatx_demo_profile',JSON.stringify(profile))},[profile])
  const share=async()=>{if(navigator.share){try{await navigator.share({title:'Chat-X',text:profile.name+' on Chat-X',url:location.href});return}catch{}}try{await navigator.clipboard.writeText(location.href);notify('Profile link copied')}catch{notify('Sharing is unavailable')}}
  return <><PageTop title="Profile" right={<button className="icon-btn" onClick={share} aria-label="Share profile"><Share2 size={19}/></button>}/>
- <div className="profile-hero"><div className="profile-orb orb-a"/><div className="profile-orb orb-b"/><div className="profile-portrait"><Avatar id="gideon" size="hero" badge/></div></div>
+ <div className="profile-hero"><div className="profile-orb orb-a"/><div className="profile-orb orb-b"/><div className="profile-portrait cx-profile-photo-wrapper"><Avatar id="gideon" size="hero" badge/><ProfileCameraControl notify={notify}/></div></div>
  <div className="profile-body">
   <h1>{profile.name} <span className="blue-check"><Check size={12}/></span></h1>
   <div className="profile-handle">{profile.handle}</div><p className="profile-quote">{profile.bio}</p>
   <div className="profile-stats"><div><b>—</b><small>Posts</small></div><div><b>—</b><small>Friends</small></div><div><b>—</b><small>Likes</small></div></div>
   <button className="edit-profile primary wide" onClick={()=>{setDraft(profile);setEditing(true)}}>Edit Profile</button>
   <div className="profile-tabs">{['Posts','Friends','Likes'].map(t=><button className={tab===t?'active':''} onClick={()=>setTab(t)} key={t}>{t}</button>)}</div>
-  {tab==='Posts'?<div className="photo-grid"><img src={faces.gideon} alt="Profile"/><img src={referenceCity} alt="City skyline"/></div>:<div className="empty-tab"><Sparkles size={30}/><p>{tab==='Friends'?'Friend accounts require a connected backend.':'Liked posts on this device appear in the Home feed.'}</p></div>}
+  {tab==='Posts'?<div className="photo-grid"><ProfilePhoto alt="Profile"/><img src={referenceCity} alt="City skyline"/></div>:<div className="empty-tab"><Sparkles size={30}/><p>{tab==='Friends'?'Friend accounts require a connected backend.':'Liked posts on this device appear in the Home feed.'}</p></div>}
  </div>
  {editing&&<div className="home-art-dialog-backdrop" onClick={()=>setEditing(false)}><form className="home-art-dialog cx-edit-form" onClick={e=>e.stopPropagation()} onSubmit={e=>{e.preventDefault();setProfile(draft);setEditing(false);notify('Profile saved on this device (preview only)')}}>
   <div><strong>Edit your profile</strong><button type="button" aria-label="Close" onClick={()=>setEditing(false)}>×</button></div>
