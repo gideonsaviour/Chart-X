@@ -733,3 +733,24 @@ body{overscroll-behavior-y:auto}
 .cx-photo-error,.cx-photo-busy{position:fixed;bottom:calc(100px + env(safe-area-inset-bottom));left:10%;right:10%;z-index:125;padding:13px;border:1px solid #59b9ef;border-radius:13px;background:#091f3c;color:#fff;font-size:12px;text-align:center}
 .cx-photo-error button{margin-left:7px;background:#144e86;color:white;border:1px solid #3f98d0;border-radius:8px;padding:5px}
 @media(max-width:360px){.cx-profile-camera{width:41px;height:41px}}
+
+/* Place the whole profile photo and its camera ON the blue cover board.
+   The previous +23px transform pushed the photo below the clipped cover edge. */
+.profile-hero{overflow:hidden;isolation:isolate}
+.profile-hero .profile-portrait.cx-profile-photo-wrapper{
+ transform:translateY(-31px)!important;
+ position:relative;z-index:4;
+ flex-shrink:0;
+}
+.profile-hero .profile-portrait.cx-profile-photo-wrapper .cx-profile-camera{
+ bottom:0!important;right:-7px!important;z-index:6;
+}
+.profile-hero .profile-portrait.cx-profile-photo-wrapper .avatar-hero{
+ display:grid;place-items:center;overflow:visible;
+}
+.profile-hero .profile-portrait.cx-profile-photo-wrapper .avatar-hero img{
+ display:block;width:100%;height:100%;object-fit:cover;border-radius:50%;
+}
+@media(max-width:375px){
+ .profile-hero .profile-portrait.cx-profile-photo-wrapper{transform:translateY(-35px)!important}
+}
