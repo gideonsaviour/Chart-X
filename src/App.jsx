@@ -404,11 +404,7 @@ function Profile({notify,navigate}) {
    </div>
   </section>
   {expanded&&<div className="cx-tiktok-details"><b>{profile.role||'Artist'}</b><p>{profile.bio}</p><button onClick={()=>{setDraft(profile);setEditing(true)}}>Edit profile details</button></div>}
-  <div className="cx-tiktok-quick-actions">
-   <button onClick={()=>{setDraft(profile);setEditing(true)}}><Edit3 size={17}/>Edit profile</button>
-   <button onClick={()=>share()}><Share2 size={17}/>Share</button>
-   <button onClick={()=>navigate('privacy')}><Shield size={17}/>Privacy</button>
-  </div>
+
   <div className="cx-artist-tabs" role="tablist" aria-label="Profile content">
    {['All','Reels','Photos'].map(t=><button type="button" role="tab" aria-selected={tab===t} key={t} className={tab===t?'active':''} onClick={()=>setTab(t)}>{t}</button>)}
    <button type="button" role="tab" aria-selected={tab==='Friends'||tab==='Likes'} onClick={()=>setMoreOpen(v=>!v)}>More <ChevronDown size={14}/></button>
