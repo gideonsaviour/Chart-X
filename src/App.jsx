@@ -61,7 +61,7 @@ function Welcome({next}) {
  },[next])
  return <div className="exact-splash-screen">
   <button type="button" className="exact-splash-tap" onClick={next} aria-label="Chat-X splash screen. Tap to continue">
-   <img src="/assets/chat-x-neon-skyline-splash.png" alt="Chat-X. Connect. Share. Inspire. Loading." draggable="false"/>
+   <img src="/assets/Chat-X%20Neon%20Skyline%20Splash%20Screen-1.png" alt="Chat-X. Connect. Share. Inspire. Loading." draggable="false"/>
   </button>
  </div>
 }
