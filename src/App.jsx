@@ -59,14 +59,18 @@ function Welcome({next}) {
  const [imageMissing,setImageMissing]=useState(false)
  useEffect(()=>{
   if(!imageSettled)return
-  const id=window.setTimeout(next,3000)
+  // Show five complete seconds of the rotating loader before entering.
+  const id=window.setTimeout(next,5000)
   return ()=>window.clearTimeout(id)
  },[imageSettled,next])
  return <div className="exact-splash-screen">
-  <button type="button" className="exact-splash-tap" onClick={next} aria-label="Chat-X splash screen. Tap to continue">
-   {!imageMissing&&<img src="/assets/Chat-X%20Neon%20Skyline%20Splash%20Screen-1.png" alt="" draggable="false" onLoad={()=>setImageSettled(true)} onError={()=>{setImageMissing(true);setImageSettled(true)}}/>}
-   {imageMissing&&<span className="splash-missing" role="status">Splash artwork has not been uploaded yet.<small>Tap to continue to Chat-X.</small></span>}
-  </button>
+  <div className="exact-splash-tap" aria-label="Chat-X loading screen" role="status">
+   {!imageMissing&&<div className="exact-splash-art">
+    <img src="/assets/Chat-X%20Neon%20Skyline%20Splash%20Screen-1.png" alt="" draggable="false" onLoad={()=>setImageSettled(true)} onError={()=>{setImageMissing(true);setImageSettled(true)}}/>
+    <span className="exact-splash-loader" aria-label="Loading" />
+   </div>}
+   {imageMissing&&<span className="splash-missing">Splash artwork has not been uploaded yet.<small>Opening Chat-X in five seconds.</small></span>}
+  </div>
  </div>
 }
 function Post({post,liked,onLike,onComment,onShare}) {
