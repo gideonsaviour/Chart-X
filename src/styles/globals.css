@@ -631,3 +631,25 @@ body{overscroll-behavior-y:auto}
 .glass-nav-dock{z-index:65}
 @media(min-width:761px){.chat-glass-chooser{right:7%;bottom:105px}}
 @media(max-width:360px){.chat-glass-chooser{width:173px;right:5%;gap:9px}}
+
+/* Sign In is a real responsive form, distinct from the unchanged Sign Up artwork. */
+.signup-login-overlay{position:absolute;inset:22% 5% 9%;z-index:5;display:flex;flex-direction:column;align-items:stretch;justify-content:flex-start;gap:clamp(9px,1.7dvh,19px);border:1px solid rgba(78,191,252,.65);border-radius:24px;background:linear-gradient(165deg,#0c2f61f5,#03152bed 46%,#061b40f5);box-shadow:inset 0 1px 8px #64ceff50,0 0 22px #006aff4a;padding:clamp(13px,4%,25px);color:#f2f8ff;overflow-y:auto}
+.signup-login-top{text-align:center;margin-bottom:5px}
+.signup-login-top h2{font-size:clamp(21px,5vw,32px);font-weight:800;letter-spacing:-.5px}
+.signup-login-top p{color:#bdd4f3;font-size:clamp(11px,3vw,16px);margin-top:6px}
+.signup-login-form{display:grid;gap:clamp(10px,2dvh,20px)}
+.signup-login-form label{display:grid;gap:7px;color:#d0e8ff;font-size:clamp(12px,3vw,15px)}
+.signup-login-form input{box-sizing:border-box;width:100%;height:clamp(42px,5.8dvh,55px);background:rgba(3,19,48,.86);border:1px solid #5189c3;border-radius:13px;color:white;font-size:16px;padding:0 13px;outline:none}
+.signup-login-form input:focus{border-color:#49c9f9;box-shadow:0 0 0 2px #278be744}
+.signup-login-password{position:relative;display:block}
+.signup-login-password input{padding-right:50px}
+.signup-login-password button{position:absolute;right:4px;top:0;height:100%;width:44px;display:grid;place-items:center;background:transparent;color:#e0edff;border:0}
+.signup-login-submit{min-height:48px;border:1px solid #8bf4fc;border-radius:26px;background:linear-gradient(90deg,#00d5ef,#0b77f4,#17c9fd);color:white;font-weight:800;box-shadow:0 3px 19px #0176ee91;font-size:16px}
+.signup-login-disclaimer{text-align:center;color:#a4bedf;font-size:clamp(10px,2.35vw,12px);line-height:1.45}
+.signup-login-or{text-align:center;color:#bdd5ed;font-size:12px}
+.signup-login-social{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:7px}
+.signup-login-social button{min-height:42px;background:#102d54;border:1px solid #4178bd;color:white;border-radius:23px;font-size:clamp(10px,2.8vw,13px)}
+.signup-login-back{margin-top:auto;background:transparent;border:0;color:#b5cfe9;font-size:clamp(11px,2.9vw,14px);padding:8px 0}
+.signup-login-back strong{color:#00e5ff}
+.signup-message{z-index:12;top:auto;bottom:5%;left:8%;right:8%;max-width:none}
+@media(max-height:670px){.signup-login-overlay{inset:18% 4% 5%;gap:7px}.signup-login-form{gap:8px}}
