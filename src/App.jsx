@@ -155,6 +155,7 @@ function HomeArtwork({navigate,notify,create}) {
    {tap('Chats','home-art-chats',()=>navigate('chats'))}
    {tap('Profile','home-art-profile',()=>navigate('profile'))}
   </div>
+  </div>
   <div className="home-art-more-feed" aria-label="Scrollable community feed">
    <div className="home-art-more-heading"><h2>More from your community</h2><p>Scroll to explore posts and updates.</p></div>
    {[...newPosts,
