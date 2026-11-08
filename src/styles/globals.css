@@ -291,8 +291,8 @@
  flex:none;
 }
 .exact-splash-art img{width:100%;height:100%;object-fit:contain}
-/* Preserve the original splash artwork and Chat-X logo. Cover only the
-   previously printed circle, and animate the WHOLE green trading sign. */
+/* Preserve the splash artwork and Chat-X branding. Draw the trading arrow
+   along its real zigzag path, then reveal the finished green sign at 4.25s. */
 .exact-splash-loader{
  position:absolute;
  left:50%;top:60.45%;
@@ -302,21 +302,42 @@
  background:radial-gradient(ellipse at center,#04102b 0%,#04102b 62%,transparent 74%);
  pointer-events:none;
 }
-.exact-splash-trading-sign{
- display:block;
- width:100%;height:100%;
+.exact-splash-trading-draw,
+.exact-splash-trading-complete{
+ position:absolute;inset:0;
+ display:block;width:100%;height:100%;
  object-fit:contain;
- transform-origin:center;
 }
-.exact-splash-loader.is-running .exact-splash-trading-sign{
- animation:exactTradingSignMove 2.5s ease-in-out 2 both;
+.exact-splash-trading-stroke,
+.exact-splash-trading-tip{
+ fill:none;stroke:#08e6c4;stroke-width:36;
+ stroke-linecap:round;stroke-linejoin:round;
+ stroke-dasharray:100;
+ stroke-dashoffset:100;
 }
-@keyframes exactTradingSignMove{
- 0%,100%{transform:translateY(0) scale(1);opacity:1}
- 50%{transform:translateY(-5px) scale(1.08);opacity:.85}
+.exact-splash-trading-tip{stroke-width:40}
+.exact-splash-trading-complete{opacity:0}
+.exact-splash-loader.is-running .exact-splash-trading-stroke{
+ animation:tradingWriteStroke 4.1s cubic-bezier(.42,0,.58,1) forwards;
 }
+.exact-splash-loader.is-running .exact-splash-trading-tip{
+ animation:tradingWriteTip .65s linear 3.55s forwards;
+}
+.exact-splash-loader.is-running .exact-splash-trading-draw{
+ animation:tradingDrawDisappear .4s ease 4.2s forwards;
+}
+.exact-splash-loader.is-running .exact-splash-trading-complete{
+ animation:tradingSignAppear .55s ease 4.15s forwards;
+}
+@keyframes tradingWriteStroke{to{stroke-dashoffset:0}}
+@keyframes tradingWriteTip{to{stroke-dashoffset:0}}
+@keyframes tradingDrawDisappear{to{opacity:0}}
+@keyframes tradingSignAppear{to{opacity:1}}
 @media(prefers-reduced-motion:reduce){
- .exact-splash-loader.is-running .exact-splash-trading-sign{animation:none}
+ .exact-splash-loader.is-running .exact-splash-trading-stroke,
+ .exact-splash-loader.is-running .exact-splash-trading-tip,
+ .exact-splash-loader.is-running .exact-splash-trading-draw{animation:none}
+ .exact-splash-loader.is-running .exact-splash-trading-complete{animation:none;opacity:1}
 }
 
 /* Asset-not-uploaded state only; the original splash PNG is displayed unchanged when present. */
