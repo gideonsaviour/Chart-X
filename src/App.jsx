@@ -205,7 +205,7 @@ function HomeArtwork({navigate,notify,create}) {
   </form></div>}
  </div>
 }
-function Feed({navigate,notify,create}) {
+function Feed({navigate,notify,create,demoStore}) {
  // A real, responsive DOM layout based on the approved Chat-X dashboard artwork.
  // Local drafts are clearly a device-only preview until backend setup is approved.
  const [posts,setPosts]=useState(()=>{
@@ -260,16 +260,16 @@ function Feed({navigate,notify,create}) {
    </button>)}
   </div>
   <div className="cx-timeline" aria-label="Community posts">
-   {posts.map(post=><article className="cx-feed-post" key={post.id}>
-    <div className="cx-post-top"><Avatar id={post.avatar} size="md"/><div><b>{post.name}{post.id===1&&<Check size={13} className="cx-verified"/>}</b><small>{post.time} · <Globe2 size={12}/></small></div>
+   {posts.filter(post=>post.local||canAccess(demoUsers[post.avatar]||demoUsers.jenny,'me',demoStore.state)).map(post=><article className="cx-feed-post" key={post.id}>
+    <div className="cx-post-top"><button type="button" className="cx-post-author" onClick={()=>navigate('profile/'+(post.local?'me':post.avatar))} aria-label={'View '+post.name+' profile'}><Avatar id={post.avatar} size="md"/></button><div><button type="button" className="cx-post-author-name" onClick={()=>navigate('profile/'+(post.local?'me':post.avatar))}><b>{post.name}</b></button><small>{post.time} · <Globe2 size={12}/></small></div>
      <button className="icon-btn cx-post-options" onClick={()=>setMenuPost(menuPost===post.id?null:post.id)} aria-label="Post options"><MoreHorizontal size={22}/></button>
     </div>
     {menuPost===post.id&&<div className="cx-post-menu">
      <button onClick={()=>{setSaved(v=>({...v,[post.id]:!v[post.id]}));setMenuPost(null)}}><Bookmark size={16}/>{saved[post.id]?'Remove saved post':'Save post'}</button>
      {post.local?<button onClick={()=>{setPosts(v=>v.filter(x=>x.id!==post.id));setMenuPost(null)}}><X size={16}/>Delete my post</button>:<button onClick={()=>{setMenuPost(null);notify('Report tools require moderation setup')}}><Shield size={16}/>Report post</button>}
     </div>}
-    {post.text&&<p className="cx-post-copy">{post.text}</p>}
-    {post.photo?<img className="cx-post-image" src={post.photo} alt="Shared attachment"/>:post.picture&&<img className="cx-post-image" src={referenceCity} alt="City skyline at night"/>}
+    {post.text&&<button type="button" className="cx-post-copy cx-open-post" onClick={()=>post.local?notify('Local draft detail screen is being connected'):navigate('post/'+(post.id===1?'post-jenny-1':post.id))}>{post.text}</button>}
+    {post.photo?<img className="cx-post-image" src={post.photo} alt="Shared attachment"/>:post.picture&&<button type="button" className="cx-open-image" onClick={()=>navigate('post/post-jenny-1')} aria-label="Open post"><img className="cx-post-image" src={referenceCity} alt="City skyline at night"/></button>}
     <div className="cx-post-stats"><span>💙 {post.likes+(liked[post.id]?1:0)} likes</span><span>{post.comments+(comments[post.id]?.length||0)} comments · {post.shares} shares</span></div>
     <div className="cx-post-actions">
      <button className={liked[post.id]?'active':''} onClick={()=>setLiked(v=>({...v,[post.id]:!v[post.id]}))}><Heart size={18} fill={liked[post.id]?'currentColor':'none'}/>Like</button>
