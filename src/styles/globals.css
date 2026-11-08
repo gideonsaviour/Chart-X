@@ -758,7 +758,7 @@ body{overscroll-behavior-y:auto}
 /* Artist profile — original user-supplied layout reference, native responsive UI. */
 .cx-artist-profile{min-height:100dvh;background:#272729;color:#f7f7f8;position:relative;padding-bottom:calc(105px + env(safe-area-inset-bottom));overflow-x:clip}
 .cx-artist-cover{
- height:clamp(340px,54dvh,570px);width:100%;position:relative;isolation:isolate;
+ height:clamp(340px,54dvh,570px);width:100%;position:relative;z-index:3;isolation:isolate;
  background-color:#0d0b09;
  background-image:radial-gradient(circle at 50% 30%,#64451e9c,transparent 34%),repeating-radial-gradient(circle at 50% 100%,transparent 0 46px,#8b62271c 49px 61px,transparent 65px 83px),linear-gradient(155deg,#09090d,#261a0d 45%,#06060c 85%);
  background-size:cover;background-position:center;overflow:visible;
@@ -783,7 +783,7 @@ body{overscroll-behavior-y:auto}
 .cx-artist-thought{position:absolute;z-index:9;bottom:calc(100% - 10px);left:50%;transform:translateX(-50%);min-width:max-content;max-width:90vw;height:auto;min-height:48px;padding:11px 19px;background:#38383d;border:0;border-radius:22px;color:#cdd0d7;font-weight:700;font-size:clamp(13px,3.8vw,19px);box-shadow:0 4px 10px #0008;overflow:visible}
 .cx-artist-thought:after{content:"";position:absolute;bottom:-9px;left:29%;width:17px;height:17px;border-radius:5px;background:#38383d;transform:rotate(45deg)}
 .cx-thought-dot{position:absolute;width:9px;height:9px;background:#38383d;bottom:-21px;left:35%;border-radius:50%}
-.cx-artist-info{position:relative;z-index:2;background:#272729;border-radius:clamp(22px,7vw,54px) clamp(22px,7vw,54px) 0 0;margin-top:-1px;min-height:350px;padding:112px 17px 24px;text-align:center}
+.cx-artist-info{position:relative;z-index:1;background:#272729;border-radius:clamp(22px,7vw,54px) clamp(22px,7vw,54px) 0 0;margin-top:-1px;min-height:350px;padding:112px 17px 24px;text-align:center}
 .cx-artist-identity{position:relative;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:4px}
 .cx-artist-identity h1{font-size:clamp(26px,7vw,43px);font-family:Outfit,'DM Sans',sans-serif;color:#fff;font-weight:850;letter-spacing:-.03em;line-height:1.2;display:flex;align-items:center;gap:10px;max-width:calc(100% - 45px);overflow-wrap:anywhere;margin:0}
 .cx-artist-demo-badge{display:grid;place-items:center;background:#56575c;border-radius:50%;width:28px;height:28px;flex:none;color:#d5d6d8}
@@ -846,3 +846,12 @@ body{overscroll-behavior-y:auto}
 .cx-artist-extra p{display:flex;align-items:center;justify-content:center;gap:8px;overflow-wrap:anywhere}
 .cx-artist-extra button{justify-self:center;border:1px solid #3a85bd;border-radius:15px;background:#103b6a;color:white;padding:10px 16px}
 @media(max-width:360px){.cx-artist-stats{gap:8px}.cx-artist-main-actions button{font-size:13px}.cx-artist-overview{margin:12px 0}}
+
+/* Keep the portrait above the profile panel at their overlap. The cover is a
+   stacking context, so its entire layer must be above the info card. */
+.cx-artist-profile{overflow-x:visible}
+.cx-artist-cover{z-index:3;overflow:visible}
+.cx-artist-info{z-index:1}
+.cx-artist-portrait{z-index:10}
+.cx-artist-photo-view{position:relative;z-index:1}
+.cx-artist-portrait>.cx-profile-camera{z-index:12}
