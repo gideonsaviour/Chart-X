@@ -189,10 +189,94 @@ function HomeArtwork({navigate,notify,create}) {
   </form></div>}
  </div>
 }
-function Feed({navigate,notify}) {
- const [posts,setPosts]=useState(initialPosts),[draft,setDraft]=useState(''),[liked,setLiked]=useState({}),[commentId,setCommentId]=useState(null),[reply,setReply]=useState('')
- const share=async text=>{try{await navigator.clipboard.writeText(text);notify('Copied to clipboard')}catch{notify('Sharing unavailable in this browser')}}
- return <><PageTop title={<Brand/>} right={<><button className="icon-btn" onClick={()=>navigate('search')} aria-label="Search"><Search size={22}/></button><button className="icon-btn notification-trigger" onClick={()=>navigate('notifications')} aria-label="Notifications"><Bell size={22}/><i/></button><button className="mini-profile" onClick={()=>navigate('chats')} aria-label="Open chats"><Avatar id="gideon" size="sm"/></button></>}/><div className="feed-column"><div className="composer"><Avatar id="gideon" size="sm"/><input value={draft} onChange={e=>setDraft(e.target.value)} onKeyDown={e=>{if(e.key==='Enter'&&draft.trim()){setPosts([{id:Date.now(),name:'Gideon Saviour',avatar:'gideon',time:'Now',text:draft,likes:0,comments:0,shares:0},...posts]);setDraft('');notify('Post added to your preview feed')}}} placeholder="What's on your mind?"/><button aria-label="Add a post" onClick={()=>{if(!draft.trim()){notify('Write something first');return}setPosts([{id:Date.now(),name:'Gideon Saviour',avatar:'gideon',time:'Now',text:draft,likes:0,comments:0,shares:0},...posts]);setDraft('');notify('Post added to your preview feed')}}><Camera size={19}/></button></div><div className="stories">{[{id:'gideon',name:'Add Story'},...people.filter(p=>!p.group).slice(0,4)].map((p,i)=><button key={p.id} onClick={()=>notify(i?'Stories preview coming with media uploads':'Photo uploads need storage integration')}><span className={'story-avatar '+(!i?'story-self':'')}><Avatar id={p.id} size="lg"/>{!i&&<span className="story-plus"><Plus size={12}/></span>}</span><small>{p.name.split(' ')[0]}{!i?' Story':''}</small></button>)}</div>{posts.map(p=><div key={p.id}><Post post={p} liked={!!liked[p.id]} onLike={()=>setLiked({...liked,[p.id]:!liked[p.id]})} onComment={()=>setCommentId(commentId===p.id?null:p.id)} onShare={share}/>{commentId===p.id&&<form className="comment-composer" onSubmit={e=>{e.preventDefault();if(reply.trim()){notify('Comment added locally');setReply('');setCommentId(null)}}}><input value={reply} onChange={e=>setReply(e.target.value)} placeholder="Write a comment…" required/><button type="submit"><Send size={17}/></button></form>}</div>)}<SponsorCard navigate={navigate}/><button className="feature-banner" onClick={()=>navigate('trading')}><div><span>CHAT-X TRADING</span><h3>Explore a whole new<br/>world of possibilities</h3><p>Discover copy trading <ChevronRight size={15}/></p></div><TrendingUp size={80}/></button></div></>
+function Feed({navigate,notify,create}) {
+ // A real, responsive DOM layout based on the approved Chat-X dashboard artwork.
+ // Local drafts are clearly a device-only preview until backend setup is approved.
+ const [posts,setPosts]=useState(()=>{
+  try {const saved=JSON.parse(localStorage.getItem('chatx_demo_posts')||'[]');return [...(Array.isArray(saved)?saved:[]),...initialPosts]}catch{return initialPosts}
+ })
+ const [draft,setDraft]=useState('')
+ const [liked,setLiked]=useState(()=>{try{return JSON.parse(localStorage.getItem('chatx_demo_likes')||'{}')}catch{return {}}})
+ const [commentId,setCommentId]=useState(null)
+ const [reply,setReply]=useState('')
+ const [comments,setComments]=useState(()=>{try{return JSON.parse(localStorage.getItem('chatx_demo_comments')||'{}')}catch{return {}}})
+ const [activeStory,setActiveStory]=useState(null)
+ const [photo,setPhoto]=useState(null)
+ const [menuPost,setMenuPost]=useState(null)
+ const [saved,setSaved]=useState(()=>{try{return JSON.parse(localStorage.getItem('chatx_demo_saved')||'{}')}catch{return {}}})
+ useEffect(()=>{localStorage.setItem('chatx_demo_posts',JSON.stringify(posts.filter(p=>p.local)))},[posts])
+ useEffect(()=>{localStorage.setItem('chatx_demo_likes',JSON.stringify(liked))},[liked])
+ useEffect(()=>{localStorage.setItem('chatx_demo_comments',JSON.stringify(comments))},[comments])
+ useEffect(()=>{localStorage.setItem('chatx_demo_saved',JSON.stringify(saved))},[saved])
+ const publish=()=>{
+  if(!draft.trim()&&!photo){notify('Write a post or attach a photo first');return}
+  const p={id:Date.now(),name:'You',avatar:'gideon',time:'Just now',text:draft.trim(),photo:photo||null,likes:0,comments:0,shares:0,local:true}
+  setPosts(v=>[p,...v]);setDraft('');setPhoto(null);notify('Post saved on this device (preview only)')
+ }
+ const share=async text=>{
+  if(navigator.share){try{await navigator.share({title:'Chat-X post',text});return}catch{}}
+  try{await navigator.clipboard.writeText(text);notify('Post copied for sharing')}catch{notify('Sharing not supported')}
+ }
+ const storyPeople=[{id:'gideon',name:'Your story'},...people.filter(p=>!p.group).slice(0,4)]
+ const addPhoto=e=>{const f=e.target.files?.[0];if(!f)return;if(!f.type.startsWith('image/')){notify('Please choose an image');return}if(f.size>2*1024*1024){notify('For this preview, select an image smaller than 2 MB');return}const rd=new FileReader();rd.onload=()=>setPhoto(String(rd.result));rd.readAsDataURL(f)}
+ const openPhoto=()=>document.getElementById('chatx-home-photo')?.click()
+ return <section className="cx-home">
+  <header className="cx-home-header">
+   <Brand large/>
+   <div className="cx-home-tools">
+    <button className="icon-btn" aria-label="Search" onClick={()=>navigate('search')}><Search size={23}/></button>
+    <button className="icon-btn notification-trigger" aria-label="Notifications" onClick={()=>navigate('notifications')}><Bell size={22}/><i/></button>
+    <button className="cx-home-profile" aria-label="Open your profile" onClick={()=>navigate('profile')}><Avatar id="gideon" size="sm"/></button>
+   </div>
+  </header>
+  <form className="cx-composer" onSubmit={e=>{e.preventDefault();publish()}}>
+   <Avatar id="gideon" size="sm"/>
+   <input value={draft} onChange={e=>setDraft(e.target.value)} placeholder="What's on your mind?" aria-label="Write a post"/>
+   <input id="chatx-home-photo" className="sr-only" type="file" accept="image/*" onChange={addPhoto}/>
+   <button type="button" onClick={openPhoto} aria-label="Add a photo"><Camera size={22}/></button>
+   <button type="submit" aria-label="Publish post"><Send size={19}/></button>
+  </form>
+  {photo&&<div className="cx-photo-preview"><img src={photo} alt="Selected post attachment"/><button onClick={()=>setPhoto(null)}>Remove photo</button></div>}
+  <div className="cx-stories" aria-label="Stories">
+   {storyPeople.map((p,i)=><button type="button" className="cx-story" key={p.id} onClick={()=>i===0?notify('Story uploads need a connected media storage service'):setActiveStory(p)}>
+    <span className="cx-story-ring"><Avatar id={p.id} size="lg"/>{i===0&&<span className="cx-story-add"><Plus size={13}/></span>}</span>
+    <span>{p.name}</span>
+   </button>)}
+  </div>
+  <div className="cx-timeline" aria-label="Community posts">
+   {posts.map(post=><article className="cx-feed-post" key={post.id}>
+    <div className="cx-post-top"><Avatar id={post.avatar} size="md"/><div><b>{post.name}{post.id===1&&<Check size={13} className="cx-verified"/>}</b><small>{post.time} · <Globe2 size={12}/></small></div>
+     <button className="icon-btn cx-post-options" onClick={()=>setMenuPost(menuPost===post.id?null:post.id)} aria-label="Post options"><MoreHorizontal size={22}/></button>
+    </div>
+    {menuPost===post.id&&<div className="cx-post-menu">
+     <button onClick={()=>{setSaved(v=>({...v,[post.id]:!v[post.id]}));setMenuPost(null)}}><Bookmark size={16}/>{saved[post.id]?'Remove saved post':'Save post'}</button>
+     {post.local?<button onClick={()=>{setPosts(v=>v.filter(x=>x.id!==post.id));setMenuPost(null)}}><X size={16}/>Delete my post</button>:<button onClick={()=>{setMenuPost(null);notify('Report tools require moderation setup')}}><Shield size={16}/>Report post</button>}
+    </div>}
+    {post.text&&<p className="cx-post-copy">{post.text}</p>}
+    {post.photo?<img className="cx-post-image" src={post.photo} alt="Shared attachment"/>:post.picture&&<img className="cx-post-image" src={referenceCity} alt="City skyline at night"/>}
+    <div className="cx-post-stats"><span>💙 {post.likes+(liked[post.id]?1:0)} likes</span><span>{post.comments+(comments[post.id]?.length||0)} comments · {post.shares} shares</span></div>
+    <div className="cx-post-actions">
+     <button className={liked[post.id]?'active':''} onClick={()=>setLiked(v=>({...v,[post.id]:!v[post.id]}))}><Heart size={18} fill={liked[post.id]?'currentColor':'none'}/>Like</button>
+     <button onClick={()=>setCommentId(commentId===post.id?null:post.id)}><MessageSquare size={18}/>Comment</button>
+     <button onClick={()=>share(post.text||'Chat-X photo post')}><Share2 size={18}/>Share</button>
+    </div>
+    {!!comments[post.id]?.length&&<div className="cx-comment-list">{comments[post.id].map((c,i)=><div key={i}><b>You</b><span>{c}</span></div>)}</div>}
+    {commentId===post.id&&<form className="cx-comment-form" onSubmit={e=>{e.preventDefault();if(!reply.trim())return;setComments(v=>({...v,[post.id]:[...(v[post.id]||[]),reply.trim()]}));setReply('');setCommentId(null)}}>
+     <input value={reply} onChange={e=>setReply(e.target.value)} placeholder="Write a comment…" aria-label="Comment" required/>
+     <button type="submit" aria-label="Send comment"><Send size={18}/></button>
+    </form>}
+   </article>)}
+  </div>
+  <div className="cx-feature-grid">
+   <button className="cx-feature trading" onClick={()=>navigate('trading')}><TrendingUp size={29}/><strong>Trading</strong><span>Explore opportunities</span><ChevronRight size={16}/></button>
+   <button className="cx-feature marketplace" onClick={()=>navigate('marketplace')}><ShoppingBag size={29}/><strong>Marketplace</strong><span>Discover products</span><ChevronRight size={16}/></button>
+  </div>
+  <button className="cx-community-cta" onClick={()=>navigate('communities')}><Users size={28}/><span><strong>Communities</strong><small>Discover groups and meet your people</small></span><ChevronRight size={20}/></button>
+  <div className="cx-feed-bottom"><Sparkles size={17}/> You're up to date in this preview.</div>
+  {activeStory&&<div className="cx-story-overlay" role="dialog" aria-modal="true" aria-label={activeStory.name+' story'} onClick={()=>setActiveStory(null)}>
+    <div onClick={e=>e.stopPropagation()}><button aria-label="Close story" onClick={()=>setActiveStory(null)}><X size={22}/></button><Avatar id={activeStory.id} size="lg"/><h3>{activeStory.name}</h3><p>Story media will appear here when uploads and storage are connected.</p></div>
+   </div>}
+ </section>
 }
 function FeedPage({notify,navigate}) {
  const [posts,setPosts]=useState(initialPosts)
@@ -334,6 +418,6 @@ export default function App() {
  const enter=()=>{sessionStorage.setItem('chatx_seen','1');setStage('app');navigate('home')}
  if(stage==='welcome')return <Welcome next={()=>setStage(sessionStorage.getItem('chatx_seen')?'app':'auth')}/>
  if(stage==='auth')return <div className="entry-wrap"><SignIn onEnter={enter}/></div>
- const pages={home:<HomeArtwork navigate={p=>p==='search'?setSearch(true):navigate(p)} notify={notify} create={()=>setCreate(true)}/>,feed:<FeedPage navigate={p=>p==='search'?setSearch(true):navigate(p)} notify={notify}/>,chats:<Chats notify={notify}/>,communities:<Communities notify={notify}/>,profile:<Profile notify={notify}/>,'trader-landing':<TraderLanding navigate={navigate}/>,trading:<Trading notify={notify}/>,marketplace:<Marketplace notify={notify}/>,notifications:<Notifications/>,settings:<SettingsPage notify={notify} navigate={navigate} onLogout={()=>{sessionStorage.removeItem('chatx_seen');setStage('auth')}}/>,about:<AboutPage navigate={navigate}/>,explore:<Explore navigate={navigate}/>}
- return <div className="site-shell"><aside className={'desktop-rail '+(menu?'menu-open':'')}><Brand/><p className="rail-heading">DISCOVER</p>{[['home',Home,'Home'],['chats',MessageCircle,'Messages'],['communities',Users,'Communities'],['trading',TrendingUp,'Trading'],['marketplace',ShoppingBag,'Marketplace'],['notifications',Bell,'Notifications'],['profile',UserRound,'Profile'],['settings',Settings,'Settings']].map(([id,Icon,label])=><button key={id} onClick={()=>navigate(id)} className={page===id?'active':''}><Icon size={19}/>{label}</button>)}<div className="rail-foot">Connect. Share. Inspire.</div></aside><div className="app-wrap"><div className="desktop-bar"><Brand/><span>YOUR WORLD. OUR COMMUNITY.</span><button className="icon-btn" onClick={()=>setMenu(!menu)} aria-label="Open navigation"><Menu size={20}/></button></div><main className={'app-screen'+(page==='home'?' home-art-main':'')} key={page}>{pages[page]||pages.home}</main>{chatMenuOpen&&<button className="chat-chooser-dismiss" aria-label="Close Chats choices" onClick={()=>setChatMenuOpen(false)}/>}{page!=='home'&&<BottomNav active={page} navigate={navigate} create={()=>{setChatMenuOpen(false);setCreate(true)}} chatMenuOpen={chatMenuOpen} setChatMenuOpen={setChatMenuOpen}/>}</div>{create&&<div className="modal-shade" onClick={()=>setCreate(false)}><section className="create-panel" onClick={e=>e.stopPropagation()}><div><h2>Create something new</h2><button onClick={()=>setCreate(false)} aria-label="Close"><X size={22}/></button></div>{[[ImageIcon,'Create a post','home'],[Users,'Explore communities','communities'],[MessageCircle,'New message','chats'],[TrendingUp,'Explore trading','trading']].map(([Icon,label,id])=><button key={id} onClick={()=>{setCreate(false);navigate(id)}}><Icon size={21}/>{label}<ChevronRight size={18}/></button>)}</section></div>}{search&&<GlobalSearch navigate={navigate} onClose={()=>setSearch(false)}/ >}{toast&&<div className="toast" role="status"><Check size={15}/>{toast}</div>}</div>
+ const pages={home:<Feed navigate={p=>p==='search'?setSearch(true):navigate(p)} notify={notify} create={()=>setCreate(true)}/>,feed:<FeedPage navigate={p=>p==='search'?setSearch(true):navigate(p)} notify={notify}/>,chats:<Chats notify={notify}/>,communities:<Communities notify={notify}/>,profile:<Profile notify={notify}/>,'trader-landing':<TraderLanding navigate={navigate}/>,trading:<Trading notify={notify}/>,marketplace:<Marketplace notify={notify}/>,notifications:<Notifications/>,settings:<SettingsPage notify={notify} navigate={navigate} onLogout={()=>{sessionStorage.removeItem('chatx_seen');setStage('auth')}}/>,about:<AboutPage navigate={navigate}/>,explore:<Explore navigate={navigate}/>}
+ return <div className="site-shell"><aside className={'desktop-rail '+(menu?'menu-open':'')}><Brand/><p className="rail-heading">DISCOVER</p>{[['home',Home,'Home'],['chats',MessageCircle,'Messages'],['communities',Users,'Communities'],['trading',TrendingUp,'Trading'],['marketplace',ShoppingBag,'Marketplace'],['notifications',Bell,'Notifications'],['profile',UserRound,'Profile'],['settings',Settings,'Settings']].map(([id,Icon,label])=><button key={id} onClick={()=>navigate(id)} className={page===id?'active':''}><Icon size={19}/>{label}</button>)}<div className="rail-foot">Connect. Share. Inspire.</div></aside><div className="app-wrap"><div className="desktop-bar"><Brand/><span>YOUR WORLD. OUR COMMUNITY.</span><button className="icon-btn" onClick={()=>setMenu(!menu)} aria-label="Open navigation"><Menu size={20}/></button></div><main className={'app-screen'+(page==='home'?' cx-home-main':'')} key={page}>{pages[page]||pages.home}</main>{chatMenuOpen&&<button className="chat-chooser-dismiss" aria-label="Close Chats choices" onClick={()=>setChatMenuOpen(false)}/>}{<BottomNav active={page} navigate={navigate} create={()=>{setChatMenuOpen(false);setCreate(true)}} chatMenuOpen={chatMenuOpen} setChatMenuOpen={setChatMenuOpen}/>}</div>{create&&<div className="modal-shade" onClick={()=>setCreate(false)}><section className="create-panel" onClick={e=>e.stopPropagation()}><div><h2>Create something new</h2><button onClick={()=>setCreate(false)} aria-label="Close"><X size={22}/></button></div>{[[ImageIcon,'Create a post','home'],[Users,'Explore communities','communities'],[MessageCircle,'New message','chats'],[TrendingUp,'Explore trading','trading']].map(([Icon,label,id])=><button key={id} onClick={()=>{setCreate(false);navigate(id)}}><Icon size={21}/>{label}<ChevronRight size={18}/></button>)}</section></div>}{search&&<GlobalSearch navigate={navigate} onClose={()=>setSearch(false)}/ >}{toast&&<div className="toast" role="status"><Check size={15}/>{toast}</div>}</div>
 }
