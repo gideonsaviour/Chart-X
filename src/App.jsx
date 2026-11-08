@@ -127,12 +127,14 @@ function HomeArtwork({navigate,notify,create}) {
  const [showPost,setShowPost]=useState(false)
  const [showComment,setShowComment]=useState(false)
  const [comment,setComment]=useState('')
- const [postCount,setPostCount]=useState(0)
+ const [newPosts,setNewPosts]=useState([])
+ const [feedLiked,setFeedLiked]=useState({})
+ const [feedComment,setFeedComment]=useState(null)
  const tap=(label,cls,fn)=> <button type="button" className={'home-art-hit '+cls} aria-label={label} onClick={fn}/>
  const story=name=>notify(name==='Add Story'?'Story uploads need storage integration':name+' story preview is not yet connected to media storage')
  const share=async()=>{try{await navigator.clipboard.writeText(window.location.href);notify('Chat-X page link copied')}catch{notify('Sharing is unavailable in this browser')}}
  return <div className="home-art-page">
-  <div className="home-art-canvas">
+  <div className="home-art-viewport"><div className="home-art-canvas">
    <img className="home-art-img" src="/assets/CX%20Social%20Dashboard%20UI.png" alt="Chat-X home dashboard with stories, a post, trading, marketplace, communities and navigation"/>
    {tap('Search Chat-X','home-art-search',()=>navigate('search'))}
    {tap('Notifications','home-art-alerts',()=>navigate('notifications'))}
@@ -153,8 +155,28 @@ function HomeArtwork({navigate,notify,create}) {
    {tap('Chats','home-art-chats',()=>navigate('chats'))}
    {tap('Profile','home-art-profile',()=>navigate('profile'))}
   </div>
-  {postCount>0&&<p className="home-art-feedback" role="status">{postCount} preview post{postCount!==1?'s':''} created in this session.</p>}
-  {showPost&&<div className="home-art-dialog-backdrop" onClick={()=>setShowPost(false)}><form className="home-art-dialog" onClick={e=>e.stopPropagation()} onSubmit={e=>{e.preventDefault();if(draft.trim()){setPostCount(n=>n+1);setDraft('');setShowPost(false);notify('Post added to local preview')}}}>
+  <div className="home-art-more-feed" aria-label="Scrollable community feed">
+   <div className="home-art-more-heading"><h2>More from your community</h2><p>Scroll to explore posts and updates.</p></div>
+   {[...newPosts,
+     {id:'sample-sarah',name:'Sarah',avatar:'sarah',time:'Preview post',text:'Welcome to the Chat-X community! 💙',picture:false,likes:12,comments:0,shares:0},
+     {id:'sample-david',name:'David',avatar:'david',time:'Preview post',text:'Connect. Share. Inspire. More updates will appear here.',picture:false,likes:8,comments:0,shares:0}
+   ].map(post=><div key={post.id}>
+    <Post post={post} liked={!!feedLiked[post.id]}
+     onLike={()=>setFeedLiked(v=>({...v,[post.id]:!v[post.id]}))}
+     onComment={()=>setFeedComment(feedComment===post.id?null:post.id)}
+     onShare={async message=>{try{await navigator.clipboard.writeText(message);notify('Post copied to clipboard')}catch{notify('Sharing unavailable in this browser')}}}/>
+    {feedComment===post.id&&<form className="comment-composer" onSubmit={e=>{e.preventDefault();setFeedComment(null);notify('Comment added in this preview')}}><input required aria-label="Your comment" placeholder="Write a comment…"/><button aria-label="Send comment" type="submit"><Send size={16}/></button></form>}
+   </div>)}
+  </div>
+  <nav className="home-art-fixed-nav" aria-label="Home navigation">
+   {tap('Home','home-art-nav home-art-nav-home',()=>navigate('home'))}
+   {tap('Communities','home-art-nav home-art-nav-communities',()=>navigate('communities'))}
+   {tap('Create','home-art-nav home-art-nav-create',create)}
+   {tap('Chats','home-art-nav home-art-nav-chats',()=>navigate('chats'))}
+   {tap('Profile','home-art-nav home-art-nav-profile',()=>navigate('profile'))}
+  </nav>
+
+  {showPost&&<div className="home-art-dialog-backdrop" onClick={()=>setShowPost(false)}><form className="home-art-dialog" onClick={e=>e.stopPropagation()} onSubmit={e=>{e.preventDefault();if(draft.trim()){setNewPosts(v=>[{id:Date.now(),name:'You',avatar:'gideon',time:'Now',text:draft.trim(),picture:false,likes:0,comments:0,shares:0},...v]);setDraft('');setShowPost(false);notify('Post added to local preview')}}}>
    <div><strong>Create a post</strong><button type="button" aria-label="Close" onClick={()=>setShowPost(false)}>×</button></div>
    <textarea autoFocus rows={4} placeholder="What's on your mind?" value={draft} onChange={e=>setDraft(e.target.value)} required/>
    <button className="home-art-dialog-submit" type="submit">Post</button>
