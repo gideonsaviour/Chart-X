@@ -56,6 +56,7 @@ function SignIn({onEnter}) {
 }
 function Welcome({next}) {
  const [imageSettled,setImageSettled]=useState(false)
+ const [imageMissing,setImageMissing]=useState(false)
  useEffect(()=>{
   if(!imageSettled)return
   const id=window.setTimeout(next,3000)
@@ -63,7 +64,8 @@ function Welcome({next}) {
  },[imageSettled,next])
  return <div className="exact-splash-screen">
   <button type="button" className="exact-splash-tap" onClick={next} aria-label="Chat-X splash screen. Tap to continue">
-   <img src="/assets/Chat-X%20Neon%20Skyline%20Splash%20Screen-1.png" alt="Chat-X. Connect. Share. Inspire. Loading." draggable="false" onLoad={()=>setImageSettled(true)} onError={()=>setImageSettled(true)}/>
+   {!imageMissing&&<img src="/assets/Chat-X%20Neon%20Skyline%20Splash%20Screen-1.png" alt="" draggable="false" onLoad={()=>setImageSettled(true)} onError={()=>{setImageMissing(true);setImageSettled(true)}}/>}
+   {imageMissing&&<span className="splash-missing" role="status">Splash artwork has not been uploaded yet.<small>Tap to continue to Chat-X.</small></span>}
   </button>
  </div>
 }
