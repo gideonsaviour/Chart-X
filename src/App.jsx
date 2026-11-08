@@ -1,4 +1,4 @@
-import { useEffect, useMemo, useState } from 'react'
+import { useEffect, useMemo, useRef, useState } from 'react'
 import { referencePortrait, referenceCity, referenceJenny, referenceSarah, referenceDavid, referenceQueen, referencePhone, referenceMac, referenceHeadphones, referenceWatch } from './designAssets.js'
 import {
   Home, Users, MessageCircle, UserRound, Plus, Search, Bell, Settings, X,
@@ -306,14 +306,16 @@ function FeedPage({notify,navigate}) {
  </>
 }
 function Chats({notify}) {
- const [selected,setSelected]=useState(null),[query,setQuery]=useState(''),[filter,setFilter]=useState('All'),[message,setMessage]=useState(''),[sent,setSent]=useState({})
+ const [selected,setSelected]=useState(null),[query,setQuery]=useState(''),[filter,setFilter]=useState('All'),[message,setMessage]=useState(''),[sent,setSent]=useState(()=>{try{return JSON.parse(localStorage.getItem('chatx_demo_messages')||'{}')}catch{return {}}})
+ useEffect(()=>{localStorage.setItem('chatx_demo_messages',JSON.stringify(sent))},[sent])
  const visible=people.filter(p=>(filter!=='Unread'||p.unread>0)&&(filter!=='Groups'||p.group)&&p.name.toLowerCase().includes(query.toLowerCase()))
  const send=()=>{if(!message.trim())return;setSent({...sent,[selected.id]:[...(sent[selected.id]||[]),message.trim()]});setMessage('')}
  return <><div className={'messages-main '+(selected?'show-conversation':'')}><section className="messages-list"><PageTop title="Chats" right={<button className="icon-btn" onClick={()=>notify('Choose a conversation to chat')} aria-label="New message"><Edit3 size={19}/></button>}/><div className="search-pill"><Search size={18}/><input value={query} onChange={e=>setQuery(e.target.value)} placeholder="Search chats..."/></div><div className="filter-pills">{['All','Groups','Unread'].map(f=><button key={f} className={filter===f?'selected':''} onClick={()=>setFilter(f)}>{f}{f==='All'?' (12)':f==='Groups'?' (5)':' (2)'}</button>)}</div><div className="chat-items">{visible.map(p=><button className={'chat-item '+(selected?.id===p.id?'active':'')} key={p.id} onClick={()=>setSelected(p)}><Avatar id={p.id} size="md"/><span><b>{p.name}</b><small className={p.text==='Typing...'?'typing':''}>{p.text}</small></span><aside><small>{p.time}</small>{p.unread>0&&<em>{p.unread}</em>}</aside></button>)}</div></section><section className="conversation">{selected?<><div className="conversation-header"><button className="icon-btn" onClick={()=>setSelected(null)} aria-label="Back to messages"><ArrowLeft size={20}/></button><Avatar id={selected.id} size="sm"/><div><b>{selected.name}</b><small>{selected.online?'Online now':'Chat-X preview'}</small></div><button className="icon-btn" onClick={()=>notify('Calls require real-time backend integration')} aria-label="Call"><Phone size={19}/></button><button className="icon-btn" onClick={()=>notify('Video calls require real-time backend integration')} aria-label="Video call"><Video size={19}/></button></div><div className="conversation-body"><div className="secure-note"><Lock size={13}/> Demo conversation</div><span className="bubble inbound">Hey! How's everything going?<small>9:02</small></span><span className="bubble outbound">Great! Building something new with Chat-X. 💙<small>9:04 <CheckCheck size={12}/></small></span><span className="bubble inbound">Can't wait to see it!<small>9:05</small></span>{(sent[selected.id]||[]).map((m,i)=><span className="bubble outbound" key={i}>{m}<small>Now <CheckCheck size={12}/></small></span>)}</div><form className="send-form" onSubmit={e=>{e.preventDefault();send()}}><button type="button" onClick={()=>notify('Attachments need storage integration')}><Paperclip size={19}/></button><input value={message} onChange={e=>setMessage(e.target.value)} placeholder="Type a message..."/><button type="submit" className="send-icon"><Send size={18}/></button></form></>:<div className="conversation-empty"><MessageCircleMore size={48}/><h3>Your conversations</h3><p>Choose a chat to view messages.</p></div>}</section></div></>
 }
 function Profile({notify}) {const [tab,setTab]=useState('Posts');return <><PageTop title="Profile" right={<button className="icon-btn" onClick={()=>{if(navigator.share){navigator.share({title:'Chat-X',text:'Gideon Saviour on Chat-X',url:location.href}).catch(()=>{})}else notify('Profile sharing requires a public profile link')}} aria-label="Share profile"><Share2 size={19}/></button>}/><div className="profile-hero"><div className="profile-orb orb-a"/><div className="profile-orb orb-b"/><div className="profile-portrait"><Avatar id="gideon" size="hero" badge/></div></div><div className="profile-body"><h1>Gideon Saviour <span className="blue-check"><Check size={12}/></span></h1><div className="profile-handle">@gideon_saviour</div><p className="profile-quote">Dream Big · Work Hard · Achieve More</p><div className="profile-stats"><div><b>245</b><small>Posts</small></div><div><b>12.5K</b><small>Friends</small></div><div><b>48.7K</b><small>Likes</small></div></div><button className="edit-profile primary wide" onClick={()=>notify('Profile editing will be available after accounts are connected')}>Edit Profile</button><div className="profile-tabs">{['Posts','Friends','Likes'].map(t=><button className={tab===t?'active':''} onClick={()=>setTab(t)} key={t}>{t}</button>)}</div>{tab==='Posts'?<div className="photo-grid"><img src={faces.gideon} alt="Profile"/><img src="https://images.unsplash.com/photo-1500534623283-312aade485b7?w=400&h=400&fit=crop" alt="Sunset"/><img src="https://images.unsplash.com/photo-1507525428034-b723cf961d3e?w=400&h=400&fit=crop" alt="Beach"/></div>:<div className="empty-tab"><Sparkles size={30}/><p>{tab==='Friends'?'Your connections will appear here.':'Liked posts will appear here.'}</p></div>}</div></>}
 function Communities({notify}) {
- const [joined,setJoined]=useState({})
+ const [joined,setJoined]=useState(()=>{try{return JSON.parse(localStorage.getItem('chatx_demo_communities')||'{}')}catch{return {}}})
+ useEffect(()=>{localStorage.setItem('chatx_demo_communities',JSON.stringify(joined))},[joined])
  return <><PageTop title="Communities" right={<button className="icon-btn" onClick={()=>notify('Creating communities requires account setup')} aria-label="Create community"><Plus size={22}/></button>}/>
   <p className="screen-intro">Find your people. Share what you love.</p>
   <div className="community-list community-list-no-filter">
@@ -410,9 +412,19 @@ function BottomNav({active,navigate,create}) {
 export default function App() {
  const [stage,setStage]=useState('welcome')
  const [page,setPage]=useState('home'),[chatMenuOpen,setChatMenuOpen]=useState(false),[menu,setMenu]=useState(false),[create,setCreate]=useState(false),[toast,setToast]=useState(''),[search,setSearch]=useState(false)
+ const scrollPositions=useRef({})
+ const pageRef=useRef('home')
+ const historyRef=useRef([])
+ useEffect(()=>{const onBack=()=>{const prev=historyRef.current.pop()||'home';setPage(prev);pageRef.current=prev;requestAnimationFrame(()=>window.scrollTo(0,scrollPositions.current[prev]||0))};window.addEventListener('popstate',onBack);return()=>window.removeEventListener('popstate',onBack)},[])
  useEffect(()=>{if(!toast)return;const timeout=setTimeout(()=>setToast(''),3200);return ()=>clearTimeout(timeout)},[toast])
  const notify=text=>setToast(text)
- const navigate=p=>{setPage(p);setMenu(false);setChatMenuOpen(false);window.scrollTo({top:0,behavior:'instant'})}
+ const navigate=p=>{
+  const current=pageRef.current
+  scrollPositions.current[current]=window.scrollY
+  if(p!==current){historyRef.current.push(current);window.history.pushState({chatxPage:p},'','#'+p)}
+  pageRef.current=p;setPage(p);setMenu(false);setChatMenuOpen(false)
+  requestAnimationFrame(()=>window.scrollTo({top:scrollPositions.current[p]||0,behavior:'instant'}))
+ }
  useEffect(()=>{if(!chatMenuOpen)return;const close=e=>{if(e.key==='Escape')setChatMenuOpen(false)};window.addEventListener('keydown',close);return ()=>window.removeEventListener('keydown',close)},[chatMenuOpen])
  const enter=()=>{sessionStorage.setItem('chatx_seen','1');setStage('app');navigate('home')}
  if(stage==='welcome')return <Welcome next={()=>setStage(sessionStorage.getItem('chatx_seen')?'app':'auth')}/>
