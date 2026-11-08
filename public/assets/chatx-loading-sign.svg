@@ -1,0 +1,8 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="120 96 1285 770" role="img" aria-label="Rising green trading arrow">
+<defs>
+ <linearGradient id="arrow" x1="0" y1="1" x2="1" y2="0"><stop stop-color="#00d4bd"/><stop offset=".55" stop-color="#00efcc"/><stop offset="1" stop-color="#05ffd2"/></linearGradient>
+ <filter id="glow" x="-15%" y="-25%" width="135%" height="150%"><feGaussianBlur stdDeviation="19"/></filter>
+</defs>
+<path d="M1375 128 1169 194 1216 237 1028 440 894 342 716 584 581 494 415 707 335 655 157 836 337 694 418 745 590 547 722 633 904 408 1030 496 1261 276 1327 329Z" fill="#04dcb7" opacity=".33" filter="url(#glow)"/>
+<path d="M1375 128 1169 194 1216 237 1028 440 894 342 716 584 581 494 415 707 335 655 157 836 337 694 418 745 590 547 722 633 904 408 1030 496 1261 276 1327 329Z" fill="url(#arrow)"/>
+</svg>
