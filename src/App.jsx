@@ -59,7 +59,7 @@ function Welcome({next}) {
  const [imageMissing,setImageMissing]=useState(false)
  useEffect(()=>{
   if(!imageSettled)return
-  // Animate the complete trading sign for five seconds before entering.
+  // Trace the trading arrow from start to tip, reveal the complete sign, then enter at five seconds.
   const id=window.setTimeout(next,5000)
   return ()=>window.clearTimeout(id)
  },[imageSettled,next])
@@ -68,7 +68,11 @@ function Welcome({next}) {
    {!imageMissing&&<div className="exact-splash-art">
     <img src="/assets/Chat-X%20Neon%20Skyline%20Splash%20Screen-1.png" alt="" draggable="false" onLoad={()=>setImageSettled(true)} onError={()=>{setImageMissing(true);setImageSettled(true)}}/>
     <span className={'exact-splash-loader'+(imageSettled?' is-running':'')} aria-label="Loading">
-     <img className="exact-splash-trading-sign" src="/assets/chatx-loading-sign.svg" alt="" aria-hidden="true"/>
+     <svg className="exact-splash-trading-draw" viewBox="120 96 1285 770" aria-hidden="true" focusable="false">
+      <path className="exact-splash-trading-stroke" pathLength="100" d="M157 836 L335 655 L415 707 L581 494 L716 584 L894 342 L1028 440 L1261 219 L1375 128"/>
+      <path className="exact-splash-trading-tip" pathLength="100" d="M1169 194 L1375 128 L1327 329"/>
+     </svg>
+     <img className="exact-splash-trading-complete" src="/assets/chatx-loading-sign.svg" alt="" aria-hidden="true"/>
     </span>
    </div>}
    {imageMissing&&<span className="splash-missing">Splash artwork has not been uploaded yet.<small>Opening Chat-X in five seconds.</small></span>}
