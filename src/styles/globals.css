@@ -663,3 +663,6 @@ body{overscroll-behavior-y:auto}
 .signup-signin-link{z-index:8!important;pointer-events:auto!important;touch-action:manipulation;min-height:35px}
 .signup-login-overlay{z-index:9;pointer-events:auto}
 .signup-message{z-index:15!important;bottom:10%!important;top:auto!important}
+
+/* Keep icon hit targets positioned against the artwork, not an empty wrapper. */
+.signup-social{position:static!important}
