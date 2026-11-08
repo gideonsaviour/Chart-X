@@ -1,6 +1,6 @@
 import { useEffect, useMemo, useRef, useState } from 'react'
 import { DemoScreen, useDemoState, demoPosts, demoUsers, canAccess } from './socialCore.jsx'
-import { ProfilePhoto, ProfileCameraControl, useProfilePhoto } from './ProfileCamera.jsx'
+import { ProfilePhoto, ProfileCameraControl, CoverCameraControl, useCoverPhoto } from './ProfileCamera.jsx'
 import { referencePortrait, referenceCity, referenceJenny, referenceSarah, referenceDavid, referenceQueen, referencePhone, referenceMac, referenceHeadphones, referenceWatch } from './designAssets.js'
 import {
   Home, Users, MessageCircle, UserRound, Plus, Search, Bell, Settings, X,
@@ -329,33 +329,71 @@ function Chats({notify,navigate}) {
  const send=()=>{if(!message.trim())return;setSent({...sent,[selected.id]:[...(sent[selected.id]||[]),message.trim()]});setMessage('')}
  return <><div className={'messages-main '+(selected?'show-conversation':'')}><section className="messages-list"><PageTop title="Chats" right={<button className="icon-btn" onClick={()=>notify('Choose a conversation to chat')} aria-label="New message"><Edit3 size={19}/></button>}/><div className="search-pill"><Search size={18}/><input value={query} onChange={e=>setQuery(e.target.value)} placeholder="Search chats..."/></div><div className="filter-pills">{['All','Groups','Unread'].map(f=><button key={f} className={filter===f?'selected':''} onClick={()=>setFilter(f)}>{f}{f==='All'?' (12)':f==='Groups'?' (5)':' (2)'}</button>)}</div><div className="chat-items">{visible.map(p=><button className={'chat-item '+(selected?.id===p.id?'active':'')} key={p.id} onClick={()=>setSelected(p)}><Avatar id={p.id} size="md"/><span><b>{p.name}</b><small className={p.text==='Typing...'?'typing':''}>{p.text}</small></span><aside><small>{p.time}</small>{p.unread>0&&<em>{p.unread}</em>}</aside></button>)}</div></section><section className="conversation">{selected?<><div className="conversation-header"><button className="icon-btn" onClick={()=>setSelected(null)} aria-label="Back to messages"><ArrowLeft size={20}/></button><button type="button" className="cx-chat-user" onClick={()=>navigate(selected.group?'community/'+(selected.id==='family'?'friends':'tech'):'profile/'+(['jenny','david','silver'].includes(selected.id)?selected.id:'me'))} aria-label="Open chat participant profile"><Avatar id={selected.id} size="sm"/><div><b>{selected.name}</b><small>{selected.online?'Online now':'Chat-X preview'}</small></div></button><button className="icon-btn" onClick={()=>notify('Calls require real-time backend integration')} aria-label="Call"><Phone size={19}/></button><button className="icon-btn" onClick={()=>notify('Video calls require real-time backend integration')} aria-label="Video call"><Video size={19}/></button></div><div className="conversation-body"><div className="secure-note"><Lock size={13}/> Demo conversation</div><span className="bubble inbound">Hey! How's everything going?<small>9:02</small></span><span className="bubble outbound">Great! Building something new with Chat-X. 💙<small>9:04 <CheckCheck size={12}/></small></span><span className="bubble inbound">Can't wait to see it!<small>9:05</small></span>{(sent[selected.id]||[]).map((m,i)=><span className="bubble outbound" key={i}>{m}<small>Now <CheckCheck size={12}/></small></span>)}</div><form className="send-form" onSubmit={e=>{e.preventDefault();send()}}><button type="button" onClick={()=>notify('Attachments need storage integration')}><Paperclip size={19}/></button><input value={message} onChange={e=>setMessage(e.target.value)} placeholder="Type a message..."/><button type="submit" className="send-icon"><Send size={18}/></button></form></>:<div className="conversation-empty"><MessageCircleMore size={48}/><h3>Your conversations</h3><p>Choose a chat to view messages.</p></div>}</section></div></>
 }
-function Profile({notify}) {
+function Profile({notify,navigate}) {
  const [tab,setTab]=useState('Posts')
  const [editing,setEditing]=useState(false)
+ const [expanded,setExpanded]=useState(false)
+ const [showMenu,setShowMenu]=useState(false)
+ const [editingThought,setEditingThought]=useState(false)
+ const [thoughtDraft,setThoughtDraft]=useState('')
  const [profile,setProfile]=useState(()=>{
-  try{return {...{name:'Gideon Saviour',handle:'@gideon_saviour',bio:'Dream Big · Work Hard · Achieve More'},...JSON.parse(localStorage.getItem('chatx_demo_profile')||'{}')}}catch{return {name:'Gideon Saviour',handle:'@gideon_saviour',bio:'Dream Big · Work Hard · Achieve More'}}
+  try{return {...{name:'Silver Sonik',handle:'@silver_sonik',role:'Artist',bio:'Connect. Share. Inspire.',thought:'Thinking about…'},...JSON.parse(localStorage.getItem('chatx_demo_profile')||'{}')}}catch{return {name:'Silver Sonik',handle:'@silver_sonik',role:'Artist',bio:'Connect. Share. Inspire.',thought:'Thinking about…'}}
  })
  const [draft,setDraft]=useState(profile)
- useEffect(()=>{localStorage.setItem('chatx_demo_profile',JSON.stringify(profile))},[profile])
- const share=async()=>{if(navigator.share){try{await navigator.share({title:'Chat-X',text:profile.name+' on Chat-X',url:location.href});return}catch{}}try{await navigator.clipboard.writeText(location.href);notify('Profile link copied')}catch{notify('Sharing is unavailable')}}
- return <><PageTop title="Profile" right={<button className="icon-btn" onClick={share} aria-label="Share profile"><Share2 size={19}/></button>}/>
- <div className="profile-hero"><div className="profile-orb orb-a"/><div className="profile-orb orb-b"/><div className="profile-portrait cx-profile-photo-wrapper"><Avatar id="gideon" size="hero" badge/><ProfileCameraControl notify={notify}/></div></div>
- <div className="profile-body">
-  <h1>{profile.name} <span className="blue-check"><Check size={12}/></span></h1>
-  <div className="profile-handle">{profile.handle}</div><p className="profile-quote">{profile.bio}</p>
-  <div className="profile-stats"><div><b>—</b><small>Posts</small></div><div><b>—</b><small>Friends</small></div><div><b>—</b><small>Likes</small></div></div>
-  <button className="edit-profile primary wide" onClick={()=>{setDraft(profile);setEditing(true)}}>Edit Profile</button>
-  <div className="profile-tabs">{['Posts','Friends','Likes'].map(t=><button className={tab===t?'active':''} onClick={()=>setTab(t)} key={t}>{t}</button>)}</div>
-  {tab==='Posts'?<div className="photo-grid"><ProfilePhoto alt="Profile"/><img src={referenceCity} alt="City skyline"/></div>:<div className="empty-tab"><Sparkles size={30}/><p>{tab==='Friends'?'Friend accounts require a connected backend.':'Liked posts on this device appear in the Home feed.'}</p></div>}
- </div>
- {editing&&<div className="home-art-dialog-backdrop" onClick={()=>setEditing(false)}><form className="home-art-dialog cx-edit-form" onClick={e=>e.stopPropagation()} onSubmit={e=>{e.preventDefault();setProfile(draft);setEditing(false);notify('Profile saved on this device (preview only)')}}>
-  <div><strong>Edit your profile</strong><button type="button" aria-label="Close" onClick={()=>setEditing(false)}>×</button></div>
-  <label>Display name<input required maxLength={70} value={draft.name} onChange={e=>setDraft(v=>({...v,name:e.target.value}))}/></label>
-  <label>Username<input required maxLength={50} value={draft.handle} onChange={e=>setDraft(v=>({...v,handle:e.target.value}))}/></label>
-  <label>Bio<textarea rows={3} maxLength={200} value={draft.bio} onChange={e=>setDraft(v=>({...v,bio:e.target.value}))}/></label>
-  <button className="home-art-dialog-submit" type="submit">Save changes</button>
- </form></div>}
- </>
+ const cover=useCoverPhoto()
+ useEffect(()=>{try{localStorage.setItem('chatx_demo_profile',JSON.stringify(profile))}catch{notify('Unable to save profile changes on this device')}},[profile])
+ const share=async()=>{
+  if(navigator.share){try{await navigator.share({title:'Chat-X',text:profile.name+' on Chat-X',url:location.href});return}catch{}}
+  try{await navigator.clipboard.writeText(location.href);notify('Preview link copied')}catch{notify('Sharing is not available in this browser')}
+ }
+ return <section className="cx-artist-profile">
+  <div className="cx-artist-cover" style={cover?{backgroundImage:'linear-gradient(180deg,rgba(0,0,0,.2),rgba(0,0,0,.3)),url('+JSON.stringify(cover)+')'}:undefined}>
+   {!cover&&<div className="cx-artist-cover-brand" aria-hidden="true"><span>SS</span><small>SILVER SONIK</small></div>}
+   <nav className="cx-artist-tools" aria-label="Profile actions">
+    <button type="button" onClick={()=>setShowMenu(v=>!v)} aria-label="Open profile menu"><Menu/></button>
+    <span/>
+    <button type="button" onClick={()=>{setDraft(profile);setEditing(true)}} aria-label="Edit profile"><Edit3/></button>
+    <button type="button" onClick={()=>navigate('discover')} aria-label="Search"><Search/></button>
+    <button type="button" onClick={()=>setShowMenu(v=>!v)} aria-label="More options"><MoreHorizontal/></button>
+   </nav>
+   {showMenu&&<div className="cx-artist-menu">
+     <button onClick={()=>{setShowMenu(false);setDraft(profile);setEditing(true)}}><Edit3 size={17}/>Edit profile</button>
+     <button onClick={()=>{setShowMenu(false);navigate('privacy')}}><Shield size={17}/>Privacy & Security</button>
+     <button onClick={()=>{setShowMenu(false);share()}}><Share2 size={17}/>Share profile</button>
+     <button onClick={()=>{setShowMenu(false);navigate('settings')}}><Settings size={17}/>Settings</button>
+   </div>}
+   <CoverCameraControl notify={notify}/>
+   <div className="cx-artist-portrait">
+    <button type="button" className="cx-artist-thought" onClick={()=>{setThoughtDraft(profile.thought||'');setEditingThought(true)}} aria-label="Edit profile thought">{profile.thought||'Thinking about…'}<span className="cx-thought-dot"/></button>
+    <button type="button" className="cx-artist-photo-view" onClick={()=>navigate('media/me')} aria-label="View your profile picture"><ProfilePhoto alt="Your profile picture"/></button>
+    <ProfileCameraControl notify={notify}/>
+   </div>
+  </div>
+  <section className="cx-artist-info">
+   <div className="cx-artist-identity">
+    <h1>{profile.name}<span className="cx-artist-demo-badge" title="Demo profile badge, not official verification" aria-label="Demo badge"><Check size={15}/></span></h1>
+    <button className="cx-artist-expand" aria-label={expanded?'Collapse profile details':'Expand profile details'} aria-expanded={expanded} onClick={()=>setExpanded(v=>!v)}><ChevronRight className={expanded?'open':''} size={23}/></button>
+    <p>{profile.role||'Artist'}</p>
+   </div>
+   {expanded&&<div className="cx-artist-extra">
+    <p className="cx-artist-handle">{profile.handle}</p>
+    <p>{profile.bio}</p>
+    <div className="cx-artist-stats"><span><b>Demo</b><small>Profile</small></span><span><b>—</b><small>Followers</small></span><span><b>—</b><small>Following</small></span></div>
+    <div className="cx-artist-shortcuts"><button onClick={()=>{setDraft(profile);setEditing(true)}}>Edit Profile</button><button onClick={()=>navigate('privacy')}>Privacy</button></div>
+   </div>}
+   <div className="cx-artist-tabs">{['Posts','Photos','Friends','Likes'].map(t=><button key={t} className={tab===t?'active':''} onClick={()=>setTab(t)}>{t}</button>)}</div>
+   {tab==='Photos'?<div className="photo-grid cx-artist-gallery"><button onClick={()=>navigate('media/me')} aria-label="View profile picture"><ProfilePhoto alt="Profile"/></button><button onClick={()=>navigate('media/post-post-jenny-1')} aria-label="View sample photo"><img src={referenceCity} alt="Demo city"/></button></div>:<div className="cx-artist-tab-content">{tab==='Posts'?'Your public posts will appear here when connected. You can still create demo posts on Home.':tab==='Friends'?'Friend connections require account integration.':'Liked posts are stored locally in this demo.'}</div>}
+  </section>
+  {editingThought&&<div className="home-art-dialog-backdrop" onClick={()=>setEditingThought(false)}><form className="home-art-dialog cx-edit-form" onClick={e=>e.stopPropagation()} onSubmit={e=>{e.preventDefault();setProfile(p=>({...p,thought:thoughtDraft.trim()||'Thinking about…'}));setEditingThought(false);notify('Thought updated on this device')}}><div><strong>What’s on your mind?</strong><button type="button" aria-label="Close" onClick={()=>setEditingThought(false)}>×</button></div><label>Profile thought<input maxLength={50} value={thoughtDraft} onChange={e=>setThoughtDraft(e.target.value)} placeholder="Thinking about…"/></label><button className="home-art-dialog-submit" type="submit">Save</button></form></div>}
+  {editing&&<div className="home-art-dialog-backdrop" onClick={()=>setEditing(false)}><form className="home-art-dialog cx-edit-form" onClick={e=>e.stopPropagation()} onSubmit={e=>{e.preventDefault();setProfile(draft);setEditing(false);notify('Profile saved on this device (demo only)')}}>
+   <div><strong>Edit your profile</strong><button type="button" aria-label="Close" onClick={()=>setEditing(false)}>×</button></div>
+   <label>Display name<input required maxLength={70} value={draft.name} onChange={e=>setDraft(v=>({...v,name:e.target.value}))}/></label>
+   <label>Username<input required maxLength={50} value={draft.handle} onChange={e=>setDraft(v=>({...v,handle:e.target.value}))}/></label>
+   <label>Role<input maxLength={45} value={draft.role||''} onChange={e=>setDraft(v=>({...v,role:e.target.value}))}/></label>
+   <label>Bio<textarea rows={3} maxLength={200} value={draft.bio} onChange={e=>setDraft(v=>({...v,bio:e.target.value}))}/></label>
+   <button className="home-art-dialog-submit" type="submit">Save changes</button>
+  </form></div>}
+ </section>
 }
 function Communities({notify,navigate}) {
  const [joined,setJoined]=useState(()=>{try{return JSON.parse(localStorage.getItem('chatx_demo_communities')||'{}')}catch{return {}}})
@@ -479,7 +517,7 @@ export default function App() {
  const enter=()=>{sessionStorage.setItem('chatx_seen','1');setStage('app');navigate('home')}
  if(stage==='welcome')return <Welcome next={()=>setStage(sessionStorage.getItem('chatx_seen')?'app':'auth')}/>
  if(stage==='auth')return <div className="entry-wrap"><SignIn onEnter={enter}/></div>
- const pages={home:<Feed navigate={p=>p==='search'?navigate('discover'):navigate(p)} notify={notify} create={()=>setCreate(true)} demoStore={demoStore}/>,feed:<FeedPage navigate={p=>p==='search'?setSearch(true):navigate(p)} notify={notify}/>,chats:<Chats notify={notify} navigate={navigate}/>,communities:<Communities notify={notify} navigate={navigate}/>,profile:<Profile notify={notify}/>,'trader-landing':<TraderLanding navigate={navigate}/>,trading:<Trading notify={notify}/>,marketplace:<Marketplace notify={notify} navigate={navigate}/>,notifications:<Notifications navigate={navigate}/>,settings:<SettingsPage notify={notify} navigate={navigate} onLogout={()=>{sessionStorage.removeItem('chatx_seen');setStage('auth')}}/>,about:<AboutPage navigate={navigate}/>,explore:<Explore navigate={navigate}/>}
+ const pages={home:<Feed navigate={p=>p==='search'?navigate('discover'):navigate(p)} notify={notify} create={()=>setCreate(true)} demoStore={demoStore}/>,feed:<FeedPage navigate={p=>p==='search'?setSearch(true):navigate(p)} notify={notify}/>,chats:<Chats notify={notify} navigate={navigate}/>,communities:<Communities notify={notify} navigate={navigate}/>,profile:<Profile notify={notify} navigate={navigate}/>,'trader-landing':<TraderLanding navigate={navigate}/>,trading:<Trading notify={notify}/>,marketplace:<Marketplace notify={notify} navigate={navigate}/>,notifications:<Notifications navigate={navigate}/>,settings:<SettingsPage notify={notify} navigate={navigate} onLogout={()=>{sessionStorage.removeItem('chatx_seen');setStage('auth')}}/>,about:<AboutPage navigate={navigate}/>,explore:<Explore navigate={navigate}/>}
  const detailRoute=/^(profile\/|post\/|community\/|product\/|media\/|media-product\/|privacy$|requests$|discover$)/.test(page)
  const activePage=detailRoute?<DemoScreen route={page} store={demoStore} navigate={navigate} back={()=>{if(window.history.state?.chatxPage){window.history.back()}else navigate('home')}} notify={notify}/>:pages[page]||pages.home
  return <div className="site-shell"><aside className={'desktop-rail '+(menu?'menu-open':'')}><Brand/><p className="rail-heading">DISCOVER</p>{[['home',Home,'Home'],['chats',MessageCircle,'Messages'],['communities',Users,'Communities'],['trading',TrendingUp,'Trading'],['marketplace',ShoppingBag,'Marketplace'],['notifications',Bell,'Notifications'],['profile',UserRound,'Profile'],['settings',Settings,'Settings']].map(([id,Icon,label])=><button key={id} onClick={()=>navigate(id)} className={page===id?'active':''}><Icon size={19}/>{label}</button>)}<div className="rail-foot">Connect. Share. Inspire.</div></aside><div className="app-wrap"><div className="desktop-bar"><Brand/><span>YOUR WORLD. OUR COMMUNITY.</span><button className="icon-btn" onClick={()=>setMenu(!menu)} aria-label="Open navigation"><Menu size={20}/></button></div><main className={'app-screen'+(page==='home'?' cx-home-main':'')} key={page}>{activePage}</main>{chatMenuOpen&&<button type="button" className="chat-chooser-dismiss" aria-label="Close chat options" onClick={()=>setChatMenuOpen(false)}/>}
