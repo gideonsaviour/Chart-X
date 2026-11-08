@@ -291,24 +291,42 @@
  flex:none;
 }
 .exact-splash-art img{width:100%;height:100%;object-fit:contain}
+/* The original splash PNG remains untouched. Mask its printed circular spinner
+   and replace it with the supplied upward-chart sign filling over exactly 5s. */
 .exact-splash-loader{
- position:absolute;left:50%;top:60.45%;
- width:8.8%;aspect-ratio:1;
+ position:absolute;
+ left:50%;top:60.45%;
+ width:15%;height:8%;
  transform:translate(-50%,-50%);
- border-radius:50%;
- /* Hide the artwork's static spinner completely so there is only one ring. */
- background:#04102b;
+ display:flex;align-items:center;justify-content:center;
+ background:radial-gradient(ellipse at center,#04102b 0%,#04102b 62%,transparent 74%);
  pointer-events:none;
 }
-.exact-splash-loader::after{
- content:"";position:absolute;inset:12%;border-radius:50%;
- border:3px solid rgba(55,106,155,.22);
- border-top-color:#4e83b3;
- animation:exactSplashSpin 1.8s linear infinite;
+.exact-splash-loader .exact-splash-sign-base,
+.exact-splash-loader .exact-splash-sign-progress img{
+ display:block;
+ width:100%;height:100%;
+ object-fit:contain;
 }
-@keyframes exactSplashSpin{to{transform:rotate(360deg)}}
+.exact-splash-sign-base{
+ position:absolute;inset:0;opacity:.3;
+}
+.exact-splash-sign-progress{
+ position:absolute;inset:0;
+ overflow:hidden;
+ clip-path:inset(0 100% 0 0);
+}
+.exact-splash-loader.is-running .exact-splash-sign-progress{
+ animation:exactSplashReadUp 5s linear 1 both;
+}
+@keyframes exactSplashReadUp{
+ from{clip-path:inset(0 100% 0 0)}
+ to{clip-path:inset(0 0 0 0)}
+}
 @media(prefers-reduced-motion:reduce){
- .exact-splash-loader::after{animation-duration:3s}
+ .exact-splash-loader.is-running .exact-splash-sign-progress{
+  animation:exactSplashReadUp 5s linear 1 both;
+ }
 }
 
 /* Asset-not-uploaded state only; the original splash PNG is displayed unchanged when present. */
