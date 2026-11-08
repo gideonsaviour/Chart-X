@@ -466,7 +466,7 @@ function TraderLanding({navigate}) {
   <PageTop title="Trading Hub" right={<button className="icon-btn" aria-label="Trading information" onClick={()=>setShowBrokers(true)}><ShieldCheck size={21}/></button>}/>
   <div className="trader-landing">
    <div className="trader-hero">
-    <span className="trader-kicker"><TrendingUp size={16}/> CHAT-X TRADING</span>
+    <span className="trader-kicker"><TrendingUp size={16}/> CHARTX TRADING</span>
     <h1>Trade globally.<br/><em>Stay connected.</em></h1>
     <p>Your space for market discovery, broker connectivity and copy trading — all in one place.</p>
     <button className="primary wide trader-connect-button" onClick={()=>setShowBrokers(true)}><Wallet size={19}/> Connect a Broker <ChevronRight size={19}/></button>
