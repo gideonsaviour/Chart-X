@@ -217,7 +217,7 @@ function Feed({navigate,notify,create}) {
   if(navigator.share){try{await navigator.share({title:'Chat-X post',text});return}catch{}}
   try{await navigator.clipboard.writeText(text);notify('Post copied for sharing')}catch{notify('Sharing not supported')}
  }
- const storyPeople=[{id:'gideon',name:'Your story'},...people.filter(p=>!p.group).slice(0,4)]
+ const storyPeople=[{id:'gideon',name:'Add Story'},{id:'sarah',name:'Sarah'},{id:'david',name:'David'},{id:'queen',name:'Queen'},{id:'silver',name:'Silver'}]
  const addPhoto=e=>{const f=e.target.files?.[0];if(!f)return;if(!f.type.startsWith('image/')){notify('Please choose an image');return}if(f.size>2*1024*1024){notify('For this preview, select an image smaller than 2 MB');return}const rd=new FileReader();rd.onload=()=>setPhoto(String(rd.result));rd.readAsDataURL(f)}
  const openPhoto=()=>document.getElementById('chatx-home-photo')?.click()
  return <section className="cx-home">
@@ -268,8 +268,8 @@ function Feed({navigate,notify,create}) {
    </article>)}
   </div>
   <div className="cx-feature-grid">
-   <button className="cx-feature trading" onClick={()=>navigate('trading')}><TrendingUp size={29}/><strong>Trading</strong><span>Explore opportunities</span><ChevronRight size={16}/></button>
-   <button className="cx-feature marketplace" onClick={()=>navigate('marketplace')}><ShoppingBag size={29}/><strong>Marketplace</strong><span>Discover products</span><ChevronRight size={16}/></button>
+   <button className="cx-feature trading" onClick={()=>navigate('trading')}><span className="cx-feature-title"><TrendingUp size={26}/><strong>Trading</strong></span><b className="cx-feature-stat">$2,840.50</b><span className="cx-feature-positive">▲ +12.5% <TrendingUp size={24}/></span><span className="cx-feature-cta">Copy Trade Now <ChevronRight size={16}/></span></button>
+   <button className="cx-feature marketplace" onClick={()=>navigate('marketplace')}><span className="cx-feature-title"><ShoppingBag size={26}/><strong>Marketplace</strong></span><span className="cx-feature-products"><img src={referenceHeadphones} alt="Headphones"/><img src={referenceWatch} alt="Watch"/><img src={referencePhone} alt="Phone"/></span><span className="cx-feature-cta">Explore Deals <ChevronRight size={16}/></span></button>
   </div>
   <button className="cx-community-cta" onClick={()=>navigate('communities')}><Users size={28}/><span><strong>Communities</strong><small>Discover groups and meet your people</small></span><ChevronRight size={20}/></button>
   <div className="cx-feed-bottom"><Sparkles size={17}/> You're up to date in this preview.</div>
