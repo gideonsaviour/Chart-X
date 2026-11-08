@@ -1,6 +1,6 @@
-# Chat-X AI Backend
+# ChartX AI Backend
 
-Secure backend for Chat-X AI Assistant.
+Secure backend for ChartX AI Assistant.
 
 ## Deploy on Render.com (Free)
 
