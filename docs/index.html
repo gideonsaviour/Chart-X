@@ -7,13 +7,13 @@
 <meta name="theme-color" content="#000000"/>
 <meta name="apple-mobile-web-app-capable" content="yes"/>
 <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent"/>
-<meta name="apple-mobile-web-app-title" content="Chat-X"/>
+<meta name="apple-mobile-web-app-title" content="ChartX"/>
 <meta name="mobile-web-app-capable" content="yes"/>
 <link rel="apple-touch-icon" href="icon-192.png"/>
 <link rel="apple-touch-icon" sizes="192x192" href="icon-192.png"/>
 <link rel="apple-touch-icon" sizes="512x512" href="icon-512.png"/>
 <link rel="icon" type="image/png" sizes="192x192" href="icon-192.png"/>
-<title>Chat-X</title>
+<title>ChartX</title>
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet"/>
 <style>
 :root{
@@ -945,7 +945,7 @@ body.light-theme #messages{background:transparent}
 #splash-status{position:absolute;left:0;right:0;top:92.55%;text-align:center;
   font-size:clamp(11px,1.42vh,15px);font-weight:500;color:#5B6B85;letter-spacing:.005em}
 @media(prefers-reduced-motion:reduce){#splash-fill{transition:none}}
-/* ===== Chat-X C→X signature animation ===== */
+/* ===== ChartX C→X signature animation ===== */
 .cx-anim{position:relative;overflow:hidden}
 .cx-anim .cx-c,.cx-anim .cx-x{position:absolute;font-size:26px;font-weight:900;color:#fff;line-height:1}
 .cx-anim .cx-b{position:absolute;display:flex;align-items:center;justify-content:center;opacity:0}
@@ -1010,7 +1010,7 @@ body.light-theme #messages{background:transparent}
         <span class="cx-x">X</span>
         <span class="cx-b"><svg width="30" height="30" fill="none" stroke="#fff" stroke-width="2" viewBox="0 0 24 24"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg></span>
       </div>
-      <div class="auth-h1">Welcome to Chat-X</div>
+      <div class="auth-h1">Welcome to ChartX</div>
       <div class="auth-sub">Private messaging, end to end encrypted.</div>
       <button class="auth-btn" onclick="authGo('signup')">Create account</button>
       <button class="auth-ghost" onclick="authGo('login')">I already have an account</button>
@@ -1092,12 +1092,12 @@ body.light-theme #messages{background:transparent}
 
 <div id="feed">
   <div class="scr-head">
-    <div class="hdr-mark cx-anim" aria-label="Chat-X">
+    <div class="hdr-mark cx-anim" aria-label="ChartX">
       <span class="cx-c">C</span>
       <span class="cx-x">X</span>
       <span class="cx-b"><svg width="19" height="19" fill="none" stroke="#fff" stroke-width="2.2" viewBox="0 0 24 24"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg></span>
     </div>
-    <div class="scr-title">Chat-X</div>
+    <div class="scr-title">ChartX</div>
     <button class="icon-btn" onclick="openCreatePost()" title="New post">
       <svg width="22" height="22" fill="none" stroke="currentColor" stroke-width="2.4" viewBox="0 0 24 24"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
     </button>
@@ -1201,7 +1201,7 @@ body.light-theme #messages{background:transparent}
   <div id="splash-stage">
     <picture>
       <source srcset="assets/chat-x-splash.webp" type="image/webp"/>
-      <img id="splash-img" src="assets/chat-x-splash.png" alt="Chat-X — Connect. Share. Inspire."/>
+      <img id="splash-img" src="assets/chat-x-splash.png" alt="ChartX — Connect. Share. Inspire."/>
     </picture>
     <div id="splash-track"><i id="splash-fill"></i></div>
     <div id="splash-status">Loading your conversations…</div>
@@ -1218,7 +1218,7 @@ body.light-theme #messages{background:transparent}
           <div class="sdot" style="width:10px;height:10px;background:var(--success);bottom:1px;right:1px;border:2px solid var(--card)"></div>
         </div>
         <div>
-          <div style="font-weight:800;font-size:16px;letter-spacing:-.3px">Chat-X</div>
+          <div style="font-weight:800;font-size:16px;letter-spacing:-.3px">ChartX</div>
           <div style="font-size:10px;color:var(--primary);font-weight:600">End-to-end Encrypted</div>
         </div>
       </div>
@@ -1263,7 +1263,7 @@ body.light-theme #messages{background:transparent}
     <div style="width:80px;height:80px;border-radius:24px;background:linear-gradient(135deg,var(--primary),var(--primary-deep));display:flex;align-items:center;justify-content:center;margin-bottom:24px;box-shadow:0 0 40px rgba(0,137,123,0.35)">
       <svg width="36" height="36" fill="none" stroke="#fff" stroke-width="2" viewBox="0 0 24 24"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>
     </div>
-    <h2 style="font-size:24px;font-weight:700;margin-bottom:8px">Welcome to Chat-X</h2>
+    <h2 style="font-size:24px;font-weight:700;margin-bottom:8px">Welcome to ChartX</h2>
     <p style="color:var(--text3);font-size:15px;margin-bottom:32px;text-align:center;max-width:300px">Select a conversation or try the AI Assistant</p>
     <div style="display:flex;gap:10px;flex-wrap:wrap;justify-content:center">
       <div class="pill">Encrypted</div><div class="pill">Real-time</div><div class="pill">Private</div><div class="pill">AI-powered</div>
@@ -1326,7 +1326,7 @@ body.light-theme #messages{background:transparent}
       <div class="avatar" data-user-initials style="width:60px;height:60px;font-size:22px">GS</div>
       <div>
         <div style="font-weight:700;font-size:16px" data-user-name>Gideon Saviour</div>
-        <div style="font-size:13px;color:var(--text3);margin-top:2px" data-user-contact>Hey there! I am using Chat-X</div>
+        <div style="font-size:13px;color:var(--text3);margin-top:2px" data-user-contact>Hey there! I am using ChartX</div>
         <div style="font-size:11px;color:var(--primary);margin-top:4px">Online</div>
       </div>
     </div>
@@ -1370,7 +1370,7 @@ body.light-theme #messages{background:transparent}
     </div>
     <div style="padding:16px 20px;border-top:1px solid var(--border)">
       <button onclick="signOut()" style="width:100%;background:var(--bg3);border:1px solid rgba(239,68,68,.3);color:var(--danger);padding:12px;border-radius:12px;cursor:pointer;font-family:Inter,sans-serif;font-size:14px;font-weight:600;margin-bottom:12px">Sign out</button>
-      <div style="font-size:12px;color:var(--text3);text-align:center">Chat-X v1.0.0</div>
+      <div style="font-size:12px;color:var(--text3);text-align:center">ChartX v1.0.0</div>
     </div>
   </div>
 </div>
@@ -1576,7 +1576,7 @@ body.light-theme #messages{background:transparent}
       </div>
       <div onclick="openAppInfo()" style="display:flex;align-items:center;gap:14px;padding:14px 20px;cursor:pointer;transition:background .15s" onmouseover="this.style.background='rgba(0,0,0,0.06)'" onmouseout="this.style.background='transparent'">
         <div style="width:40px;height:40px;border-radius:12px;background:rgba(0,137,123,0.15);display:flex;align-items:center;justify-content:center;flex-shrink:0"><svg width="20" height="20" fill="none" stroke="var(--primary)" stroke-width="2" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg></div>
-        <div style="flex:1"><div style="font-size:14px;font-weight:600;color:var(--text)">App Info</div><div style="font-size:12px;color:var(--text3);margin-top:1px">Chat-X v1.0.0 · by Gideon Saviour</div></div>
+        <div style="flex:1"><div style="font-size:14px;font-weight:600;color:var(--text)">App Info</div><div style="font-size:12px;color:var(--text3);margin-top:1px">ChartX v1.0.0 · by Gideon Saviour</div></div>
         <svg width="16" height="16" fill="none" stroke="var(--text3)" stroke-width="2" viewBox="0 0 24 24"><polyline points="9 18 15 12 9 6"/></svg>
       </div>
     </div>
@@ -1677,9 +1677,9 @@ const contacts=[
   {id:'u5',name:'Priya Sharma',av:'PS',status:'offline',seen:'2h ago',unread:0,last:'See you tomorrow!',type:'dm'},
   {id:'u6',name:'James Okafor',av:'JO',status:'online',seen:'now',unread:0,last:'Sent you the files',type:'dm'},
   {id:'u7',name:'Luna Park',av:'LP',status:'offline',seen:'1d ago',unread:0,last:'Great working with you',type:'dm'},
-  {id:'ai',name:'Chat-X AI Assistant',av:'AI',status:'ai',seen:'now',unread:0,last:'How can I help you today?',type:'ai'},
+  {id:'ai',name:'ChartX AI Assistant',av:'AI',status:'ai',seen:'now',unread:0,last:'How can I help you today?',type:'ai'},
   {id:'g1',name:'Finite Brand Team',av:'FB',status:'group',seen:'now',unread:5,last:'Sarah: Pushing new designs now',type:'group',members:['David L','Sarah C','Marcus W','Priya S','James O','You'],admin:'David L'},
-  {id:'g2',name:'Chat-X Dev',av:'CX',status:'group',seen:'10m ago',unread:0,last:'Marcus: All tests passing',type:'group',members:['Marcus W','Priya S','James O','You'],admin:'You'},
+  {id:'g2',name:'ChartX Dev',av:'CX',status:'group',seen:'10m ago',unread:0,last:'Marcus: All tests passing',type:'group',members:['Marcus W','Priya S','James O','You'],admin:'You'},
   {id:'g3',name:'Bitcoin Builders',av:'BB',status:'group',seen:'30m ago',unread:2,last:'James: Block 850,000 mined!',type:'group',members:['James O','David L','Sarah C','Marcus W','Priya S','Luna P','You','Alex B','Tom K','Nina R','Chris M','Sam T'],admin:'James O'},
   {id:'c1',name:'Tech Enthusiasts',av:'TE',status:'group',seen:'2h ago',unread:0,last:'New AI models dropping this week',type:'community',members:1240},
   {id:'c2',name:'Bitcoin Network',av:'BN',status:'group',seen:'1h ago',unread:0,last:'BTC just hit a new milestone',type:'community',members:8900},
@@ -1702,11 +1702,11 @@ function mkAv(i,s,status,border='var(--card)'){
 }
 
 function seedMsgs(c){
-  if(c.type==='ai')return[{from:'ai',text:"Hi! I'm Chat-X AI. Ask me anything!",time:'now',st:'read'}]
+  if(c.type==='ai')return[{from:'ai',text:"Hi! I'm ChartX AI. Ask me anything!",time:'now',st:'read'}]
   if(c.type==='community')return[{from:c.id,text:`Welcome to ${c.name}! ${c.members?.toLocaleString()} members.`,time:'9:00 AM',st:'read'},{from:'u6',text:c.last,time:'10:30 AM',st:'read'}]
   return[
     {from:c.id,text:'Hey! How is everything going?',time:'10:00 AM',st:'read'},
-    {from:'me',text:"All good! Just finishing Chat-X — it's looking really clean.",time:'10:02 AM',st:'read'},
+    {from:'me',text:"All good! Just finishing ChartX — it's looking really clean.",time:'10:02 AM',st:'read'},
     {from:c.id,text:"Awesome! What features are in?",time:'10:04 AM',st:'read'},
     {from:'me',text:'AI assistant, group chats, voice/video calls, file sharing, events and communities!',time:'10:06 AM',st:'read'},
     {from:c.id,text:c.last,time:'10:10 AM',st:'delivered'},
@@ -1814,7 +1814,7 @@ function renderMessages(){
     return '<div class="msg-row'+(mine?' mine':'')+' fade">'
      +(!mine&&active?mkAv(active.av,28,isAI?'ai':null):'')
      +'<div><div class="'+(mine?'msg-mine':isAI?'msg-ai':'msg-theirs')+'" onclick="msgActions(\''+m.id+'\')" style="cursor:pointer">'
-     +(isAI?'<div style="font-size:10px;color:var(--primary);font-weight:700;margin-bottom:4px;letter-spacing:.5px">CHAT-X AI</div>':'')
+     +(isAI?'<div style="font-size:10px;color:var(--primary);font-weight:700;margin-bottom:4px;letter-spacing:.5px">CHARTX AI</div>':'')
      +quote+inner
      +'<div style="display:flex;align-items:center;justify-content:flex-end;gap:2px;margin-top:4px">'
      +'<span style="font-size:11px;color:'+(mine?'rgba(255,255,255,.55)':'var(--text-2)')+'">'+(m.time||'')
@@ -1841,7 +1841,7 @@ async function sendMessage(){
       const res=await fetch('https://api.groq.com/openai/v1/chat/completions',{
         method:'POST',
         headers:{'Content-Type':'application/json','Authorization':'Bearer '+GK},
-        body:JSON.stringify({model:'llama-3.3-70b-versatile',messages:[{role:'system',content:'You are Chat-X AI Assistant — smart, helpful and friendly. Give concise conversational answers.'},...aiHistory.slice(-10)],temperature:.7,max_tokens:1024})
+        body:JSON.stringify({model:'llama-3.3-70b-versatile',messages:[{role:'system',content:'You are ChartX AI Assistant — smart, helpful and friendly. Give concise conversational answers.'},...aiHistory.slice(-10)],temperature:.7,max_tokens:1024})
       })
       const data=await res.json()
       msgs.pop()
@@ -3061,11 +3061,11 @@ function submitContact(){
 function openTerms(){
   openSheet('Terms & privacy',
     '<div style="font-size:13px;color:var(--text3);line-height:1.7">'
-   +'<p style="margin-bottom:14px"><strong style="color:var(--text)">What we collect.</strong> Chat-X stores your name, and the email or phone number you signed up with, on this device. Nothing is sent to a server.</p>'
+   +'<p style="margin-bottom:14px"><strong style="color:var(--text)">What we collect.</strong> ChartX stores your name, and the email or phone number you signed up with, on this device. Nothing is sent to a server.</p>'
    +'<p style="margin-bottom:14px"><strong style="color:var(--text)">Your messages.</strong> Conversations are encrypted end to end. We cannot read them, and neither can anyone else who intercepts them.</p>'
    +'<p style="margin-bottom:14px"><strong style="color:var(--text)">Your photos.</strong> Profile pictures and wallpapers stay in your browser storage. They are never uploaded.</p>'
    +'<p style="margin-bottom:14px"><strong style="color:var(--text)">Deleting your data.</strong> Signing out removes your profile from this device. Clearing browser data removes everything.</p>'
-   +'<p style="margin-bottom:14px"><strong style="color:var(--text)">Acceptable use.</strong> Do not use Chat-X to harass others or to share unlawful content.</p>'
+   +'<p style="margin-bottom:14px"><strong style="color:var(--text)">Acceptable use.</strong> Do not use ChartX to harass others or to share unlawful content.</p>'
    +'<p style="color:var(--text3);font-size:12px">Last updated '+new Date().toLocaleDateString('en-GB',{day:'numeric',month:'long',year:'numeric'})+'</p></div>')
 }
 function openAppInfo(){
@@ -3074,7 +3074,7 @@ function openAppInfo(){
     '<div style="text-align:center;margin-bottom:20px">'
     +'<div style="width:64px;height:64px;border-radius:18px;background:linear-gradient(135deg,var(--primary),var(--primary-deep));display:flex;align-items:center;justify-content:center;margin:0 auto 12px">'
     +'<svg width="30" height="30" fill="none" stroke="#fff" stroke-width="2" viewBox="0 0 24 24"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg></div>'
-    +'<div style="font-size:18px;font-weight:700;color:var(--text)">Chat-X</div>'
+    +'<div style="font-size:18px;font-weight:700;color:var(--text)">ChartX</div>'
     +'<div style="font-size:13px;color:var(--text3);margin-top:2px">Version 1.0.0</div></div>'
     +[['Signed in as', u?fullName(u):'\u2014'],
       ['Account', u?(u.email||u.phone||'\u2014'):'\u2014'],
@@ -3216,7 +3216,7 @@ function toggleLike(id){
 function sharePost(id){
   const p=posts.find(x=>x.id===id); if(!p) return
   const txt=p.name+': '+(p.text||'shared a photo')
-  if(navigator.share){ navigator.share({title:'Chat-X',text:txt}).catch(()=>{}) }
+  if(navigator.share){ navigator.share({title:'ChartX',text:txt}).catch(()=>{}) }
   else if(navigator.clipboard){ navigator.clipboard.writeText(txt); toast('Copied to clipboard') }
   else toast('Sharing not supported here')
 }
@@ -3435,11 +3435,11 @@ const SEED_G=[
  {id:'g102',name:'Design Review',desc:'Post work in progress, get honest critique.',members:['u3'],joined:true,posts:[{uid:'u3',name:'Sarah Chen',text:'New type scale up for review.',ts:Date.now()-7200000}]}
 ]
 const SEED_PG=[
- {id:'pg1',name:'Chat-X Updates',cat:'Product',desc:'Release notes and roadmap for Chat-X.',followers:1240,following:true,posts:[{text:'Stories and the feed are live.',ts:Date.now()-3600000}]},
+ {id:'pg1',name:'ChartX Updates',cat:'Product',desc:'Release notes and roadmap for ChartX.',followers:1240,following:true,posts:[{text:'Stories and the feed are live.',ts:Date.now()-3600000}]},
  {id:'pg2',name:'Lagos Tech Weekly',cat:'Media',desc:'What shipped in Lagos this week.',followers:8900,following:false,posts:[]}
 ]
 const SEED_EV=[
- {id:'ev1',title:'Chat-X launch meetup',date:'2026-09-04',time:'18:00',place:'Yaba, Lagos',
+ {id:'ev1',title:'ChartX launch meetup',date:'2026-09-04',time:'18:00',place:'Yaba, Lagos',
   desc:'Demos, drinks and a look at what we are building next.',going:[],interested:['u3']}
 ]
 const SEED_MK=[
@@ -3627,7 +3627,7 @@ function rsvp(id,kind){
 }
 function createEvent(){
   openSheet('Create event',
-   '<label class="auth-label">TITLE</label><input id="ne-title" class="auth-input" placeholder="Chat-X launch meetup"/>'
+   '<label class="auth-label">TITLE</label><input id="ne-title" class="auth-input" placeholder="ChartX launch meetup"/>'
    +'<div class="auth-row"><div style="flex:1"><label class="auth-label">DATE</label><input id="ne-date" type="date" class="auth-input"/></div>'
    +'<div style="flex:1"><label class="auth-label">TIME</label><input id="ne-time" type="time" class="auth-input"/></div></div>'
    +'<label class="auth-label">LOCATION</label><input id="ne-place" class="auth-input" placeholder="Yaba, Lagos"/>'
