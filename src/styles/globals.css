@@ -257,3 +257,26 @@
 .broker-security svg{flex:none}
 @media(max-width:760px){.chat-glass-chooser{bottom:calc(97px + env(safe-area-inset-bottom))}}
 @media(max-width:365px){.chat-glass-chooser{left:calc(70% - 75px);width:150px;gap:10px}.chat-choice-orb{width:67px;height:67px;min-width:67px}}@media(prefers-reduced-motion:reduce){.chat-choice-orb{animation:none}}
+
+
+/* Original Chat-X splash artwork: displayed untouched, never cropped or restyled.
+   The source file belongs at public/assets/chat-x-neon-skyline-splash.png */
+.exact-splash-screen{
+ width:100%;min-height:100vh;min-height:100dvh;
+ background:#010b25;
+ display:flex;align-items:center;justify-content:center;
+ overflow:hidden;
+}
+.exact-splash-tap{
+ appearance:none;-webkit-appearance:none;cursor:pointer;
+ display:flex;align-items:center;justify-content:center;
+ background:transparent;border:0;padding:0;margin:0;
+ width:100%;height:100vh;height:100dvh;
+ overflow:hidden;
+}
+.exact-splash-tap img{
+ display:block;width:100%;height:100%;max-width:100%;
+ object-fit:contain;object-position:center;
+ pointer-events:none;user-select:none;-webkit-user-select:none;
+}
+.exact-splash-tap:focus-visible{outline:2px solid #67c9ff;outline-offset:-5px}
