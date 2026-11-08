@@ -606,3 +606,17 @@ body{overscroll-behavior-y:auto}
  .cx-home-header .brand.brand-large .brand-symbol,.cx-home-header .brand.brand-large .brand-symbol svg{width:69px!important;max-width:69px!important}
  .cx-home-header .cx-home-tools .icon-btn{width:38px}
 }
+
+/* Approved Home cards: functional components with the same glass card structure. */
+.cx-feature-grid{gap:8px}
+.cx-feature{min-height:165px;padding:12px 9px;gap:7px;overflow:hidden;background:linear-gradient(155deg,#0b315a,#03152d 80%);border:1px solid #25abf5;box-shadow:inset 0 2px 6px #39a3f744,0 2px 13px #0277da55}
+.cx-feature .cx-feature-title{display:flex;gap:8px;align-items:center;color:#f5faff;font-size:clamp(12px,3.4vw,16px);width:100%;white-space:nowrap}
+.cx-feature .cx-feature-title svg{flex:none;color:#0be8e5}
+.cx-feature .cx-feature-title strong{font-size:inherit}
+.cx-feature .cx-feature-stat{font-size:clamp(19px,5vw,27px);line-height:1.1;color:white}
+.cx-feature .cx-feature-positive{color:#20f6a6;font-weight:750;display:flex;align-items:center;justify-content:space-between;width:100%;font-size:clamp(12px,3.6vw,17px)}
+.cx-feature .cx-feature-positive svg{color:#06dece}
+.cx-feature .cx-feature-products{width:100%;display:flex;gap:4px;align-items:stretch;min-height:57px}
+.cx-feature .cx-feature-products img{min-width:0;width:calc((100% - 8px)/3);height:60px;object-fit:cover;border-radius:9px;border:1px solid #5b94d8}
+.cx-feature .cx-feature-cta{margin-top:auto;align-self:stretch;padding:9px 4px;display:flex;justify-content:center;align-items:center;gap:5px;text-align:center;color:#fff;font-size:clamp(10px,2.8vw,13px);font-weight:800;white-space:nowrap;border-radius:30px;background:linear-gradient(90deg,#00c8e6,#1568ec);box-shadow:inset 0 1px 4px #ffffffaa,0 2px 13px #007eea88;border:1px solid #80eaff}
+.cx-feature .cx-feature-cta svg{flex:none}
