@@ -51,8 +51,44 @@ function Avatar({id='gideon',name='',size='md',badge=false}) { return <span clas
 function TabButton({active,onClick,icon:Icon,children}) {return <button type="button" className={'tab-button '+(active?'active':'')} onClick={onClick}>{Icon&&<Icon size={18}/>}<span>{children}</span></button>}
 function PageTop({title,right,back}) {return <><header className="screen-top">{back&&<button className="icon-btn" onClick={back} aria-label="Back"><ArrowLeft size={21}/></button>}<strong>{title}</strong><div className="screen-top-right">{right}</div></header></>}
 function SignIn({onEnter}) {
-  const [method,setMethod]=useState(null),[mode,setMode]=useState('create'),[identifier,setIdentifier]=useState(''),[pass,setPass]=useState(''),[show,setShow]=useState(false)
-  return <div className="auth-shell"><div className="auth-orbit auth-orbit-one"/><div className="auth-orbit auth-orbit-two"/><div className="auth-inner"><Brand large/><h1>Chat-<span>X</span></h1><p className="auth-tagline">Connect. Share. Inspire.</p><div className="auth-panel"><h2>{mode==='create'?'Create Account':'Welcome Back'}</h2><p>Join a world built for connection.</p>{!method?<><button className="primary wide" onClick={()=>setMethod('email')}><Mail size={19}/> Continue with Email</button><button className="outline wide" onClick={()=>setMethod('phone')}><Smartphone size={19}/> Continue with Phone</button><div className="auth-separator">or continue with</div><div className="social-options"><button title="Google sign-in requires configuration" onClick={()=>setMethod('email')}>G</button><button title="Facebook sign-in requires configuration" onClick={()=>setMethod('email')}>f</button><button title="Apple sign-in requires configuration" onClick={()=>setMethod('email')}>●</button></div></>:<form onSubmit={e=>{e.preventDefault(); if(identifier.trim()&&pass.length>=4)onEnter()}}><label>{method==='email'?'Email address':'Phone number'}</label><input required type={method==='email'?'email':'tel'} value={identifier} onChange={e=>setIdentifier(e.target.value)} placeholder={method==='email'?'you@example.com':'+234 800 000 0000'}/><label>Password</label><div className="password-wrap"><input required minLength={4} type={show?'text':'password'} value={pass} onChange={e=>setPass(e.target.value)} placeholder="Enter your password"/><button type="button" onClick={()=>setShow(!show)} aria-label="Show password">{show?<EyeOff size={17}/>:<Eye size={17}/>}</button></div><button className="primary wide" type="submit">{mode==='create'?'Explore Chat-X':'Sign In'} <ChevronRight size={18}/></button><button className="auth-back" type="button" onClick={()=>setMethod(null)}>Choose another method</button><small className="demo-note">Preview mode: form opens the demonstration app. Real accounts require backend setup.</small></form>}<p className="auth-switch">{mode==='create'?'Already have an account?':'New to Chat-X?'} <button onClick={()=>{setMode(mode==='create'?'login':'create');setMethod(null)}}>{mode==='create'?'Sign In':'Create Account'}</button></p></div></div></div>
+ const [mode,setMode]=useState('create')
+ const [fullName,setFullName]=useState('')
+ const [email,setEmail]=useState('')
+ const [password,setPassword]=useState('')
+ const [showPassword,setShowPassword]=useState(false)
+ const [status,setStatus]=useState('')
+ const [imageFailed,setImageFailed]=useState(false)
+ const submit=e=>{
+  e.preventDefault()
+  if(mode==='create'&&!fullName.trim()){setStatus('Enter your full name.');return}
+  if(!email.trim()||!password){setStatus('Enter your email and password.');return}
+  if(password.length<8){setStatus('Use at least 8 characters for your password.');return}
+  // Existing application is a UI preview, not a registered-account service.
+  // Enter the demo app without claiming that an actual account was created.
+  onEnter()
+ }
+ const social=provider=>setStatus(provider+' sign-in needs an authentication provider to be connected. No account has been created.')
+ return <section className="signup-page">
+  {imageFailed&&<div className="signup-art-error">Sign-up artwork is missing from the deployed assets. The original PNG must be installed at /assets/Chat-X Neon Account Signup Screen-2.png.</div>}
+  <div className="signup-artboard">
+   <img className="signup-artwork" src="/assets/Chat-X%20Neon%20Account%20Signup%20Screen-2.png" alt="" aria-hidden="true" onError={()=>setImageFailed(true)} />
+   <form className="signup-hitarea" onSubmit={submit} autoComplete="on">
+    {mode==='create'&&<label className="signup-input signup-full-name"><span className="sr-only">Full Name</span><input type="text" name="name" aria-label="Full Name" placeholder="Full Name" autoComplete="name" required value={fullName} onChange={e=>setFullName(e.target.value)} /></label>}
+    <label className="signup-input signup-email"><span className="sr-only">Email Address</span><input type="email" name="email" aria-label="Email Address" placeholder="Email Address" autoComplete="email" required value={email} onChange={e=>setEmail(e.target.value)} /></label>
+    <label className="signup-input signup-password"><span className="sr-only">Password</span><input type={showPassword?'text':'password'} name="password" aria-label="Password" placeholder="Password" autoComplete={mode==='create'?'new-password':'current-password'} minLength={8} required value={password} onChange={e=>setPassword(e.target.value)} /></label>
+    <button type="button" className="signup-eye" onClick={()=>setShowPassword(x=>!x)} aria-label={showPassword?'Hide password':'Show password'} aria-pressed={showPassword}></button>
+    <button className="signup-submit" type="submit" aria-label={mode==='create'?'Sign Up - open Chat-X preview':'Sign In - open Chat-X preview'} />
+   </form>
+   <div className="signup-social">
+    <button className="signup-social-google" aria-label="Continue with Google" onClick={()=>social('Google')}></button>
+    <button className="signup-social-facebook" aria-label="Continue with Facebook" onClick={()=>social('Facebook')}></button>
+    <button className="signup-social-apple" aria-label="Continue with Apple" onClick={()=>social('Apple')}></button>
+   </div>
+   <button className="signup-signin-link" onClick={()=>{setMode(x=>x==='create'?'signin':'create');setStatus('')}} aria-label={mode==='create'?'Sign In':'Return to Sign Up'} />
+   {mode==='signin'&&<div className="signup-signin-note" role="status">Sign in preview: enter your email and password, then tap Sign Up to continue. Full authentication requires backend configuration.</div>}
+   {status&&<div className="signup-message" role="status">{status}<button onClick={()=>setStatus('')} aria-label="Dismiss message">×</button></div>}
+  </div>
+ </section>
 }
 function Welcome({next}) {
  const [imageSettled,setImageSettled]=useState(false)
