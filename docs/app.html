@@ -6,7 +6,7 @@
 <meta http-equiv="Pragma" content="no-cache"/>
 <meta http-equiv="Expires" content="0"/>
 <meta name="viewport" content="width=device-width,initial-scale=1.0"/>
-<title>Chat-X</title>
+<title>ChartX</title>
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet"/>
 <style>
 *{box-sizing:border-box;margin:0;padding:0}
@@ -140,7 +140,7 @@ input::placeholder,textarea::placeholder{color:#444}
       <svg width="52" height="52" fill="none" stroke="#fff" stroke-width="2.2" viewBox="0 0 24 24"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>
     </div>
   </div>
-  <div id="splash-name">Chat-X</div>
+  <div id="splash-name">ChartX</div>
   <div id="splash-tag">Next generation messaging</div>
   <div id="splash-bottom">
     <div id="splash-from">from</div>
@@ -161,7 +161,7 @@ input::placeholder,textarea::placeholder{color:#444}
           <div class="sdot" style="width:10px;height:10px;background:#10b981;bottom:1px;right:1px;border:2px solid #111"></div>
         </div>
         <div>
-          <div style="font-weight:800;font-size:16px;letter-spacing:-.3px">Chat-X</div>
+          <div style="font-weight:800;font-size:16px;letter-spacing:-.3px">ChartX</div>
           <div style="font-size:10px;color:#00897B;font-weight:600">End-to-end Encrypted</div>
         </div>
       </div>
@@ -210,7 +210,7 @@ input::placeholder,textarea::placeholder{color:#444}
     <div style="width:80px;height:80px;border-radius:24px;background:linear-gradient(135deg,#00897B,#00695C);display:flex;align-items:center;justify-content:center;margin-bottom:24px;box-shadow:0 0 40px rgba(0,137,123,0.25)">
       <svg width="36" height="36" fill="none" stroke="#fff" stroke-width="2" viewBox="0 0 24 24"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>
     </div>
-    <h2 style="font-size:24px;font-weight:700;margin-bottom:8px">Welcome to Chat-X</h2>
+    <h2 style="font-size:24px;font-weight:700;margin-bottom:8px">Welcome to ChartX</h2>
     <p style="color:#666;font-size:15px;margin-bottom:32px;text-align:center;max-width:300px">Select a conversation or try the AI Assistant</p>
     <div style="display:flex;gap:10px;flex-wrap:wrap;justify-content:center">
       <div class="pill">Encrypted</div>
@@ -411,7 +411,7 @@ function renderMessages(){
     return`<div class="msg-row${mine?' mine':''} fade">
       ${(!mine&&active)?av(active.av,28,isAI?'ai':null):''}
       <div class="${mine?'msg-mine':isAI?'msg-ai':'msg-theirs'}">
-        ${isAI?`<div style="font-size:10px;color:#00897B;font-weight:700;margin-bottom:4px;letter-spacing:.5px">CHAT-X AI</div>`:''}
+        ${isAI?`<div style="font-size:10px;color:#00897B;font-weight:700;margin-bottom:4px;letter-spacing:.5px">CHARTX AI</div>`:''}
         ${isAI?m.text.replace(/\n/g,"<br>"):m.text}
         <div style="display:flex;align-items:center;justify-content:flex-end;gap:2px;margin-top:4px">
           <span style="font-size:11px;color:${mine?'rgba(255,255,255,.4)':'#444'}">${m.time}</span>
@@ -449,7 +449,7 @@ async function sendMessage(){
         body:JSON.stringify({
           model:'llama-3.3-70b-versatile',
           messages:[
-            {role:'system',content:'You are Chat-X AI Assistant — a smart, helpful, intelligent assistant built into the Chat-X messaging app. Answer questions accurately and concisely. Be conversational and friendly. For current events give your best knowledge and mention your cutoff if needed.'},
+            {role:'system',content:'You are ChartX AI Assistant — a smart, helpful, intelligent assistant built into the ChartX messaging app. Answer questions accurately and concisely. Be conversational and friendly. For current events give your best knowledge and mention your cutoff if needed.'},
             ...aiHistory.slice(-10)
           ],
           temperature:0.7,
