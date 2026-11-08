@@ -684,3 +684,21 @@ body{overscroll-behavior-y:auto}
  margin:0!important;
 }
 @media(max-width:360px){.balance-card > button.primary.wide{max-width:235px!important;height:44px!important;min-height:44px!important}}
+
+/* Detail-page launch controls are native buttons, never bitmap hit areas. */
+.cx-post-author,.cx-post-author-name{border:0;background:transparent;padding:0;color:inherit;display:inline-flex;align-items:center;text-align:left}
+.cx-post-author-name b{font-size:14px}
+.cx-open-post{border:0;background:transparent;text-align:left;display:block;width:100%;padding:15px 2px;color:inherit;font:inherit;cursor:pointer;white-space:pre-wrap}
+.cx-open-post:focus-visible,.cx-post-author:focus-visible,.cx-post-author-name:focus-visible{outline:2px solid #5cccff;outline-offset:3px;border-radius:8px}
+.cx-open-image{padding:0;border:0;display:block;background:transparent;width:100%;border-radius:14px;overflow:hidden}
+.cx-open-image .cx-post-image{width:100%}
+.cx-community-open{display:flex;flex:1;min-width:0;flex-direction:column;gap:3px;align-items:flex-start;text-align:left;border:0;background:transparent;color:inherit;padding:0}
+.cx-community-open small{font-size:11px;color:#aac4e3}
+.cx-community-open p{font-size:12px}
+.cx-product-image{display:block;width:100%;padding:0;border:0;background:transparent}
+.cx-product-image img{width:100%;max-height:220px;object-fit:cover}
+.cx-product-title{background:transparent;border:0;color:white;text-align:left;font-size:14px;font-weight:750;padding:0}
+.cx-chat-user{display:flex;align-items:center;gap:8px;min-width:0;flex:1;text-align:left;border:0;background:transparent;color:inherit;padding:0}
+.cx-chat-user>div{display:grid;gap:4px}
+.cx-chat-user small{font-size:11px;color:#a4c3df}
+@media(max-width:760px){.core-page,.cx-home,.messages-main,.community-list,.product-grid{max-width:100%;overflow-x:clip}}
