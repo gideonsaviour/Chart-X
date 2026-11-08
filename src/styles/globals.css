@@ -582,3 +582,27 @@ body{overscroll-behavior-y:auto}
  .glass-nav-dock{bottom:0!important}
  .app-screen{overflow-x:clip}
 }
+
+/* Critical mobile layout correction: Brand.large is sized 205×141px in
+   legacy CSS; constrain the ACTUAL SVG, not only its parent span. */
+.cx-home-header{height:78px;min-height:78px;max-height:78px;box-sizing:border-box;overflow:hidden;flex-wrap:nowrap;isolation:isolate}
+.cx-home-header .brand.brand-large{display:flex;align-items:center;justify-content:flex-start;flex:0 0 78px;width:78px;max-width:78px;height:54px;min-width:0;overflow:hidden}
+.cx-home-header .brand.brand-large .brand-symbol{display:block;flex:0 0 78px;width:78px!important;height:54px!important;margin:0!important;overflow:hidden;filter:drop-shadow(0 0 4px #089aff88)}
+.cx-home-header .brand.brand-large .brand-symbol svg{display:block;width:78px!important;height:54px!important;max-width:78px!important;max-height:54px!important;overflow:hidden;filter:none!important}
+.cx-home-header .cx-home-tools{margin-left:auto;min-width:0;flex:0 0 auto}
+.cx-home-header .cx-home-tools .icon-btn{background:transparent;width:42px;height:42px}
+.cx-home-header .cx-home-profile .avatar{width:39px;height:39px}
+.cx-composer{min-height:52px;margin-top:8px}
+.cx-composer .avatar{width:38px;height:38px}
+.cx-stories{gap:8px}
+.cx-story{width:calc((100vw - 56px)/5);max-width:80px;min-width:62px}
+.cx-post-image{image-rendering:auto}
+@media(min-width:761px){
+ .cx-story{width:76px}
+ .cx-home-header{padding-top:10px}
+}
+@media(max-width:360px){
+ .cx-home-header .brand.brand-large{flex-basis:69px;width:69px}
+ .cx-home-header .brand.brand-large .brand-symbol,.cx-home-header .brand.brand-large .brand-symbol svg{width:69px!important;max-width:69px!important}
+ .cx-home-header .cx-home-tools .icon-btn{width:38px}
+}
