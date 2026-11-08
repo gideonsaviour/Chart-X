@@ -347,70 +347,62 @@ function Profile({notify,navigate}) {
   if(navigator.share){try{await navigator.share({title:'Chat-X',text:profile.name+' on Chat-X',url:location.href});return}catch{}}
   try{await navigator.clipboard.writeText(location.href);notify('Preview link copied')}catch{notify('Sharing is not available in this browser')}
  }
- return <section className="cx-artist-profile">
-  <div className="cx-artist-cover" style={cover?{backgroundImage:'linear-gradient(180deg,rgba(0,0,0,.2),rgba(0,0,0,.3)),url('+JSON.stringify(cover)+')'}:undefined}>
-   {!cover&&<div className="cx-artist-cover-brand" aria-hidden="true"><span>SS</span><small>SILVER SONIK</small></div>}
-   <nav className="cx-artist-tools" aria-label="Profile actions">
-    <button type="button" onClick={()=>setShowMenu(v=>!v)} aria-label="Open profile menu"><Menu/></button>
-    <span/>
-    <button type="button" onClick={()=>{setDraft(profile);setEditing(true)}} aria-label="Edit profile"><Edit3/></button>
-    <button type="button" onClick={()=>navigate('discover')} aria-label="Search"><Search/></button>
-    <button type="button" onClick={()=>setShowMenu(v=>!v)} aria-label="More options"><MoreHorizontal/></button>
-   </nav>
-   {showMenu&&<div className="cx-artist-menu">
-     <button onClick={()=>{setShowMenu(false);setDraft(profile);setEditing(true)}}><Edit3 size={17}/>Edit profile</button>
-     <button onClick={()=>{setShowMenu(false);navigate('privacy')}}><Shield size={17}/>Privacy & Security</button>
-     <button onClick={()=>{setShowMenu(false);share()}}><Share2 size={17}/>Share profile</button>
-     <button onClick={()=>{setShowMenu(false);navigate('settings')}}><Settings size={17}/>Settings</button>
-   </div>}
-   <CoverCameraControl notify={notify}/>
-   <div className="cx-artist-portrait">
-    <button type="button" className="cx-artist-thought" onClick={()=>{setThoughtDraft(profile.thought||'');setEditingThought(true)}} aria-label="Edit profile thought">{profile.thought||'Thinking about…'}<span className="cx-thought-dot"/></button>
-    <button type="button" className="cx-artist-photo-view" onClick={()=>navigate('media/me')} aria-label="View your profile picture"><ProfilePhoto alt="Your profile picture"/></button>
+ return <section className="cx-artist-profile cx-tiktok-profile">
+  <header className="cx-tiktok-topbar">
+   <button type="button" aria-label="Edit profile" onClick={()=>{setDraft(profile);setEditing(true)}}><Edit3 size={25}/></button>
+   <div className="cx-tiktok-top-actions">
+    <button type="button" aria-label="Notifications" onClick={()=>navigate('notifications')}><Bell size={22}/></button>
+    <button type="button" aria-label="Discover people" onClick={()=>navigate('discover')}><UserPlus size={25}/></button>
+    <button type="button" aria-label="Profile menu" aria-expanded={showMenu} onClick={()=>setShowMenu(v=>!v)}><Menu size={27}/></button>
+   </div>
+  </header>
+  {showMenu&&<div className="cx-tiktok-menu">
+   <button onClick={()=>{setShowMenu(false);setDraft(profile);setEditing(true)}}><Edit3 size={17}/>Edit profile</button>
+   <button onClick={()=>{setShowMenu(false);navigate('privacy')}}><Shield size={17}/>Privacy & Security</button>
+   <button onClick={()=>{setShowMenu(false);share()}}><Share2 size={17}/>Share profile</button>
+   <button onClick={()=>{setShowMenu(false);navigate('settings')}}><Settings size={17}/>Settings</button>
+  </div>}
+  <section className="cx-tiktok-summary" aria-label="Your profile">
+   <div className="cx-tiktok-left">
+    <button className="cx-tiktok-name" type="button" onClick={()=>setExpanded(v=>!v)} aria-expanded={expanded}><span>{profile.name}</span><ChevronDown size={24}/></button>
+    <p className="cx-tiktok-handle">{profile.handle}</p>
+    <div className="cx-tiktok-stats">
+     <button type="button" onClick={()=>navigate('requests')}><b>—</b><span>Following</span></button>
+     <button type="button" onClick={()=>navigate('requests')}><b>—</b><span>Followers</span></button>
+     <button type="button" onClick={()=>setTab('Likes')}><b>—</b><span>Likes</span></button>
+    </div>
+   </div>
+   <div className="cx-tiktok-photo-area">
+    <button type="button" className="cx-tiktok-thought" onClick={()=>{setThoughtDraft(profile.thought||'');setEditingThought(true)}} aria-label="Edit profile thought">{profile.thought||'On your mind…'}</button>
+    <button type="button" className="cx-tiktok-photo" onClick={()=>navigate('media/me')} aria-label="View your profile picture"><ProfilePhoto alt="Your profile picture"/></button>
     <ProfileCameraControl notify={notify}/>
    </div>
-  </div>
-  <section className="cx-artist-info">
-   <div className="cx-artist-identity">
-    <h1>{profile.name}<span className="cx-artist-demo-badge" title="Demo profile badge, not official verification" aria-label="Demo badge"><Check size={15}/></span></h1>
-    <button className="cx-artist-expand" aria-label={expanded?'Collapse profile details':'Expand profile details'} aria-expanded={expanded} onClick={()=>setExpanded(v=>!v)}><ChevronRight className={expanded?'open':''} size={23}/></button>
-    <p>{profile.role||'Artist'}</p>
-   </div>
-   <p className="cx-artist-handle">{profile.handle}</p>
-   <div className="cx-artist-stats">
-    <button type="button" onClick={()=>navigate('requests')}><b>—</b><small>Followers · Demo</small></button>
-    <button type="button" onClick={()=>navigate('requests')}><b>—</b><small>Following · Demo</small></button>
-   </div>
-   <p className="cx-artist-bio">{profile.bio}</p>
-   {expanded&&<div className="cx-artist-extra">
-    {profile.location&&<p><MapPin size={16}/>{profile.location}</p>}
-    {profile.website&&<p><Globe2 size={16}/>{profile.website}</p>}
-    <button type="button" onClick={()=>{setDraft(profile);setEditing(true)}}>Edit profile details</button>
-   </div>}
-   <div className="cx-artist-common"><div className="cx-common-avatars"><Avatar id="sarah" size="sm"/><Avatar id="david" size="sm"/><Avatar id="queen" size="sm"/></div><span>Discover people and communities on Chat-X</span></div>
-   <div className="cx-artist-main-actions">
-    <button type="button" className="cx-artist-dashboard" onClick={()=>setTab('Dashboard')}><LayoutDashboard size={18}/>Dashboard</button>
-    <button type="button" className="cx-artist-create" onClick={()=>navigate('home')}><Plus size={22}/>Create</button>
-   </div>
-   <div className="cx-artist-tabs" role="tablist" aria-label="Profile content">
-    {['All','Reels','Photos'].map(t=><button type="button" role="tab" aria-selected={tab===t} key={t} className={tab===t?'active':''} onClick={()=>setTab(t)}>{t}</button>)}
-    <button type="button" role="tab" aria-selected={tab==='Friends'||tab==='Likes'} onClick={()=>setMoreOpen(v=>!v)}>More <ChevronDown size={14}/></button>
-   </div>
-   {moreOpen&&<div className="cx-artist-more-tabs"><button onClick={()=>{setTab('Friends');setMoreOpen(false)}}>Friends</button><button onClick={()=>{setTab('Likes');setMoreOpen(false)}}>Likes</button></div>}
-   {(tab==='All'||tab==='Dashboard')&&<div className="cx-artist-overview">
-    <div className="cx-artist-section-heading"><h2>At a glance</h2><button onClick={()=>{setDraft(profile);setEditing(true)}}>Edit</button></div>
-    <button className="cx-glance-item" onClick={()=>{setDraft(profile);setEditing(true)}}><UserRound size={19}/><span>{profile.role||'Artist'}</span></button>
-    <button className="cx-glance-item" onClick={()=>{setDraft(profile);setEditing(true)}}><MapPin size={19}/><span>{profile.location||'Add your location'}</span></button>
-    <button className="cx-glance-item" onClick={()=>{setDraft(profile);setEditing(true)}}><Globe2 size={19}/><span>{profile.website||'Add your website'}</span></button>
-    <div className="cx-artist-section-heading"><h2>Discover people</h2><button onClick={()=>navigate('discover')}>See all</button></div>
-    <div className="cx-artist-connection-row">{['sarah','david','queen'].map(id=><button key={id} onClick={()=>navigate('profile/'+id)}><Avatar id={id} size="lg"/><span>{id==='sarah'?'Sarah':id==='david'?'David':'Queen'}</span></button>)}</div>
-    <p className="cx-artist-demo-note">Sample profiles for navigation, not real friends or followers.</p>
-   </div>}
-   {tab==='Photos'&&<div className="photo-grid cx-artist-gallery"><button onClick={()=>navigate('media/me')} aria-label="View profile picture"><ProfilePhoto alt="Profile"/></button><button onClick={()=>navigate('media/post-post-jenny-1')} aria-label="View sample photo"><img src={referenceCity} alt="Demo city"/></button></div>}
-   {tab==='Reels'&&<div className="cx-artist-tab-content">Coming Soon — Video uploads will be available soon.</div>}
-   {tab==='Friends'&&<div className="cx-artist-overview">{['sarah','david','queen'].map(id=><button className="cx-glance-item" key={id} onClick={()=>navigate('profile/'+id)}><Avatar id={id} size="sm"/>{id==='sarah'?'Sarah':id==='david'?'David':'Queen'}<ChevronRight size={17}/></button>)}<p className="cx-artist-demo-note">Fictional profiles only. Actual friendships require backend setup.</p></div>}
-   {tab==='Likes'&&<div className="cx-artist-tab-content">Likes are saved locally in your demo feed.</div>}
   </section>
+  {expanded&&<div className="cx-tiktok-details"><b>{profile.role||'Artist'}</b><p>{profile.bio}</p><button onClick={()=>{setDraft(profile);setEditing(true)}}>Edit profile details</button></div>}
+  <div className="cx-tiktok-quick-actions">
+   <button onClick={()=>{setDraft(profile);setEditing(true)}}><Edit3 size={17}/>Edit profile</button>
+   <button onClick={()=>share()}><Share2 size={17}/>Share</button>
+   <button onClick={()=>navigate('privacy')}><Shield size={17}/>Privacy</button>
+  </div>
+  <div className="cx-artist-tabs" role="tablist" aria-label="Profile content">
+   {['All','Reels','Photos'].map(t=><button type="button" role="tab" aria-selected={tab===t} key={t} className={tab===t?'active':''} onClick={()=>setTab(t)}>{t}</button>)}
+   <button type="button" role="tab" aria-selected={tab==='Friends'||tab==='Likes'} onClick={()=>setMoreOpen(v=>!v)}>More <ChevronDown size={14}/></button>
+  </div>
+  {moreOpen&&<div className="cx-artist-more-tabs"><button onClick={()=>{setTab('Friends');setMoreOpen(false)}}>Friends</button><button onClick={()=>{setTab('Likes');setMoreOpen(false)}}>Likes</button></div>}
+  {(tab==='All'||tab==='Dashboard')&&<div className="cx-artist-overview">
+   <div className="cx-artist-section-heading"><h2>About</h2><button onClick={()=>{setDraft(profile);setEditing(true)}}>Edit</button></div>
+   <p className="cx-tiktok-about">{profile.bio}</p>
+   <button className="cx-glance-item" onClick={()=>{setDraft(profile);setEditing(true)}}><UserRound size={18}/><span>{profile.role||'Artist'}</span></button>
+   {profile.location&&<button className="cx-glance-item" onClick={()=>{setDraft(profile);setEditing(true)}}><MapPin size={18}/><span>{profile.location}</span></button>}
+   {profile.website&&<button className="cx-glance-item" onClick={()=>{setDraft(profile);setEditing(true)}}><Globe2 size={18}/><span>{profile.website}</span></button>}
+   <div className="cx-artist-section-heading"><h2>Discover people</h2><button onClick={()=>navigate('discover')}>See all</button></div>
+   <div className="cx-artist-connection-row">{['sarah','david','queen'].map(id=><button key={id} onClick={()=>navigate('profile/'+id)}><Avatar id={id} size="lg"/><span>{id==='sarah'?'Sarah':id==='david'?'David':'Queen'}</span></button>)}</div>
+   <p className="cx-artist-demo-note">Sample profiles; follower and like statistics require real account data.</p>
+  </div>}
+  {tab==='Photos'&&<div className="photo-grid cx-artist-gallery"><button onClick={()=>navigate('media/me')} aria-label="View profile picture"><ProfilePhoto alt="Profile"/></button><button onClick={()=>navigate('media/post-post-jenny-1')} aria-label="View sample photo"><img src={referenceCity} alt="Demo city"/></button></div>}
+  {tab==='Reels'&&<div className="cx-artist-tab-content">Coming Soon — Video uploads will be available soon.</div>}
+  {tab==='Friends'&&<div className="cx-artist-overview">{['sarah','david','queen'].map(id=><button className="cx-glance-item" key={id} onClick={()=>navigate('profile/'+id)}><Avatar id={id} size="sm"/>{id==='sarah'?'Sarah':id==='david'?'David':'Queen'}<ChevronRight size={17}/></button>)}</div>}
+  {tab==='Likes'&&<div className="cx-artist-tab-content">Likes from this device's demo will appear here when linked to your posts.</div>}
   {editingThought&&<div className="home-art-dialog-backdrop" onClick={()=>setEditingThought(false)}><form className="home-art-dialog cx-edit-form" onClick={e=>e.stopPropagation()} onSubmit={e=>{e.preventDefault();setProfile(p=>({...p,thought:thoughtDraft.trim()||'Thinking about…'}));setEditingThought(false);notify('Thought updated on this device')}}><div><strong>What’s on your mind?</strong><button type="button" aria-label="Close" onClick={()=>setEditingThought(false)}>×</button></div><label>Profile thought<input maxLength={50} value={thoughtDraft} onChange={e=>setThoughtDraft(e.target.value)} placeholder="Thinking about…"/></label><button className="home-art-dialog-submit" type="submit">Save</button></form></div>}
   {editing&&<div className="home-art-dialog-backdrop" onClick={()=>setEditing(false)}><form className="home-art-dialog cx-edit-form" onClick={e=>e.stopPropagation()} onSubmit={e=>{e.preventDefault();setProfile(draft);setEditing(false);notify('Profile saved on this device (demo only)')}}>
    <div><strong>Edit your profile</strong><button type="button" aria-label="Close" onClick={()=>setEditing(false)}>×</button></div>
