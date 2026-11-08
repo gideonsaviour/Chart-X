@@ -55,13 +55,15 @@ function SignIn({onEnter}) {
   return <div className="auth-shell"><div className="auth-orbit auth-orbit-one"/><div className="auth-orbit auth-orbit-two"/><div className="auth-inner"><Brand large/><h1>Chat-<span>X</span></h1><p className="auth-tagline">Connect. Share. Inspire.</p><div className="auth-panel"><h2>{mode==='create'?'Create Account':'Welcome Back'}</h2><p>Join a world built for connection.</p>{!method?<><button className="primary wide" onClick={()=>setMethod('email')}><Mail size={19}/> Continue with Email</button><button className="outline wide" onClick={()=>setMethod('phone')}><Smartphone size={19}/> Continue with Phone</button><div className="auth-separator">or continue with</div><div className="social-options"><button title="Google sign-in requires configuration" onClick={()=>setMethod('email')}>G</button><button title="Facebook sign-in requires configuration" onClick={()=>setMethod('email')}>f</button><button title="Apple sign-in requires configuration" onClick={()=>setMethod('email')}>●</button></div></>:<form onSubmit={e=>{e.preventDefault(); if(identifier.trim()&&pass.length>=4)onEnter()}}><label>{method==='email'?'Email address':'Phone number'}</label><input required type={method==='email'?'email':'tel'} value={identifier} onChange={e=>setIdentifier(e.target.value)} placeholder={method==='email'?'you@example.com':'+234 800 000 0000'}/><label>Password</label><div className="password-wrap"><input required minLength={4} type={show?'text':'password'} value={pass} onChange={e=>setPass(e.target.value)} placeholder="Enter your password"/><button type="button" onClick={()=>setShow(!show)} aria-label="Show password">{show?<EyeOff size={17}/>:<Eye size={17}/>}</button></div><button className="primary wide" type="submit">{mode==='create'?'Explore Chat-X':'Sign In'} <ChevronRight size={18}/></button><button className="auth-back" type="button" onClick={()=>setMethod(null)}>Choose another method</button><small className="demo-note">Preview mode: form opens the demonstration app. Real accounts require backend setup.</small></form>}<p className="auth-switch">{mode==='create'?'Already have an account?':'New to Chat-X?'} <button onClick={()=>{setMode(mode==='create'?'login':'create');setMethod(null)}}>{mode==='create'?'Sign In':'Create Account'}</button></p></div></div></div>
 }
 function Welcome({next}) {
+ const [imageSettled,setImageSettled]=useState(false)
  useEffect(()=>{
-  const id=window.setTimeout(next,3200)
+  if(!imageSettled)return
+  const id=window.setTimeout(next,3000)
   return ()=>window.clearTimeout(id)
- },[next])
+ },[imageSettled,next])
  return <div className="exact-splash-screen">
   <button type="button" className="exact-splash-tap" onClick={next} aria-label="Chat-X splash screen. Tap to continue">
-   <img src="/assets/Chat-X%20Neon%20Skyline%20Splash%20Screen-1.png" alt="Chat-X. Connect. Share. Inspire. Loading." draggable="false"/>
+   <img src="/assets/Chat-X%20Neon%20Skyline%20Splash%20Screen-1.png" alt="Chat-X. Connect. Share. Inspire. Loading." draggable="false" onLoad={()=>setImageSettled(true)} onError={()=>setImageSettled(true)}/>
   </button>
  </div>
 }
