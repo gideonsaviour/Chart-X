@@ -1,6 +1,7 @@
 import React,{useEffect,useState} from 'react'
 import { ArrowLeft,Lock,UserRound,Users,Heart,MessageCircle,Share2,Bookmark,ChevronRight,Search,X,Check,Shield,Globe2,Camera,ShoppingBag,TrendingUp,Bell,Settings,Eye,Image as ImageIcon,ExternalLink,Plus,Send,Flag,UserPlus } from 'lucide-react'
 import {referencePortrait,referenceJenny,referenceSarah,referenceDavid,referenceQueen,referenceCity,referencePhone,referenceHeadphones,referenceWatch} from './designAssets'
+import { ProfilePhoto, ProfileCameraControl, useProfilePhoto } from './ProfileCamera.jsx'
 import './socialCore.css'
 
 // Fictional, stable demo records; identities, media, and relationships use the same IDs.
@@ -69,7 +70,7 @@ function ProfileDetail({id,state,patch,navigate,notify,back,coming}){
  const toggle=()=>{if(privateAccount&&!approved){patch('requests',id,!requested);notify(requested?'Demo follow request cancelled':'Demo follow request set to Requested (not delivered)')}else{patch('relationships',id,followed?null:'following');notify(followed?'Demo unfollowed':'Demo followed locally')}}
  return <><CoreHeader title="Profile" back={back}/><div className="core-profile">
   <div className="core-profile-cover"><span>{owner?'Your profile':'Sample profile'}</span></div>
-  <div className="core-profile-intro"><button className="core-avatar-tap" aria-label={authorized?'Open profile photo':'Profile picture is private'} onClick={()=>authorized?navigate('media/'+id):null}><UserImage user={u} authorized={authorized} large/></button><div><h2>{u.name}</h2><p>{u.handle}</p></div></div>
+  <div className="core-profile-intro"><div className="core-owner-photo-wrap"><button className="core-avatar-tap" aria-label={authorized?'Open profile photo':'Profile picture is private'} onClick={()=>authorized?navigate('media/'+id):null}>{owner?<ProfilePhoto className="core-avatar large" alt="Your demo profile photo"/>:<UserImage user={u} authorized={authorized} large/>}</button>{owner&&<ProfileCameraControl notify={notify}/>}</div><div><h2>{u.name}</h2><p>{u.handle}</p></div></div>
   {!authorized?<div className="core-private"><Lock size={33}/><h3>This Account Is Private</h3><p>Follow this account and wait for approval to see their posts, photos, and profile content.</p><button className="core-primary" onClick={toggle}>{requested?'Requested':'Request to Follow'}</button></div>:<>
    <p className="core-bio">{u.bio}</p>
    <div className="core-profile-stats"><span>Demo profile</span><span>Posts {demoPosts.filter(p=>p.authorId===id).length}</span></div>
@@ -90,9 +91,10 @@ function PostDetail({id,state,patch,navigate,notify,back,coming}){
  return <><CoreHeader title="Post" back={back}/><article className="core-detail-card"><UserLink id={u.id} navigate={navigate} state={state}/><p className="core-post-text">{p.text}</p>{p.image&&<button className="core-image-link" onClick={()=>navigate('media/post-'+id)}><img src={p.image} alt="Post attachment"/></button>}<small>{p.created} · Demonstration content</small><div className="core-action-row"><button onClick={()=>patch('likes',id,!state.likes?.[id])}><Heart size={17} fill={state.likes?.[id]?'currentColor':'none'}/>{state.likes?.[id]?'Liked':'Like'}</button><button onClick={()=>patch('saved',id,!state.saved?.[id])}><Bookmark size={17}/>{state.saved?.[id]?'Saved':'Save'}</button><button onClick={async()=>{try{await navigator.clipboard.writeText(window.location.href);notify('Demo post link copied')}catch{notify('Copy unavailable')}}}><Share2 size={17}/>Share</button></div><div className="core-action-row"><button onClick={()=>coming('Repost','Reposting to other users requires backend connectivity.')}>Repost</button><button onClick={()=>coming('Report Post','Reports need a moderation backend before submission.')}>Report</button></div><h3>Comments ({comments.length})</h3>{comments.map((c,i)=><div className="core-comment" key={i}><b>You · local demo</b><p>{c}</p></div>)}<form className="core-comment-input" onSubmit={e=>{e.preventDefault();if(!draft.trim())return;patch('comments',id,[...comments,draft.trim()]);setDraft('')}}><label className="sr-only" htmlFor="core-reply">Write a comment</label><input id="core-reply" placeholder="Write a comment…" value={draft} onChange={e=>setDraft(e.target.value)} required/><button aria-label="Send comment" type="submit"><Send size={19}/></button></form></article></>
 }
 function MediaScreen({id,state,back}){
+ const ownPhoto=useProfilePhoto()
  let src=null,title='Media viewer'
  if(id.startsWith('post-')){const p=demoPosts.find(x=>x.id===id.slice(5));if(p&&canAccess(demoUsers[p.authorId],'me',state,p.audience))src=p.image}
- else{const u=demoUsers[id];if(u&&canAccess(u,'me',state)) {src=u.image;title=u.name+' profile picture'}}
+ else{const u=demoUsers[id];if(u&&canAccess(u,'me',state)) {src=id==='me'?(ownPhoto||u.image):u.image;title=u.name+' profile picture'}}
  const [zoom,setZoom]=useState(false)
  return <div className="core-media-screen"><CoreHeader title={title} back={back}/>{src?<button className={'core-media-image'+(zoom?' zoom':'')} onClick={()=>setZoom(v=>!v)} aria-label="Tap to zoom image"><img src={src} alt={title}/></button>:<div className="core-private"><Lock/><p>This media is not available to this viewer.</p></div>}</div>
 }
