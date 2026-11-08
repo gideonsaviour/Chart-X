@@ -279,7 +279,39 @@
  object-fit:contain;object-position:center;
  pointer-events:none;user-select:none;-webkit-user-select:none;
 }
-.exact-splash-tap:focus-visible{outline:2px solid #67c9ff;outline-offset:-5px}
+/* Keep spinner anchored to the artwork, not the browser chrome.
+   The source image itself remains untouched. */
+.exact-splash-art{
+ position:relative;
+ width:min(100vw,56.25vh);
+ width:min(100vw,56.25dvh);
+ height:auto;
+ max-height:100%;
+ aspect-ratio:9/16;
+ flex:none;
+}
+.exact-splash-art img{width:100%;height:100%;object-fit:contain}
+.exact-splash-loader{
+ position:absolute;left:50%;top:60.45%;
+ width:7.4%;aspect-ratio:1;
+ transform:translate(-50%,-50%);
+ border-radius:50%;
+ /* Cover the spinner printed in the artwork, then animate a new one. */
+ background:radial-gradient(circle,#030d27 58%,transparent 70%);
+ display:grid;place-items:center;
+ pointer-events:none;
+}
+.exact-splash-loader::after{
+ content:"";position:absolute;inset:5%;border-radius:50%;
+ border:3px solid rgba(44,112,193,.35);
+ border-top-color:#30d9ff;
+ border-right-color:#148bdc;
+ animation:exactSplashSpin .8s linear infinite;
+}
+@keyframes exactSplashSpin{to{transform:rotate(360deg)}}
+@media(prefers-reduced-motion:reduce){
+ .exact-splash-loader::after{animation-duration:2s}
+}
 
 /* Asset-not-uploaded state only; the original splash PNG is displayed unchanged when present. */
 .splash-missing{display:grid;gap:10px;text-align:center;padding:24px;color:#d6e7fa;font-size:15px;font-weight:650;max-width:320px;line-height:1.5}.splash-missing small{font-size:12px;color:#88afce;font-weight:400}
