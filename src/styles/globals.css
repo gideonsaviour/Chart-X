@@ -420,3 +420,57 @@
 .home-art-dialog textarea{resize:vertical;width:100%;background:#0c2a50;border:1px solid #3476b4;border-radius:12px;color:white;font:inherit;padding:12px;min-height:90px}
 .home-art-dialog-submit{background:linear-gradient(90deg,#06c8ef,#1365f1);border:0;color:white;font-weight:750;padding:13px;border-radius:30px}
 @media(max-width:760px){.home-art-main{min-height:0!important}.home-art-page{width:100%}}
+
+/* A social feed must scroll: keep the original uploaded image pixel-for-pixel,
+   show its content section, and pin the image's original glass navbar below. */
+.home-art-viewport{
+ width:100%;
+ aspect-ratio:941 / 1495;
+ overflow:hidden;
+ position:relative;
+}
+.home-art-canvas{
+ width:100%;
+ aspect-ratio:941 / 1672;
+ height:auto;
+ overflow:visible;
+}
+.home-art-page{
+ overflow:visible;
+ min-height:calc(100dvh + 350px);
+ padding-bottom:calc(min(100vw,465px) * 0.21 + env(safe-area-inset-bottom));
+ touch-action:pan-y;
+ -webkit-overflow-scrolling:touch;
+}
+.home-art-main{overflow:visible!important}
+.home-art-more-feed{
+ padding:10px 13px 22px;
+ background:linear-gradient(180deg,#020b1d,#081b38);
+}
+.home-art-more-heading{padding:12px 3px 7px}
+.home-art-more-heading h2{font-family:Outfit,sans-serif;font-size:20px}
+.home-art-more-heading p{color:#9bb9d7;margin-top:5px;font-size:12px}
+.home-art-fixed-nav{
+ position:fixed;
+ z-index:25;
+ left:50%;
+ bottom:0;
+ transform:translateX(-50%);
+ width:min(100vw,465px);
+ height:calc(min(100vw,465px) * 182 / 941 + env(safe-area-inset-bottom));
+ background-color:#041328;
+ background-image:url('/assets/CX%20Social%20Dashboard%20UI.png');
+ background-repeat:no-repeat;
+ background-position:center bottom;
+ background-size:100% auto;
+ border-radius:42px 42px 0 0;
+}
+.home-art-nav{position:absolute;top:0;height:100%;border-radius:20px}
+.home-art-nav-home{left:1%;width:20%}
+.home-art-nav-communities{left:21%;width:20%}
+.home-art-nav-create{left:41%;width:18%}
+.home-art-nav-chats{left:60%;width:20%}
+.home-art-nav-profile{left:80%;width:19%}
+@media(min-width:761px){
+ .home-art-fixed-nav{left:calc(50% + 127px)}
+}
