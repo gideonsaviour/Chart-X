@@ -16,7 +16,7 @@ export const demoUsers={
 export const demoPosts=[
  {id:'post-jenny-1',authorId:'jenny',text:'Good vibes only! 💙\nLet’s keep pushing forward together.',image:referenceCity,created:'Sample · 2h ago',audience:'public',likes:1200},
  {id:'post-sarah-1',authorId:'sarah',text:'A new day to share something wonderful. What inspires you today?',created:'Sample · Yesterday',audience:'public',likes:18},
- {id:'post-david-1',authorId:'david',text:'Building our future one idea at a time. #ChatX',created:'Sample · Yesterday',audience:'public',likes:9},
+ {id:'post-david-1',authorId:'david',text:'Building our future one idea at a time. #ChartX',created:'Sample · Yesterday',audience:'public',likes:9},
  {id:'post-silver-1',authorId:'silver',text:'A private moment',created:'Sample · 1 day ago',audience:'followers',likes:3}
 ]
 export const demoCommunities=[
