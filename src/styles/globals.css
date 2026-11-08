@@ -291,6 +291,20 @@
  flex:none;
 }
 .exact-splash-art img{width:100%;height:100%;object-fit:contain}
+/* The original PNG has a baked-in “Loading...” caption below the spinner.
+   Mask just that caption with a soft navy blend. No other artwork is altered. */
+.exact-splash-art::after{
+ content:"";
+ position:absolute;
+ left:50%;
+ top:63.25%;
+ transform:translateX(-50%);
+ width:44%;
+ height:5.7%;
+ background:radial-gradient(ellipse at center,#04102b 0%,#04102b 48%,rgba(4,16,43,.96) 69%,transparent 100%);
+ pointer-events:none;
+}
+
 /* Preserve the splash artwork and Chat-X branding. Draw the trading arrow
    along its real zigzag path, then reveal the finished green sign at 4.25s. */
 .exact-splash-loader{
