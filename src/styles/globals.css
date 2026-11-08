@@ -653,3 +653,13 @@ body{overscroll-behavior-y:auto}
 .signup-login-back strong{color:#00e5ff}
 .signup-message{z-index:12;top:auto;bottom:5%;left:8%;right:8%;max-width:none}
 @media(max-height:670px){.signup-login-overlay{inset:18% 4% 5%;gap:7px}.signup-login-form{gap:8px}}
+
+/* Auth hit-testing fix: the full-screen form was intercepting taps intended
+   for Sign In and the social-provider icons below it. */
+.signup-hitarea{pointer-events:none!important}
+.signup-hitarea .signup-input,.signup-hitarea .signup-input input,.signup-hitarea .signup-eye,.signup-hitarea .signup-submit{pointer-events:auto!important}
+.signup-social{position:relative;z-index:6}
+.signup-social button{z-index:7;pointer-events:auto;touch-action:manipulation;-webkit-tap-highlight-color:rgba(22,158,252,.16)}
+.signup-signin-link{z-index:8!important;pointer-events:auto!important;touch-action:manipulation;min-height:35px}
+.signup-login-overlay{z-index:9;pointer-events:auto}
+.signup-message{z-index:15!important;bottom:10%!important;top:auto!important}
