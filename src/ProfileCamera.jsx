@@ -72,7 +72,7 @@ export function ProfileCameraControl({notify}){
   {!!candidate&&<div className="cx-photo-backdrop" onClick={()=>setCandidate('')}><section role="dialog" aria-modal="true" aria-label="Preview new profile photo" className="cx-photo-dialog" onClick={e=>e.stopPropagation()}>
     <header><h2>Profile Photo Preview</h2><button onClick={()=>setCandidate('')} aria-label="Close"><X size={22}/></button></header>
     <img src={candidate} alt="Selected profile picture preview"/>
-    <p>This photo will be saved on this device for your Chat-X demo. It will not be uploaded or shared.</p>
+    <p>This photo will be saved on this device for your ChartX demo. It will not be uploaded or shared.</p>
     <div><button type="button" onClick={()=>setCandidate('')}>Cancel</button><button type="button" className="cx-photo-save" onClick={commit}><Check size={18}/> Use Photo</button></div>
   </section></div>}
  </>
@@ -130,7 +130,7 @@ export function CoverCameraControl({notify}){
    <section className="cx-photo-dialog" role="dialog" aria-modal="true" aria-label="Preview cover image" onClick={e=>e.stopPropagation()}>
     <header><h2>Cover Photo Preview</h2><button aria-label="Close" onClick={()=>setCandidate('')}><X size={22}/></button></header>
     <img className="cx-cover-preview" src={candidate} alt="New cover preview"/>
-    <p>The cover is stored only on this device for the Chat-X demo. No public upload occurs.</p>
+    <p>The cover is stored only on this device for the ChartX demo. No public upload occurs.</p>
     <div><button type="button" onClick={()=>setCandidate('')}>Cancel</button><button type="button" className="cx-photo-save" onClick={commit}><Check size={18}/>Use Cover</button></div>
    </section>
   </div>}
