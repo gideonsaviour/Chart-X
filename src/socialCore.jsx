@@ -6,7 +6,7 @@ import './socialCore.css'
 
 // Fictional, stable demo records; identities, media, and relationships use the same IDs.
 export const demoUsers={
- me:{id:'me',name:'You',handle:'@chatx_demo',bio:'Exploring Chat-X',image:referencePortrait,private:false},
+ me:{id:'me',name:'You',handle:'@chatx_demo',bio:'Exploring ChartX',image:referencePortrait,private:false},
  jenny:{id:'jenny',name:'Jenny Bright',handle:'@jennybright',bio:'Good vibes and bright ideas 💙',image:referenceJenny,private:false,verified:false},
  sarah:{id:'sarah',name:'Sarah',handle:'@sarah_demo',bio:'Sharing moments and making connections',image:referenceSarah,private:false},
  david:{id:'david',name:'David King',handle:'@david_demo',bio:'Creator and tech enthusiast',image:referenceDavid,private:false},
@@ -20,7 +20,7 @@ export const demoPosts=[
  {id:'post-silver-1',authorId:'silver',text:'A private moment',created:'Sample · 1 day ago',audience:'followers',likes:3}
 ]
 export const demoCommunities=[
- {id:'tech',name:'Chat-X Tech Hub',description:'Explore AI, software and the future.',count:'24.5K',members:['sarah','david'],private:false},
+ {id:'tech',name:'ChartX Tech Hub',description:'Explore AI, software and the future.',count:'24.5K',members:['sarah','david'],private:false},
  {id:'music',name:'Music Vibes',description:'Music, conversations and new sounds.',count:'18.7K',members:['silver','queen'],private:false},
  {id:'friends',name:'Friends Forever',description:'A private space for trusted connections.',count:'Demo',members:['jenny'],private:true}
 ]
