@@ -1,7 +1,7 @@
 {
-  "name": "chat-x",
+  "name": "chartx",
   "version": "1.0.0",
-  "description": "A next-generation messaging app — better than WhatsApp",
+  "description": "ChartX social networking and messaging frontend",
   "scripts": {
     "dev": "vite",
     "build": "vite build",
