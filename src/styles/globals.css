@@ -280,3 +280,6 @@
  pointer-events:none;user-select:none;-webkit-user-select:none;
 }
 .exact-splash-tap:focus-visible{outline:2px solid #67c9ff;outline-offset:-5px}
+
+/* Asset-not-uploaded state only; the original splash PNG is displayed unchanged when present. */
+.splash-missing{display:grid;gap:10px;text-align:center;padding:24px;color:#d6e7fa;font-size:15px;font-weight:650;max-width:320px;line-height:1.5}.splash-missing small{font-size:12px;color:#88afce;font-weight:400}
