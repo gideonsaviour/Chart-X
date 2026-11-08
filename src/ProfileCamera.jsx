@@ -77,3 +77,62 @@ export function ProfileCameraControl({notify}){
   </section></div>}
  </>
 }
+
+const COVER_KEY='chatx_demo_cover_photo_v1'
+const COVER_EVENT='chatx-demo-cover-change'
+export function useCoverPhoto(){
+ const read=()=>{try{return window.localStorage.getItem(COVER_KEY)||''}catch{return ''}}
+ const [cover,setCover]=useState(read)
+ useEffect(()=>{
+  const refresh=()=>setCover(read())
+  window.addEventListener(COVER_EVENT,refresh)
+  window.addEventListener('storage',refresh)
+  return()=>{window.removeEventListener(COVER_EVENT,refresh);window.removeEventListener('storage',refresh)}
+ },[])
+ return cover
+}
+export function CoverCameraControl({notify}){
+ const input=useRef(null)
+ const [candidate,setCandidate]=useState('')
+ const [busy,setBusy]=useState(false)
+ const [error,setError]=useState('')
+ const select=async event=>{
+  const file=event.target.files?.[0]
+  event.target.value=''
+  if(!file)return
+  if(!file.type.startsWith('image/')){setError('Choose an image for your cover.');return}
+  if(file.size>12*1024*1024){setError('Choose an image under 12 MB.');return}
+  setBusy(true);setError('')
+  try{
+   const img=await createImageBitmap(file)
+   const canvas=document.createElement('canvas')
+   const scale=Math.min(1,1100/Math.max(img.width,img.height))
+   canvas.width=Math.max(1,Math.round(img.width*scale))
+   canvas.height=Math.max(1,Math.round(img.height*scale))
+   const ctx=canvas.getContext('2d')
+   if(!ctx)throw Error('Canvas unavailable')
+   ctx.drawImage(img,0,0,canvas.width,canvas.height)
+   img.close?.()
+   setCandidate(canvas.toDataURL('image/jpeg',.72))
+  }catch{setError('Could not open this image. Try another picture.')}
+  finally{setBusy(false)}
+ }
+ const commit=()=>{
+  try{window.localStorage.setItem(COVER_KEY,candidate);window.dispatchEvent(new Event(COVER_EVENT));setCandidate('');notify?.('Cover image saved on this device only (demo).')}
+  catch{setError('Not enough device storage. Try another image.')}
+ }
+ return <>
+  <input type="file" ref={input} accept="image/*" className="sr-only" onChange={select} aria-label="Choose new cover image"/>
+  <button type="button" className="cx-cover-camera" aria-label="Change cover image" title="Change cover image" onClick={()=>input.current?.click()}><Camera size={25}/></button>
+  {busy&&<span className="cx-photo-busy" role="status">Preparing cover…</span>}
+  {error&&<div className="cx-photo-error" role="alert">{error}<button onClick={()=>setError('')}>Dismiss</button></div>}
+  {candidate&&<div className="cx-photo-backdrop" onClick={()=>setCandidate('')}>
+   <section className="cx-photo-dialog" role="dialog" aria-modal="true" aria-label="Preview cover image" onClick={e=>e.stopPropagation()}>
+    <header><h2>Cover Photo Preview</h2><button aria-label="Close" onClick={()=>setCandidate('')}><X size={22}/></button></header>
+    <img className="cx-cover-preview" src={candidate} alt="New cover preview"/>
+    <p>The cover is stored only on this device for the Chat-X demo. No public upload occurs.</p>
+    <div><button type="button" onClick={()=>setCandidate('')}>Cancel</button><button type="button" className="cx-photo-save" onClick={commit}><Check size={18}/>Use Cover</button></div>
+   </section>
+  </div>}
+ </>
+}
