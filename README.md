@@ -1,6 +1,6 @@
-# Chat-X 💬
+# ChartX 💬
 
-A next-generation messaging app — better than WhatsApp.
+ChartX — social networking, messaging, communities, marketplace and trading (frontend demo).
 
 ## Features
 - ⚡ Real-time messaging
