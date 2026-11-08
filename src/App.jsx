@@ -59,7 +59,7 @@ function Welcome({next}) {
  const [imageMissing,setImageMissing]=useState(false)
  useEffect(()=>{
   if(!imageSettled)return
-  // Run the sign's five-second progress animation and page transition together.
+  // Animate the complete trading sign for five seconds before entering.
   const id=window.setTimeout(next,5000)
   return ()=>window.clearTimeout(id)
  },[imageSettled,next])
@@ -68,8 +68,7 @@ function Welcome({next}) {
    {!imageMissing&&<div className="exact-splash-art">
     <img src="/assets/Chat-X%20Neon%20Skyline%20Splash%20Screen-1.png" alt="" draggable="false" onLoad={()=>setImageSettled(true)} onError={()=>{setImageMissing(true);setImageSettled(true)}}/>
     <span className={'exact-splash-loader'+(imageSettled?' is-running':'')} aria-label="Loading">
-     <img className="exact-splash-sign-base" src="/assets/chatx-loading-sign.svg" alt="" aria-hidden="true"/>
-     <span className="exact-splash-sign-progress" aria-hidden="true"><img src="/assets/chatx-loading-sign.svg" alt=""/></span>
+     <img className="exact-splash-trading-sign" src="/assets/chatx-loading-sign.svg" alt="" aria-hidden="true"/>
     </span>
    </div>}
    {imageMissing&&<span className="splash-missing">Splash artwork has not been uploaded yet.<small>Opening Chat-X in five seconds.</small></span>}
