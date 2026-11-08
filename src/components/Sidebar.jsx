@@ -76,7 +76,7 @@ export default function Sidebar({ activeChat, setActiveChat }) {
           <div style={{ display: 'flex', alignItems: 'center', gap: 10 }}>
             <Avatar initials={currentUser.avatar} size={36} status="online" />
             <div>
-              <div style={{ fontWeight: 700, fontSize: 15, color: '#f1f1f5' }}>Chat-X</div>
+              <div style={{ fontWeight: 700, fontSize: 15, color: '#f1f1f5' }}>ChartX</div>
               <div style={{ fontSize: 11, color: '#7c3aed', display: 'flex', alignItems: 'center', gap: 4 }}>
                 <Shield size={10} /> End-to-end encrypted
               </div>
