@@ -73,10 +73,10 @@ function SignIn({onEnter}) {
   <div className="signup-artboard">
    <img className="signup-artwork" src="/assets/Chat-X%20Neon%20Account%20Signup%20Screen-2.png" alt="" aria-hidden="true" onError={()=>setImageFailed(true)} />
    <form className="signup-hitarea" onSubmit={submit} autoComplete="on">
-    {mode==='create'&&<label className="signup-input signup-full-name"><span className="sr-only">Full Name</span><input type="text" name="name" aria-label="Full Name" placeholder="Full Name" autoComplete="name" required value={fullName} onChange={e=>setFullName(e.target.value)} /></label>}
-    <label className="signup-input signup-email"><span className="sr-only">Email Address</span><input type="email" name="email" aria-label="Email Address" placeholder="Email Address" autoComplete="email" required value={email} onChange={e=>setEmail(e.target.value)} /></label>
-    <label className="signup-input signup-password"><span className="sr-only">Password</span><input type={showPassword?'text':'password'} name="password" aria-label="Password" placeholder="Password" autoComplete={mode==='create'?'new-password':'current-password'} minLength={8} required value={password} onChange={e=>setPassword(e.target.value)} /></label>
-    <button type="button" className="signup-eye" onClick={()=>setShowPassword(x=>!x)} aria-label={showPassword?'Hide password':'Show password'} aria-pressed={showPassword}></button>
+    {mode==='create'&&<label className="signup-input signup-full-name"><span className="sr-only">Full Name</span><input type="text" name="name" aria-label="Full Name" placeholder=" " autoComplete="name" required value={fullName} onChange={e=>setFullName(e.target.value)} /></label>}
+    <label className="signup-input signup-email"><span className="sr-only">Email Address</span><input type="email" name="email" aria-label="Email Address" placeholder=" " autoComplete="email" required value={email} onChange={e=>setEmail(e.target.value)} /></label>
+    <label className="signup-input signup-password"><span className="sr-only">Password</span><input type={showPassword?'text':'password'} name="password" aria-label="Password" placeholder=" " autoComplete={mode==='create'?'new-password':'current-password'} minLength={8} required value={password} onChange={e=>setPassword(e.target.value)} /></label>
+    <button type="button" className="signup-eye" onClick={()=>setShowPassword(x=>!x)} aria-label={showPassword?'Hide password':'Show password'} aria-pressed={showPassword}><Eye size={23} strokeWidth={2.2} aria-hidden="true"/></button>
     <button className="signup-submit" type="submit" aria-label={mode==='create'?'Sign Up - open Chat-X preview':'Sign In - open Chat-X preview'} />
    </form>
    <div className="signup-social">
