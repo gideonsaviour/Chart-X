@@ -59,7 +59,7 @@ function Welcome({next}) {
  const [imageMissing,setImageMissing]=useState(false)
  useEffect(()=>{
   if(!imageSettled)return
-  // Show five complete seconds of the rotating loader before entering.
+  // Run the sign's five-second progress animation and page transition together.
   const id=window.setTimeout(next,5000)
   return ()=>window.clearTimeout(id)
  },[imageSettled,next])
@@ -67,7 +67,10 @@ function Welcome({next}) {
   <div className="exact-splash-tap" aria-label="Chat-X loading screen" role="status">
    {!imageMissing&&<div className="exact-splash-art">
     <img src="/assets/Chat-X%20Neon%20Skyline%20Splash%20Screen-1.png" alt="" draggable="false" onLoad={()=>setImageSettled(true)} onError={()=>{setImageMissing(true);setImageSettled(true)}}/>
-    <span className="exact-splash-loader" aria-label="Loading" />
+    <span className={'exact-splash-loader'+(imageSettled?' is-running':'')} aria-label="Loading">
+     <img className="exact-splash-sign-base" src="/assets/chatx-loading-sign.svg" alt="" aria-hidden="true"/>
+     <span className="exact-splash-sign-progress" aria-hidden="true"><img src="/assets/chatx-loading-sign.svg" alt=""/></span>
+    </span>
    </div>}
    {imageMissing&&<span className="splash-missing">Splash artwork has not been uploaded yet.<small>Opening Chat-X in five seconds.</small></span>}
   </div>
