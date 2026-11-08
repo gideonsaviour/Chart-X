@@ -15,7 +15,7 @@ export default function EmptyState() {
       }}>
         <MessageSquare size={36} color="#fff" />
       </div>
-      <h2 style={{ fontSize: 24, fontWeight: 700, marginBottom: 8 }}>Welcome to Chat-X</h2>
+      <h2 style={{ fontSize: 24, fontWeight: 700, marginBottom: 8 }}>Welcome to ChartX</h2>
       <p style={{ color: '#8b8b9e', fontSize: 15, marginBottom: 40, textAlign: 'center', maxWidth: 320 }}>
         Select a conversation to start messaging, or start a new chat.
       </p>
