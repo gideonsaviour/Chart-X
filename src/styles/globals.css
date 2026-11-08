@@ -702,3 +702,34 @@ body{overscroll-behavior-y:auto}
 .cx-chat-user>div{display:grid;gap:4px}
 .cx-chat-user small{font-size:11px;color:#a4c3df}
 @media(max-width:760px){.core-page,.cx-home,.messages-main,.community-list,.product-grid{max-width:100%;overflow-x:clip}}
+
+/* Camera control for the account owner: circular photo with overlapping button. */
+.cx-profile-photo-wrapper,.core-owner-photo-wrap{position:relative;display:inline-flex;align-items:center;justify-content:center;isolation:isolate}
+.cx-profile-photo-wrapper .cx-profile-camera{right:-8px;bottom:-2px}
+.core-owner-photo-wrap .cx-profile-camera{right:-9px;bottom:-4px}
+.cx-profile-camera{
+ position:absolute;z-index:5;right:-8px;bottom:0;
+ width:clamp(40px,11vw,54px);height:clamp(40px,11vw,54px);
+ border-radius:50%;display:grid;place-items:center;
+ background:linear-gradient(155deg,#555e6b,#333d4e);
+ color:#fff;border:4px solid #222a35;
+ box-shadow:0 3px 12px #0009,inset 0 1px 3px #ffffff44;
+ padding:0;cursor:pointer;touch-action:manipulation
+}
+.cx-profile-camera svg{width:55%;height:55%}
+.cx-profile-camera:focus-visible{outline:3px solid #51d9ff;outline-offset:3px}
+.core-owner-photo-wrap .core-avatar-tap{display:grid;place-items:center}
+.core-owner-photo-wrap .core-avatar.large{object-fit:cover}
+.cx-photo-backdrop{position:fixed;inset:0;z-index:130;background:#010917dd;display:grid;place-items:center;padding:18px}
+.cx-photo-dialog{box-sizing:border-box;width:min(100%,420px);max-height:90dvh;overflow:auto;display:flex;flex-direction:column;gap:15px;padding:20px;border-radius:24px;border:1px solid #4398db;background:linear-gradient(145deg,#12376b,#071730);color:white;box-shadow:0 15px 50px #000b}
+.cx-photo-dialog header{display:flex;justify-content:space-between;align-items:center;gap:10px}
+.cx-photo-dialog h2{font-size:19px;font-family:Outfit,'DM Sans',sans-serif}
+.cx-photo-dialog header button{border:0;background:transparent;color:white;padding:6px}
+.cx-photo-dialog>img{width:min(100%,270px);height:min(65vw,270px);max-height:270px;object-fit:cover;border-radius:50%;align-self:center;border:3px solid #43a9ef}
+.cx-photo-dialog p{font-size:12px;line-height:1.5;color:#accbe9}
+.cx-photo-dialog>div{display:flex;align-items:center;justify-content:end;gap:10px}
+.cx-photo-dialog>div button{min-height:42px;border-radius:22px;padding:10px 17px;border:1px solid #4487bd;background:#173657;color:white;display:flex;align-items:center;gap:6px}
+.cx-photo-dialog>div .cx-photo-save{background:linear-gradient(110deg,#09bce0,#176be7);border-color:#7ceaff;font-weight:800}
+.cx-photo-error,.cx-photo-busy{position:fixed;bottom:calc(100px + env(safe-area-inset-bottom));left:10%;right:10%;z-index:125;padding:13px;border:1px solid #59b9ef;border-radius:13px;background:#091f3c;color:#fff;font-size:12px;text-align:center}
+.cx-photo-error button{margin-left:7px;background:#144e86;color:white;border:1px solid #3f98d0;border-radius:8px;padding:5px}
+@media(max-width:360px){.cx-profile-camera{width:41px;height:41px}}
