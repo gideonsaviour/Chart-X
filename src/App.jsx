@@ -67,25 +67,40 @@ function SignIn({onEnter}) {
   // Enter the demo app without claiming that an actual account was created.
   onEnter()
  }
- const social=provider=>setStatus(provider+' sign-in needs an authentication provider to be connected. No account has been created.')
+ const social=provider=>setStatus(provider+' login: Feature coming soon.')
  return <section className="signup-page">
   {imageFailed&&<div className="signup-art-error">Sign-up artwork could not be loaded.</div>}
   <div className="signup-artboard">
    <img className="signup-artwork" src="/assets/Chat-X%20Futuristic%20Sign-Up%20Screen.png" alt="" aria-hidden="true" onError={()=>setImageFailed(true)} />
-   <form className="signup-hitarea" onSubmit={submit} autoComplete="on">
+   {mode==='create'&&<form className="signup-hitarea" onSubmit={submit} autoComplete="on">
     {mode==='create'&&<label className="signup-input signup-full-name"><span className="sr-only">Full Name</span><input type="text" name="name" aria-label="Full Name" placeholder=" " autoComplete="name" required value={fullName} onChange={e=>setFullName(e.target.value)} /></label>}
     <label className="signup-input signup-email"><span className="sr-only">Email Address</span><input type="email" name="email" aria-label="Email Address" placeholder=" " autoComplete="email" required value={email} onChange={e=>setEmail(e.target.value)} /></label>
     <label className="signup-input signup-password"><span className="sr-only">Password</span><input type={showPassword?'text':'password'} name="password" aria-label="Password" placeholder=" " autoComplete={mode==='create'?'new-password':'current-password'} minLength={8} required value={password} onChange={e=>setPassword(e.target.value)} /></label>
     <button type="button" className="signup-eye" onClick={()=>setShowPassword(x=>!x)} aria-label={showPassword?'Hide password':'Show password'} aria-pressed={showPassword}></button>
-    <button className="signup-submit" type="submit" aria-label={mode==='create'?'Sign Up - open Chat-X preview':'Sign In - open Chat-X preview'} />
-   </form>
+    <button className="signup-submit" type="submit" aria-label="Sign Up - open Chat-X preview" />
+   </form>}
    <div className="signup-social">
     <button className="signup-social-google" aria-label="Continue with Google" onClick={()=>social('Google')}></button>
     <button className="signup-social-facebook" aria-label="Continue with Facebook" onClick={()=>social('Facebook')}></button>
     <button className="signup-social-apple" aria-label="Continue with Apple" onClick={()=>social('Apple')}></button>
    </div>
-   <button className="signup-signin-link" onClick={()=>{setMode(x=>x==='create'?'signin':'create');setStatus('')}} aria-label={mode==='create'?'Sign In':'Return to Sign Up'} />
-   {mode==='signin'&&<div className="signup-signin-note" role="status">Sign in preview: enter your email and password, then tap Sign Up to continue. Full authentication requires backend configuration.</div>}
+   {mode==='create'&&<button className="signup-signin-link" type="button" onClick={()=>{setMode('signin');setStatus('');setShowPassword(false)}} aria-label="Sign In" />}
+   {mode==='signin'&&<div className="signup-login-overlay">
+    <div className="signup-login-top"><h2>Welcome Back</h2><p>Sign in to your Chat-X account</p></div>
+    <form className="signup-login-form" onSubmit={submit} autoComplete="on">
+     <label>Email Address<input type="email" name="email" required autoComplete="email" placeholder="Enter email address" value={email} onChange={e=>setEmail(e.target.value)}/></label>
+     <label>Password<span className="signup-login-password"><input type={showPassword?'text':'password'} name="password" required minLength={8} autoComplete="current-password" placeholder="Enter password" value={password} onChange={e=>setPassword(e.target.value)}/><button type="button" onClick={()=>setShowPassword(v=>!v)} aria-label={showPassword?'Hide password':'Show password'}>{showPassword?<EyeOff size={20}/>:<Eye size={20}/>}</button></span></label>
+     <button className="signup-login-submit" type="submit">Sign In</button>
+    </form>
+    <p className="signup-login-disclaimer">Demo preview: signing in opens the app without verifying an account. Real authentication is coming soon.</p>
+    <p className="signup-login-or">or continue with</p>
+    <div className="signup-login-social">
+     <button type="button" onClick={()=>social('Google')} aria-label="Google login coming soon">Google</button>
+     <button type="button" onClick={()=>social('Facebook')} aria-label="Facebook login coming soon">Facebook</button>
+     <button type="button" onClick={()=>social('Apple')} aria-label="Apple login coming soon">Apple</button>
+    </div>
+    <button className="signup-login-back" type="button" onClick={()=>{setMode('create');setStatus('')}}>Don't have an account? <strong>Sign Up</strong></button>
+   </div>}}
    {status&&<div className="signup-message" role="status">{status}<button onClick={()=>setStatus('')} aria-label="Dismiss message">×</button></div>}
   </div>
  </section>
