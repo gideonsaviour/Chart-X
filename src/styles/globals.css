@@ -358,20 +358,46 @@
 /* Asset-not-uploaded state only; the original splash PNG is displayed unchanged when present. */
 .splash-missing{display:grid;gap:10px;text-align:center;padding:24px;color:#d6e7fa;font-size:15px;font-weight:650;max-width:320px;line-height:1.5}.splash-missing small{font-size:12px;color:#88afce;font-weight:400}
 
-/* Functional hit targets placed over the user's unchanged 941×1672 sign-up art.
-   All positions are percentages of the source image, so they scale together. */
+/* Functional controls aligned with original 941 × 1672 sign-up artwork.
+   Hide the fake 9:41 / wireless / battery status printed into the image.
+   The real phone's own status bar remains controlled by iOS/Android. */
 .signup-page{min-height:100dvh;background:#010a22;display:flex;justify-content:center;align-items:center}
-.signup-artboard{width:min(100vw,56.2799dvh);aspect-ratio:941/1672;position:relative;flex:none;overflow:hidden;background:#010a22}
+.signup-artboard{width:min(100vw,56.2799dvh);aspect-ratio:941/1672;position:relative;flex:none;overflow:hidden;background:#010a22;isolation:isolate}
 .signup-artwork{width:100%;height:100%;display:block;object-fit:contain;user-select:none;pointer-events:none}
-.signup-hitarea{position:absolute;inset:0}
+/* Opaque, softly matched patches only over the status indicators baked into the original PNG. */
+.signup-artboard::before,.signup-artboard::after{
+ content:"";position:absolute;z-index:1;top:1.1%;height:3.15%;pointer-events:none;
+ background:linear-gradient(90deg,#020d26,#020e29);
+}
+.signup-artboard::before{left:7%;width:16%}
+.signup-artboard::after{right:5%;width:17%;background:linear-gradient(90deg,#010b20,#010b20)}
+.signup-hitarea{position:absolute;inset:0;z-index:2}
 .signup-input{position:absolute;left:25.5%;width:58%;height:4.35%;display:flex;align-items:center}
 .signup-full-name{top:39.05%}
 .signup-email{top:45.65%}
 .signup-password{top:52.15%;width:50%}
-.signup-input input{width:100%;height:100%;background:rgba(3,20,48,.98);border:0;color:white;font-size:clamp(11px,2.6vw,23px);outline:none;padding:0 2%;border-radius:5px}
-.signup-input input::placeholder{color:#e6edfa}
-.signup-input input:focus{box-shadow:0 0 0 2px #65c6ff}
-.signup-eye{position:absolute;left:76.5%;top:52.05%;width:9%;height:4.8%;border:0;background:transparent;cursor:pointer}
+/* The original image already includes pill outlines and label text:
+   avoid adding a second border/rectangle over the original pills. */
+.signup-input input{
+ width:100%;height:100%;border:0;outline:0;box-shadow:none;
+ color:white;font-size:clamp(11px,2.6vw,23px);
+ background:transparent;padding:0 2%;border-radius:0;min-width:0;
+}
+.signup-input input::placeholder{color:transparent}
+.signup-input input:focus,.signup-input input:not(:placeholder-shown){
+ background:linear-gradient(180deg,#061b3b,#071a36);
+ border-radius:6px;box-shadow:none;outline:none;
+}
+.signup-input:focus-within{outline:0}
+.signup-eye{
+ position:absolute;left:76.5%;top:52.05%;width:9%;height:4.8%;
+ border:0;outline:0;cursor:pointer;
+ background:linear-gradient(90deg,#0a254d,#0a2a54);
+ display:grid;place-items:center;color:#fff;
+ border-radius:40%;padding:0;
+}
+/* A real unslashed eye replaces the crossed-out icon baked into the artwork. */
+.signup-eye svg{width:55%;height:55%;filter:drop-shadow(0 1px 2px #03152b)}
 .signup-submit{position:absolute;left:12.8%;top:59.05%;width:74.8%;height:6.05%;border:0;background:transparent;cursor:pointer}
 .signup-social button,.signup-signin-link{position:absolute;background:transparent;border:0;cursor:pointer}
 .signup-social-google{left:24.5%;top:70.65%;width:12%;height:6.2%}
