@@ -810,3 +810,39 @@ body{overscroll-behavior-y:auto}
 @media(min-width:761px){.cx-artist-profile{max-width:100%}.cx-artist-cover{height:clamp(400px,57vh,610px)}.cx-artist-portrait{bottom:-97px}.cx-artist-info{padding-top:124px}}
 @media(max-width:375px){.cx-artist-tools{gap:4px;left:5px;right:5px}.cx-artist-tools button{width:40px;min-width:40px}.cx-artist-identity h1{font-size:26px}.cx-artist-expand{width:34px;height:34px}.cx-artist-portrait{bottom:-81px}}
 @media(prefers-reduced-motion:reduce){.cx-artist-expand svg{transition:none}}
+
+/* Facebook-like information hierarchy only; original Chat-X cover, midnight-blue
+   accents, glass controls, identity and floating image styling are retained. */
+.cx-artist-profile{background:#061329!important;color:#eaf4ff}
+.cx-artist-info{background:linear-gradient(180deg,#101c33,#071329 70%)!important;color:#eaf4ff}
+.cx-artist-stats{display:flex;justify-content:center;gap:32px;margin:16px auto 6px;padding:4px 0;border:0}
+.cx-artist-stats button{display:grid;gap:3px;text-align:center;min-width:100px;border:0;background:transparent;color:#eff6ff}
+.cx-artist-stats b{font-size:17px}
+.cx-artist-stats small{font-size:12px;color:#9db5d2}
+.cx-artist-bio{margin:15px auto 5px;max-width:500px;line-height:1.5;font-size:14px;overflow-wrap:anywhere}
+.cx-artist-common{display:flex;align-items:center;justify-content:center;gap:12px;max-width:550px;margin:19px auto 22px;color:#b9cee6;font-size:12px}
+.cx-common-avatars{display:flex;padding-left:8px}
+.cx-common-avatars .avatar{margin-left:-9px;width:32px;height:32px;flex:none;border:2px solid #071930}
+.cx-artist-main-actions{display:grid;grid-template-columns:1fr 1fr;gap:10px;max-width:620px;margin:18px auto 12px}
+.cx-artist-main-actions button{height:46px;display:flex;justify-content:center;align-items:center;gap:9px;border-radius:13px;border:1px solid #376f9f;font-size:15px;font-weight:750}
+.cx-artist-dashboard{background:linear-gradient(105deg,#148afc,#075dd7);color:white}
+.cx-artist-create{background:rgba(122,159,205,.21);color:white}
+.cx-artist-tabs{margin-top:18px}
+.cx-artist-tabs button{display:flex;align-items:center;justify-content:center;gap:5px;font-size:13px}
+.cx-artist-more-tabs{display:flex;justify-content:center;gap:9px;padding:12px}
+.cx-artist-more-tabs button{border:1px solid #477eaf;background:#0c2b55;color:white;border-radius:13px;padding:10px 21px}
+.cx-artist-overview{max-width:620px;margin:16px auto;text-align:left;display:grid;gap:6px}
+.cx-artist-section-heading{display:flex;justify-content:space-between;align-items:center;margin:16px 0 8px}
+.cx-artist-section-heading h2{font-size:18px;font-weight:800}
+.cx-artist-section-heading button{border:0;background:transparent;color:#5dc6ff;font-size:13px}
+.cx-glance-item{width:100%;display:flex;align-items:center;gap:12px;text-align:left;border:0;border-radius:10px;background:transparent;color:#d9e9fc;padding:10px 7px;font-size:13px;overflow-wrap:anywhere}
+.cx-glance-item>span{flex:1}
+.cx-glance-item>svg{color:#9bb7d5;flex:none}
+.cx-artist-connection-row{display:flex;gap:12px;overflow-x:auto;padding:7px 0}
+.cx-artist-connection-row button{min-width:86px;display:grid;justify-items:center;gap:8px;border:1px solid #315a8d;background:#0b2547;color:white;border-radius:13px;padding:12px 8px;font-size:12px}
+.cx-artist-connection-row .avatar{width:57px;height:57px}
+.cx-artist-demo-note{font-size:11px;color:#8faac7;line-height:1.5;padding:3px 0}
+.cx-artist-extra{border-top:1px solid #304b70;padding:12px 0}
+.cx-artist-extra p{display:flex;align-items:center;justify-content:center;gap:8px;overflow-wrap:anywhere}
+.cx-artist-extra button{justify-self:center;border:1px solid #3a85bd;border-radius:15px;background:#103b6a;color:white;padding:10px 16px}
+@media(max-width:360px){.cx-artist-stats{gap:8px}.cx-artist-main-actions button{font-size:13px}.cx-artist-overview{margin:12px 0}}
