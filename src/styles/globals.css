@@ -855,3 +855,39 @@ body{overscroll-behavior-y:auto}
 .cx-artist-portrait{z-index:10}
 .cx-artist-photo-view{position:relative;z-index:1}
 .cx-artist-portrait>.cx-profile-camera{z-index:12}
+
+/* Compact profile organization based on approved reference; original Chat-X palette. */
+.cx-tiktok-profile{background:linear-gradient(155deg,#06162f,#081e3a 72%,#030e21)!important;color:#edf6ff;min-height:100dvh;padding:calc(8px + env(safe-area-inset-top)) 14px calc(135px + env(safe-area-inset-bottom));box-sizing:border-box;overflow-x:hidden!important}
+.cx-tiktok-topbar{height:62px;display:flex;align-items:center;justify-content:space-between;gap:8px}
+.cx-tiktok-topbar button{border:0;background:transparent;color:#f4f9ff;padding:9px;display:grid;place-items:center;min-width:42px;min-height:42px;border-radius:13px}
+.cx-tiktok-top-actions{display:flex;align-items:center;gap:10px}
+.cx-tiktok-topbar button:focus-visible,.cx-tiktok-summary button:focus-visible{outline:2px solid #57d8ff;outline-offset:2px}
+.cx-tiktok-menu{position:absolute;z-index:45;top:calc(60px + env(safe-area-inset-top));right:15px;background:#0d2948f2;border:1px solid #508fc5;box-shadow:0 12px 28px #0009;padding:10px;border-radius:19px;display:grid;min-width:210px}
+.cx-tiktok-menu button{background:none;border:0;color:white;display:flex;align-items:center;gap:9px;text-align:left;padding:12px 8px}
+.cx-tiktok-summary{position:relative;display:grid;grid-template-columns:minmax(0,1fr) minmax(112px,32%);gap:10px;align-items:center;min-height:230px;padding:32px 0 15px}
+.cx-tiktok-left{min-width:0;align-self:center}
+.cx-tiktok-name{display:flex;align-items:center;gap:6px;max-width:100%;border:0;background:none;color:white;padding:0;text-align:left;line-height:1.1;font-weight:900;font-family:Outfit,'DM Sans',sans-serif;font-size:clamp(22px,5.5vw,38px)}
+.cx-tiktok-name>span{min-width:0;overflow-wrap:anywhere}
+.cx-tiktok-name>svg{flex:none;width:20px}
+.cx-tiktok-handle{font-size:clamp(12px,3.4vw,17px);color:#aac9e7;margin-top:12px;overflow-wrap:anywhere}
+.cx-tiktok-stats{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:5px;margin-top:26px;max-width:370px}
+.cx-tiktok-stats button{border:0;background:transparent;display:grid;gap:4px;text-align:left;color:#e8f4ff;padding:0;min-width:0}
+.cx-tiktok-stats b{font-size:clamp(18px,4.6vw,28px);line-height:1.1}
+.cx-tiktok-stats span{color:#a4bbd6;font-size:clamp(10px,2.4vw,13px)}
+.cx-tiktok-photo-area{width:100%;aspect-ratio:1;position:relative;align-self:center;isolation:isolate;margin-top:25px}
+.cx-tiktok-photo{width:100%;height:100%;border:3px solid #39618b;border-radius:50%;overflow:hidden;display:block;background:#040b18;padding:0;box-shadow:0 0 16px #0089ee40}
+.cx-tiktok-photo img{width:100%;height:100%;display:block;object-fit:cover;border-radius:50%}
+.cx-tiktok-photo-area .cx-profile-camera{right:-4px!important;bottom:-3px!important;width:clamp(33px,9vw,47px);height:clamp(33px,9vw,47px);border:3px solid #091a36;background:linear-gradient(135deg,#01d9ee,#0f80ee);color:white;box-shadow:0 3px 11px #0088ec80}
+.cx-tiktok-photo-area .cx-profile-camera svg{width:58%;height:58%}
+.cx-tiktok-thought{position:absolute;z-index:7;bottom:calc(100% - 12px);right:-6px;max-width:min(180px,50vw);min-width:105px;min-height:53px;padding:9px 12px;border-radius:20px;background:linear-gradient(155deg,#e8eef9,#b5d4ea);color:#263c57;border:1px solid #eefaff;box-shadow:0 8px 15px #0005;line-height:1.2;text-align:center;font-size:clamp(10px,3.2vw,15px);font-weight:750}
+.cx-tiktok-thought:after{content:"";position:absolute;bottom:-8px;left:34%;height:15px;width:15px;transform:rotate(45deg);background:#bed9ea;border-radius:3px}
+.cx-tiktok-quick-actions{display:flex;gap:8px;margin:9px 0 23px;justify-content:center}
+.cx-tiktok-quick-actions button{flex:1;display:flex;align-items:center;justify-content:center;gap:6px;min-height:42px;border:1px solid #337ab6;border-radius:14px;color:#e8f6ff;background:linear-gradient(135deg,#153b69,#092349);font-size:clamp(11px,3vw,13px);font-weight:750}
+.cx-tiktok-details{border:1px solid #255d92;border-radius:13px;background:#0b2749;padding:13px 15px;display:grid;gap:9px;text-align:center;font-size:13px}
+.cx-tiktok-details p{color:#c0d5ec;line-height:1.5}
+.cx-tiktok-details button{border:1px solid #4097c7;color:#fff;background:#16437a;border-radius:10px;padding:9px}
+.cx-tiktok-profile .cx-artist-tabs{margin:13px auto 0;max-width:700px}
+.cx-tiktok-profile .cx-artist-overview,.cx-tiktok-profile .cx-artist-gallery,.cx-tiktok-profile .cx-artist-tab-content{margin-left:auto;margin-right:auto;max-width:700px}
+.cx-tiktok-about{font-size:13px;color:#b9cfe7;line-height:1.6}
+@media(max-width:375px){.cx-tiktok-profile{padding-left:11px;padding-right:11px}.cx-tiktok-summary{grid-template-columns:minmax(0,1fr) minmax(100px,33%);gap:6px}.cx-tiktok-top-actions{gap:1px}.cx-tiktok-stats{gap:3px;margin-top:17px}.cx-tiktok-thought{min-width:93px;min-height:46px}.cx-tiktok-photo-area .cx-profile-camera{width:34px;height:34px}}
+@media(min-width:761px){.cx-tiktok-summary{max-width:780px;margin:auto;min-height:300px;grid-template-columns:1fr 210px;gap:30px}.cx-tiktok-topbar,.cx-tiktok-quick-actions{max-width:780px;margin-left:auto;margin-right:auto}.cx-tiktok-name{font-size:38px}.cx-tiktok-thought{font-size:14px}}
