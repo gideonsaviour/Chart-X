@@ -442,7 +442,8 @@ export default function App() {
  const scrollPositions=useRef({})
  const pageRef=useRef('home')
  const historyRef=useRef([])
- useEffect(()=>{const onBack=()=>{const prev=historyRef.current.pop()||'home';setPage(prev);pageRef.current=prev;requestAnimationFrame(()=>window.scrollTo(0,scrollPositions.current[prev]||0))};window.addEventListener('popstate',onBack);return()=>window.removeEventListener('popstate',onBack)},[])
+ useEffect(()=>{requestAnimationFrame(()=>window.scrollTo(0,scrollPositions.current[page]||0))},[page])
+ useEffect(()=>{const onBack=()=>{scrollPositions.current[pageRef.current]=window.scrollY;const prev=historyRef.current.pop()||'home';pageRef.current=prev;setPage(prev)};window.addEventListener('popstate',onBack);return()=>window.removeEventListener('popstate',onBack)},[])
  useEffect(()=>{if(!toast)return;const timeout=setTimeout(()=>setToast(''),3200);return ()=>clearTimeout(timeout)},[toast])
  const notify=text=>setToast(text)
  const navigate=p=>{
@@ -450,7 +451,7 @@ export default function App() {
   scrollPositions.current[current]=window.scrollY
   if(p!==current){historyRef.current.push(current);window.history.pushState({chatxPage:p},'','#'+p)}
   pageRef.current=p;setPage(p);setMenu(false);setChatMenuOpen(false)
-  requestAnimationFrame(()=>window.scrollTo({top:scrollPositions.current[p]||0,behavior:'instant'}))
+  if(p===current)requestAnimationFrame(()=>window.scrollTo({top:0,behavior:'instant'}))
  }
  useEffect(()=>{if(!chatMenuOpen)return;const close=e=>{if(e.key==='Escape')setChatMenuOpen(false)};window.addEventListener('keydown',close);return ()=>window.removeEventListener('keydown',close)},[chatMenuOpen])
  const enter=()=>{sessionStorage.setItem('chatx_seen','1');setStage('app');navigate('home')}
