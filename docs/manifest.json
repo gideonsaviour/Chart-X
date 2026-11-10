@@ -1,6 +1,6 @@
 {
-  "name": "ChartX",
-  "short_name": "ChartX",
+  "name": "Chart-X",
+  "short_name": "Chart-X",
   "description": "Next generation messaging",
   "start_url": "/Chat-X/",
   "scope": "/Chat-X/",

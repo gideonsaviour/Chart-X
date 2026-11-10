@@ -1,7 +1,7 @@
 {
   "name": "chartx-backend",
   "version": "1.0.0",
-  "description": "ChartX AI Backend",
+  "description": "Chart-X AI Backend",
   "main": "server.js",
   "scripts": {
     "start": "node server.js"

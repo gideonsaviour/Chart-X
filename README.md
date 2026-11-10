@@ -1,6 +1,6 @@
-# ChartX 💬
+# Chart-X 💬
 
-ChartX — social networking, messaging, communities, marketplace and trading (frontend demo).
+Chart-X — social networking, messaging, communities, marketplace and trading (frontend demo).
 
 ## Features
 - ⚡ Real-time messaging

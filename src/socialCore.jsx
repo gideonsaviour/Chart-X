@@ -6,7 +6,7 @@ import './socialCore.css'
 
 // Fictional, stable demo records; identities, media, and relationships use the same IDs.
 export const demoUsers={
- me:{id:'me',name:'You',handle:'@chartx_demo',bio:'Exploring ChartX',image:referencePortrait,private:false},
+ me:{id:'me',name:'You',handle:'@chartx_demo',bio:'Exploring Chart-X',image:referencePortrait,private:false},
  jenny:{id:'jenny',name:'Jenny Bright',handle:'@jennybright',bio:'Good vibes and bright ideas 💙',image:referenceJenny,private:false,verified:false},
  sarah:{id:'sarah',name:'Sarah',handle:'@sarah_demo',bio:'Sharing moments and making connections',image:referenceSarah,private:false},
  david:{id:'david',name:'David King',handle:'@david_demo',bio:'Creator and tech enthusiast',image:referenceDavid,private:false},
@@ -16,11 +16,11 @@ export const demoUsers={
 export const demoPosts=[
  {id:'post-jenny-1',authorId:'jenny',text:'Good vibes only! 💙\nLet’s keep pushing forward together.',image:referenceCity,created:'Sample · 2h ago',audience:'public',likes:1200},
  {id:'post-sarah-1',authorId:'sarah',text:'A new day to share something wonderful. What inspires you today?',created:'Sample · Yesterday',audience:'public',likes:18},
- {id:'post-david-1',authorId:'david',text:'Building our future one idea at a time. #ChartX',created:'Sample · Yesterday',audience:'public',likes:9},
+ {id:'post-david-1',authorId:'david',text:'Building our future one idea at a time. #Chart-X',created:'Sample · Yesterday',audience:'public',likes:9},
  {id:'post-silver-1',authorId:'silver',text:'A private moment',created:'Sample · 1 day ago',audience:'followers',likes:3}
 ]
 export const demoCommunities=[
- {id:'tech',name:'ChartX Tech Hub',description:'Explore AI, software and the future.',count:'24.5K',members:['sarah','david'],private:false},
+ {id:'tech',name:'Chart-X Tech Hub',description:'Explore AI, software and the future.',count:'24.5K',members:['sarah','david'],private:false},
  {id:'music',name:'Music Vibes',description:'Music, conversations and new sounds.',count:'18.7K',members:['silver','queen'],private:false},
  {id:'friends',name:'Friends Forever',description:'A private space for trusted connections.',count:'Demo',members:['jenny'],private:true}
 ]

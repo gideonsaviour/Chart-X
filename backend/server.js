@@ -38,7 +38,7 @@ const server = http.createServer(async (req, res) => {
           body: JSON.stringify({
             model: 'claude-sonnet-4-6',
             max_tokens: 1024,
-            system: "You are ChartX AI Assistant — a smart, helpful assistant built into the ChartX messaging app. You have access to real-time web search. Always search the web for current events, news, prices, scores, weather, and any time-sensitive information. Give accurate, concise, conversational answers. If you searched the web, mention it briefly. Never make up facts. Keep responses friendly and to the point.",
+            system: "You are Chart-X AI Assistant — a smart, helpful assistant built into the Chart-X messaging app. You have access to real-time web search. Always search the web for current events, news, prices, scores, weather, and any time-sensitive information. Give accurate, concise, conversational answers. If you searched the web, mention it briefly. Never make up facts. Keep responses friendly and to the point.",
             tools: [{ type: "web_search_20250305", name: "web_search" }],
             messages
           })
@@ -67,9 +67,9 @@ const server = http.createServer(async (req, res) => {
     });
   } else {
     res.writeHead(200, { 'Content-Type': 'text/plain' });
-    res.end('ChartX AI Backend is running');
+    res.end('Chart-X AI Backend is running');
   }
 });
 
 const PORT = process.env.PORT || 3000;
-server.listen(PORT, () => console.log(`ChartX backend running on port ${PORT}`));
+server.listen(PORT, () => console.log(`Chart-X backend running on port ${PORT}`));

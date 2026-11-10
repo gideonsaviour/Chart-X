@@ -73,7 +73,7 @@
 .community-list-no-filter{padding-top:6px}
 
 
-/* ChartX floating optical-glass navigation, inspired by the supplied glass dock.
+/* Chart-X floating optical-glass navigation, inspired by the supplied glass dock.
    A real app control: no fake phone indicators, no pretend platform UI. */
 .app-wrap{overflow:hidden}
 .app-screen{padding-bottom:146px}
@@ -259,7 +259,7 @@
 @media(max-width:365px){.chat-glass-chooser{left:calc(70% - 75px);width:150px;gap:10px}.chat-choice-orb{width:67px;height:67px;min-width:67px}}@media(prefers-reduced-motion:reduce){.chat-choice-orb{animation:none}}
 
 
-/* Original ChartX splash artwork: displayed untouched, never cropped or restyled.
+/* Original Chart-X splash artwork: displayed untouched, never cropped or restyled.
    The source file belongs at public/assets/Chat-X Neon Skyline Splash Screen-1.png */
 .exact-splash-screen{
  width:100%;min-height:100vh;min-height:100dvh;
@@ -305,7 +305,7 @@
  pointer-events:none;
 }
 
-/* Preserve the splash artwork and ChartX branding. Draw the trading arrow
+/* Preserve the splash artwork and Chart-X branding. Draw the trading arrow
    along its real zigzag path, then reveal the finished green sign at 4.25s. */
 .exact-splash-loader{
  position:absolute;
@@ -358,7 +358,7 @@
 /* Asset-not-uploaded state only; the original splash PNG is displayed unchanged when present. */
 .splash-missing{display:grid;gap:10px;text-align:center;padding:24px;color:#d6e7fa;font-size:15px;font-weight:650;max-width:320px;line-height:1.5}.splash-missing small{font-size:12px;color:#88afce;font-weight:400}
 
-/* Exact uploaded 941x1672 ChartX artwork. Responsive hit areas do not redraw it. */
+/* Exact uploaded 941x1672 Chart-X artwork. Responsive hit areas do not redraw it. */
 .signup-page{min-height:100dvh;background:#010a22;display:flex;justify-content:center;align-items:center}
 .signup-artboard{position:relative;width:min(100vw,56.2799dvh);aspect-ratio:941/1672;flex:none;overflow:hidden;background:#010a22;isolation:isolate}
 .signup-artwork{display:block;width:100%;height:100%;object-fit:contain;user-select:none;pointer-events:none}
@@ -475,7 +475,7 @@
  .home-art-fixed-nav{left:calc(50% + 127px)}
 }
 
-/* ChartX native DOM mobile experience: artwork-matched Midnight Blue + silver glass.
+/* Chart-X native DOM mobile experience: artwork-matched Midnight Blue + silver glass.
    No viewport-sized bitmap, fake status bar, or image hotspots. */
 :root{color-scheme:dark}
 html,body,#root{min-height:100%;width:100%;max-width:100%;overflow-x:hidden}
@@ -811,7 +811,7 @@ body{overscroll-behavior-y:auto}
 @media(max-width:375px){.cx-artist-tools{gap:4px;left:5px;right:5px}.cx-artist-tools button{width:40px;min-width:40px}.cx-artist-identity h1{font-size:26px}.cx-artist-expand{width:34px;height:34px}.cx-artist-portrait{bottom:-81px}}
 @media(prefers-reduced-motion:reduce){.cx-artist-expand svg{transition:none}}
 
-/* Facebook-like information hierarchy only; original ChartX cover, midnight-blue
+/* Facebook-like information hierarchy only; original Chart-X cover, midnight-blue
    accents, glass controls, identity and floating image styling are retained. */
 .cx-artist-profile{background:#061329!important;color:#eaf4ff}
 .cx-artist-info{background:linear-gradient(180deg,#101c33,#071329 70%)!important;color:#eaf4ff}
@@ -856,7 +856,7 @@ body{overscroll-behavior-y:auto}
 .cx-artist-photo-view{position:relative;z-index:1}
 .cx-artist-portrait>.cx-profile-camera{z-index:12}
 
-/* Compact profile organization based on approved reference; original ChartX palette. */
+/* Compact profile organization based on approved reference; original Chart-X palette. */
 .cx-tiktok-profile{background:linear-gradient(155deg,#06162f,#081e3a 72%,#030e21)!important;color:#edf6ff;min-height:100dvh;padding:calc(8px + env(safe-area-inset-top)) 14px calc(135px + env(safe-area-inset-bottom));box-sizing:border-box;overflow-x:hidden!important}
 .cx-tiktok-topbar{height:62px;display:flex;align-items:center;justify-content:space-between;gap:8px}
 .cx-tiktok-topbar button{border:0;background:transparent;color:#f4f9ff;padding:9px;display:grid;place-items:center;min-width:42px;min-height:42px;border-radius:13px}
@@ -892,7 +892,7 @@ body{overscroll-behavior-y:auto}
 @media(max-width:375px){.cx-tiktok-profile{padding-left:11px;padding-right:11px}.cx-tiktok-summary{grid-template-columns:minmax(0,1fr) minmax(100px,33%);gap:6px}.cx-tiktok-top-actions{gap:1px}.cx-tiktok-stats{gap:3px;margin-top:17px}.cx-tiktok-thought{min-width:93px;min-height:46px}.cx-tiktok-photo-area .cx-profile-camera{width:34px;height:34px}}
 @media(min-width:761px){.cx-tiktok-summary{max-width:780px;margin:auto;min-height:300px;grid-template-columns:1fr 210px;gap:30px}.cx-tiktok-topbar,.cx-tiktok-quick-actions{max-width:780px;margin-left:auto;margin-right:auto}.cx-tiktok-name{font-size:38px}.cx-tiktok-thought{font-size:14px}}
 
-/* ChartX profile menu: TikTok-style right drawer behavior, original midnight glass identity. */
+/* Chart-X profile menu: TikTok-style right drawer behavior, original midnight glass identity. */
 .cx-drawer-layer{position:fixed;inset:0;z-index:125;isolation:isolate;display:flex;justify-content:flex-end;max-width:100vw}
 .cx-drawer-scrim{position:absolute;inset:0;width:100%;height:100%;border:0;background:rgba(0,4,13,.65);backdrop-filter:blur(3px);-webkit-backdrop-filter:blur(3px);cursor:pointer}
 .cx-profile-drawer{position:relative;z-index:2;width:min(86vw,420px);max-width:100%;height:100dvh;overflow:hidden;display:flex;flex-direction:column;background:linear-gradient(160deg,#0d274b,#07152c 80%);border-left:1px solid rgba(100,177,243,.48);box-shadow:-12px 0 44px #0008;color:#ecf6ff;animation:cxDrawerIn .22s ease-out}

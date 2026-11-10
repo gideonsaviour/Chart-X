@@ -1,7 +1,7 @@
 {
   "name": "chartx",
   "version": "1.0.0",
-  "description": "ChartX social networking and messaging frontend",
+  "description": "Chart-X social networking and messaging frontend",
   "scripts": {
     "dev": "vite",
     "build": "vite build",
