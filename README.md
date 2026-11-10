@@ -30,4 +30,4 @@ npm run build
 ```
 
 ## Live Demo
-[gideonsaviour.github.io/Chat-X](https://gideonsaviour.github.io/Chat-X)
+[gideonsaviour.github.io/Chart-X](https://gideonsaviour.github.io/Chart-X)
