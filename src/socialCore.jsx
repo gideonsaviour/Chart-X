@@ -6,7 +6,7 @@ import './socialCore.css'
 
 // Fictional, stable demo records; identities, media, and relationships use the same IDs.
 export const demoUsers={
- me:{id:'me',name:'You',handle:'@chatx_demo',bio:'Exploring ChartX',image:referencePortrait,private:false},
+ me:{id:'me',name:'You',handle:'@chartx_demo',bio:'Exploring ChartX',image:referencePortrait,private:false},
  jenny:{id:'jenny',name:'Jenny Bright',handle:'@jennybright',bio:'Good vibes and bright ideas 💙',image:referenceJenny,private:false,verified:false},
  sarah:{id:'sarah',name:'Sarah',handle:'@sarah_demo',bio:'Sharing moments and making connections',image:referenceSarah,private:false},
  david:{id:'david',name:'David King',handle:'@david_demo',bio:'Creator and tech enthusiast',image:referenceDavid,private:false},
