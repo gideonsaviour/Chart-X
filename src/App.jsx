@@ -73,7 +73,7 @@ function SignIn({onEnter}) {
  return <section className="signup-page">
   {imageFailed&&<div className="signup-art-error">Sign-up artwork could not be loaded.</div>}
   <div className="signup-artboard">
-   <img className="signup-artwork" src="/assets/Chat-X%20Futuristic%20Sign-Up%20Screen.png" alt="" aria-hidden="true" onError={()=>setImageFailed(true)} />
+   <img className="signup-artwork" src={`${import.meta.env.BASE_URL}assets/Chat-X%20Futuristic%20Sign-Up%20Screen.png`} alt="" aria-hidden="true" onError={()=>setImageFailed(true)} />
    {mode==='create'&&<form className="signup-hitarea" onSubmit={submit} autoComplete="on">
     {mode==='create'&&<label className="signup-input signup-full-name"><span className="sr-only">Full Name</span><input type="text" name="name" aria-label="Full Name" placeholder=" " autoComplete="name" required value={fullName} onChange={e=>setFullName(e.target.value)} /></label>}
     <label className="signup-input signup-email"><span className="sr-only">Email Address</span><input type="email" name="email" aria-label="Email Address" placeholder=" " autoComplete="email" required value={email} onChange={e=>setEmail(e.target.value)} /></label>
@@ -119,13 +119,13 @@ function Welcome({next}) {
  return <div className="exact-splash-screen">
   <div className="exact-splash-tap" aria-label="ChartX loading screen" role="status">
    {!imageMissing&&<div className="exact-splash-art">
-    <img src="/assets/Chat-X%20Neon%20Skyline%20Splash%20Screen-1.png" alt="" draggable="false" onLoad={()=>setImageSettled(true)} onError={()=>{setImageMissing(true);setImageSettled(true)}}/>
+    <img src={`${import.meta.env.BASE_URL}assets/Chat-X%20Neon%20Skyline%20Splash%20Screen-1.png`} alt="" draggable="false" onLoad={()=>setImageSettled(true)} onError={()=>{setImageMissing(true);setImageSettled(true)}}/>
     <span className={'exact-splash-loader'+(imageSettled?' is-running':'')} aria-label="Loading">
      <svg className="exact-splash-trading-draw" viewBox="120 96 1285 770" aria-hidden="true" focusable="false">
       <path className="exact-splash-trading-stroke" pathLength="100" d="M157 836 L335 655 L415 707 L581 494 L716 584 L894 342 L1028 440 L1261 219 L1375 128"/>
       <path className="exact-splash-trading-tip" pathLength="100" d="M1169 194 L1375 128 L1327 329"/>
      </svg>
-     <img className="exact-splash-trading-complete" src="/assets/chatx-loading-sign.svg" alt="" aria-hidden="true"/>
+     <img className="exact-splash-trading-complete" src={`${import.meta.env.BASE_URL}assets/chatx-loading-sign.svg`} alt="" aria-hidden="true"/>
     </span>
    </div>}
    {imageMissing&&<span className="splash-missing">Splash artwork has not been uploaded yet.<small>Opening ChartX in seven seconds.</small></span>}
@@ -152,7 +152,7 @@ function HomeArtwork({navigate,notify,create}) {
  const share=async()=>{try{await navigator.clipboard.writeText(window.location.href);notify('ChartX page link copied')}catch{notify('Sharing is unavailable in this browser')}}
  return <div className="home-art-page">
   <div className="home-art-viewport"><div className="home-art-canvas">
-   <img className="home-art-img" src="/assets/CX%20Social%20Dashboard%20UI.png" alt="ChartX home dashboard with stories, a post, trading, marketplace, communities and navigation"/>
+   <img className="home-art-img" src={`${import.meta.env.BASE_URL}assets/CX%20Social%20Dashboard%20UI.png`} alt="ChartX home dashboard with stories, a post, trading, marketplace, communities and navigation"/>
    {tap('Search ChartX','home-art-search',()=>navigate('search'))}
    {tap('Notifications','home-art-alerts',()=>navigate('notifications'))}
    {tap('Open profile','home-art-avatar',()=>navigate('profile'))}
